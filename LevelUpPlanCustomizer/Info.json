@@ -1,0 +1,14 @@
+﻿{
+  "AssemblyName": "LevelUpPlanCustomizer.dll",
+  "Author": "AlterAsc",
+  "DisplayName": "LevelUp Plan Customizer",
+  "EntryMethod": "LevelUpPlanCustomizer.Main.Load",
+  "GameVersion": "1.3.0",
+  "HomePage": "",
+  "Id": "LevelUpPlanCustomizer",
+  "ManagerVersion": "0.23.0",
+  "Repository": "",
+  "Requirements": [],
+  "LoadAfter": [],
+  "Version": "0.1.0"
+}
