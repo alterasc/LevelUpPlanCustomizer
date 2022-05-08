@@ -1,0 +1,145 @@
+﻿{
+  "FeatureList": "777ae11136378a64883059457966a325",
+  "Classes": [
+    {
+      "m_CharacterClass": "Blueprint:bfa11238e7ae3544bbeb4d0b92e897ec:PaladinClass",
+      "m_MemorizeSpells": [
+        "Blueprint:831e942864e924846a30d2e0678e438b:BlessWeapon",
+        "Blueprint:72d9f5adda6387a40a63c49d7781bbbf:VeilOfHeaven",
+        "Blueprint:431f783e1a020cd46ab37b8666a92bd3:BestowGraceCast",
+        "Blueprint:e1291272c8f48c14ab212a599ad17aac:EffortlessArmor",
+        "Blueprint:faabd2cc67efa4646ac58c7bb3e40fcc:Prayer",
+        "Blueprint:be5452c422a6ea744bf1037b0a443bb1:CrusadersEdgeCast",
+        "Blueprint:332ad68273db9704ab0e92518f2efd1c:Eaglesoul"
+      ],
+      "Levels": 20,
+      "RaceStat": "Strength",
+      "LevelsStat": "Charisma",
+      "Skills": [
+        "SkillPersuasion",
+        "SkillKnowledgeWorld",
+        "SkillMobility"
+      ],
+      "Selections": [
+        {
+          "m_Selection": "Blueprint:a7c8b73528d34c2479b4bd638503da1d:PaladinDeitySelection",
+          "m_Features": [
+            "Blueprint:88d5da04361b16746bf5b65795e0c38c:IomedaeFeature"
+          ]
+        },
+        {
+          "m_Selection": "Blueprint:02b187038a8dce545bb34bbfb346428d:SelectionMercy",
+          "m_Features": [
+            "Blueprint:e5aa306af9b91974a9b2f2cbe702f562:MercyFatiqued",
+            "Blueprint:19250e5a12db1fc448970b81e0f38922:MercyStaggered",
+            "Blueprint:25641bda25467224e930e8c70eaf9a83:MercyExhausted",
+            "Blueprint:d306e052d2f85b24cb5082951459045e:MercyConfused",
+            "Blueprint:445c696bead5140459909ffbed14750e:MercyCursed",
+            "Blueprint:62582b4636218d74db34606f872c9c05:MercyParalyzed"
+          ]
+        },
+        {
+          "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+          "m_Features": [
+            "Blueprint:97e216dbb46ae3c4faef90cf6bbe6fd5:Dodge",
+            "Blueprint:ac57069b6bf8c904086171683992a92a:ShieldFocus",
+            "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
+            "Blueprint:76d4885a395976547a13c5d6bf95b482:ArmorFocusSelection",
+            "Blueprint:422dab7309e1ad343935f33a4d6e9f11:Outflank",
+            "Blueprint:9972f33f977fc724c838e59641b2fca5:PowerAttackFeature",
+            "Blueprint:14a1fc1356df9f146900e1e42142fc9d:VitalStrikeFeature",
+            "Blueprint:f4201c85a991369408740c6888362e20:ImprovedCritical",
+            "Blueprint:52913092cd018da47845f36e6fbe240f:VitalStrikeFeatureImproved",
+            "Blueprint:79042cb55f030614ea29956177977c52:GreatFortitude",
+            "Blueprint:e2d1fa11f6b095e4fb2fd1dcf5e36eb3:VitalStrikeFeatureGreater"
+          ]
+        },
+        {
+          "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+          "m_Features": [
+            "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus"
+          ],
+          "IsParametrizedFeature": true,
+          "m_ParametrizedFeature": "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
+          "ParamWeaponCategory": "Longsword"
+        },
+        {
+          "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+          "m_Features": [
+            "Blueprint:f4201c85a991369408740c6888362e20:ImprovedCritical"
+          ],
+          "IsParametrizedFeature": true,
+          "m_ParametrizedFeature": "Blueprint:f4201c85a991369408740c6888362e20:ImprovedCritical",
+          "ParamWeaponCategory": "Longsword"
+        },
+        {
+          "m_Selection": "Blueprint:76d4885a395976547a13c5d6bf95b482:ArmorFocusSelection",
+          "m_Features": [
+            "Blueprint:c27e6d2b0d33d42439f512c6d9a6a601:ArmorFocusHeavy"
+          ]
+        },
+        {
+          "m_Selection": "Blueprint:ad7dc4eba7bf92f4aba23f716d7a9ba6:PaladinDivineBondSelection",
+          "m_Features": [
+            "Blueprint:e08a817f475c8794aa56fdd904f43a57:WeaponBondProgression"
+          ]
+        },
+        {
+          "m_Selection": "Blueprint:f926dabeee7f8a54db8f2010b323383c:BackgroundsBaseSelection",
+          "m_Features": [
+            "Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection"
+          ]
+        },
+        {
+          "m_Selection": "Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection",
+          "m_Features": [
+            "Blueprint:9da9faf5f0ef4904db4a59a22dafbb06:BackgroundPickpocket"
+          ]
+        },
+        {
+          "m_Selection": "Blueprint:59e7a76987fe3b547b9cce045f4db3e4:DeitySelection",
+          "m_Features": [
+            "Blueprint:88d5da04361b16746bf5b65795e0c38c:IomedaeFeature"
+          ]
+        }
+      ]
+    }
+  ],
+  "MythicClasses": [
+    {
+      "m_CharacterClass": "Blueprint:530b6a79cb691c24ba99e1577b4beb6d:MythicCompanionClass",
+      "Levels": 10,
+      "Selections": [
+        {
+          "m_Selection": "Blueprint:9ee0f6745f555484299b0a1563b99d81:MythicFeatSelection",
+          "m_Features": [
+            "Blueprint:d3ff895f7a79a764f9e16c588c781ab5:PowerAttackMythicFeat",
+            "Blueprint:d8df8f8ad7149824e8e60dd3453557d2:ToughnessMythicFeat",
+            "Blueprint:74eb201774bccb9428ba5ac8440bf990:WeaponFocusMythicFeat",
+            "Blueprint:e07bcb271ecefec44be314e1c807c798:VitalStrikeMythicFeat",
+            "Blueprint:8bc4dbea992b6bd489ac5b66fd41e380:GreatFortitudeMythicFeat"
+          ]
+        },
+        {
+          "m_Selection": "Blueprint:ba0e5a900b775be4a99702f1ed08914d:MythicAbilitySelection",
+          "m_Features": [
+            "Blueprint:d25326011c45a5942bc12f5d4401d4ae:LastStand",
+            "Blueprint:8161528d5b98b3e4a8a6a0ed327c3b6a:EverReady",
+            "Blueprint:cf594fa8871332a4ba861c6002480ec2:AbundantCasting",
+            "Blueprint:7e5b63faeca24474db0bfd019167dda4:AbundantSmite",
+            "Blueprint:74afc3465db56924c9618a42d84efab8:Unstoppable"
+          ]
+        },
+        {
+          "m_Selection": "Blueprint:9ee0f6745f555484299b0a1563b99d81:MythicFeatSelection",
+          "m_Features": [
+            "Blueprint:74eb201774bccb9428ba5ac8440bf990:WeaponFocusMythicFeat"
+          ],
+          "IsParametrizedFeature": true,
+          "m_ParametrizedFeature": "Blueprint:74eb201774bccb9428ba5ac8440bf990:WeaponFocusMythicFeat",
+          "ParamWeaponCategory": "Longsword"
+        }
+      ]
+    }
+  ]
+}

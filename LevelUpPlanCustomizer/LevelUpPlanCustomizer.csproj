@@ -153,12 +153,18 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="Patches\AlwaysAvailableAutoLevelup.cs" />
+    <Compile Include="Patches\PlanUpdater.cs" />
+    <Compile Include="Schemas\Utils.cs" />
+    <Compile Include="Schemas\v1\LevelUpPlan.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Sample\v1\Seelah.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -169,8 +175,10 @@
     <Error Condition="!Exists('..\packages\Aze.Publicise.MSBuild.Task.1.1.0\build\Aze.Publicise.MSBuild.Task.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Aze.Publicise.MSBuild.Task.1.1.0\build\Aze.Publicise.MSBuild.Task.props'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>robocopy "$(TargetDir) " "%25WrathPath%25\Mods\LevelUpPlanCustomizer\ " /s /e
+    <PostBuildEvent>if $(ConfigurationName) == Release (powershell.exe -Command $null=mkdir '$(SolutionDir)PublishOutput'; Compress-Archive -CompressionLevel Optimal -Path '$(TargetDir)*' -DestinationPath '$(SolutionDir)PublishOutput\$(ProjectName).zip' -Force)
 
-if $(ConfigurationName) == Release (powershell.exe -Command $null=mkdir '$(SolutionDir)PublishOutput'; Compress-Archive -CompressionLevel Optimal -Path '$(TargetDir)*.dll', '$(TargetDir)*.pdb', '$(TargetDir)*.json' -DestinationPath '$(SolutionDir)PublishOutput\$(ProjectName).zip' -Force)</PostBuildEvent>
+(robocopy "$(TargetDir) " "%25WrathPath%25\Mods\LevelUpPlanCustomizer\ " /s /e )^&amp; IF %25ERRORLEVEL%25 LEQ 1 exit 0
+
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
