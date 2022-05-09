@@ -25,36 +25,39 @@ namespace LevelUpPlanCustomizer.Base.Patches
                 if (Initialized) return;
                 Initialized = true;
 
-                var fileName = "Seelah.json";
-                var userPath = $"{Main.ModEntry.Path}Sample{Path.DirectorySeparatorChar}v1{Path.DirectorySeparatorChar}{fileName}";
+                UpdateLevelUpPlans();
+            }
+
+            private static void UpdateLevelUpPlans()
+            {
                 LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
-                logChannel.Log($"userPath - {userPath}");
-                if (File.Exists(userPath))
+
+                var userPath = $"{Main.ModEntry.Path}FeatureLists";
+                var info = Directory.CreateDirectory(userPath);
+                foreach (var file in info.GetFiles("*.json", SearchOption.AllDirectories))
                 {
                     LevelUpPlan levelUpPlan = null;
-                    using var reader = File.OpenText(userPath);
+                    using (var reader = file.OpenText())
                     try
                     {
                         var jsonSerializer = new JsonSerializer();
                         levelUpPlan = jsonSerializer.Deserialize<LevelUpPlan>(new JsonTextReader(reader));
-                        logChannel.Log($"Updating {levelUpPlan.FeatureList}");
                     }
                     catch (Exception ex)
                     {
-                        logChannel.Error($"Unable to read {fileName}: {ex}");
+                        logChannel.Error($"Unable to parse {file}: {ex}");
                     }
                     if (levelUpPlan != null)
                     {
-                        logChannel.Log($"Successfully read {fileName}");
                         try
                         {
                             ApplyPlan(levelUpPlan);
+                            logChannel.Log($"Successfully updated feature list with id: {levelUpPlan.FeatureList}");
                         }
                         catch (Exception ex)
                         {
-                            logChannel.Error($"Error when applying {fileName}: {ex}");
+                            logChannel.Error($"Error when applying {file}: {ex}");
                         }
-
                     }
                 }
             }
