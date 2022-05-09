@@ -1,6 +1,7 @@
 ﻿using Kingmaker.Blueprints.Classes.Spells;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
+using Kingmaker.Settings;
 
 namespace LevelUpPlanCustomizer.Base.Schemas.v1
 {
@@ -9,6 +10,8 @@ namespace LevelUpPlanCustomizer.Base.Schemas.v1
         public string FeatureList { get; set; }
         public ClassLevel[] Classes { get; set; }
         public ClassLevel[] MythicClasses { get; set; }
+
+        public AddFact[] AddFacts { get; set; }
     }
 
     public class ClassLevel
@@ -38,5 +41,12 @@ namespace LevelUpPlanCustomizer.Base.Schemas.v1
         public StatType Stat { get; set; }
         public string m_FeatureSelectMythicSpellbook { get; set; }
         public string m_Spellbook { get; set; }
+    }
+
+    public class AddFact
+    {
+        public string[] m_Facts { get; set; }
+        public int CasterLevel { get; set; } = 0;
+        public GameDifficultyOption MinDifficulty { get; set; } = GameDifficultyOption.Story;
     }
 }

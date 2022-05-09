@@ -2,6 +2,7 @@
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.JsonSystem;
+using Kingmaker.UnitLogic.FactLogic;
 using LevelUpPlanCustomizer.Base.Schemas;
 using LevelUpPlanCustomizer.Base.Schemas.v1;
 using Newtonsoft.Json;
@@ -38,15 +39,15 @@ namespace LevelUpPlanCustomizer.Base.Patches
                 {
                     LevelUpPlan levelUpPlan = null;
                     using (var reader = file.OpenText())
-                    try
-                    {
-                        var jsonSerializer = new JsonSerializer();
-                        levelUpPlan = jsonSerializer.Deserialize<LevelUpPlan>(new JsonTextReader(reader));
-                    }
-                    catch (Exception ex)
-                    {
-                        logChannel.Error($"Unable to parse {file}: {ex}");
-                    }
+                        try
+                        {
+                            var jsonSerializer = new JsonSerializer();
+                            levelUpPlan = jsonSerializer.Deserialize<LevelUpPlan>(new JsonTextReader(reader));
+                        }
+                        catch (Exception ex)
+                        {
+                            logChannel.Error($"Unable to parse {file}: {ex}");
+                        }
                     if (levelUpPlan != null)
                     {
                         try
@@ -65,7 +66,6 @@ namespace LevelUpPlanCustomizer.Base.Patches
             private static void ApplyPlan(LevelUpPlan levelUpPlan)
             {
                 var featureList = Utils.GetBlueprint<BlueprintFeature>(levelUpPlan.FeatureList);
-                featureList.RemoveComponents<AddClassLevels>();
                 List<AddClassLevels> addClassLevels = new List<AddClassLevels>();
                 foreach (var cl in levelUpPlan.Classes)
                 {
@@ -75,7 +75,20 @@ namespace LevelUpPlanCustomizer.Base.Patches
                 {
                     addClassLevels.Add(CreateAddClassLevels(cl));
                 }
+                var addFacts = levelUpPlan.AddFacts.Select(cl =>
+                    new AddFacts()
+                    {
+                        m_Facts = cl.m_Facts.Select(c => Utils.GetBlueprintReference<BlueprintUnitFactReference>(c)).ToArray(),
+                        CasterLevel = cl.CasterLevel,
+                        MinDifficulty = cl.MinDifficulty
+                    }
+                ).ToList();
+
+                featureList.RemoveComponents<AddClassLevels>();
+                featureList.RemoveComponents<AddFacts>();
+
                 addClassLevels.ForEach(c => featureList.AddComponent(c));
+                addFacts.ForEach(c => featureList.AddComponent(c));
             }
 
             private static AddClassLevels CreateAddClassLevels(ClassLevel cl)
