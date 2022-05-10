@@ -1,0 +1,161 @@
+﻿{
+  "UnitId": "d27dd725873142039c6015fbf49ac621",
+  "Gender": "Male",
+  "m_Race": "0a5d473ead98b0646b94495af250fdc4",
+  "Alignment": "LawfulGood",
+  "Strength": 17,
+  "Dexterity": 14,
+  "Constition": 12,
+  "Intelligence": 10,
+  "Wisdom": 10,
+  "Charisma": 14,
+  "LevelUpPlan": {    
+    "Classes": [
+      {
+        "m_CharacterClass": "Blueprint:bfa11238e7ae3544bbeb4d0b92e897ec:PaladinClass",
+        "m_MemorizeSpells": [],
+        "Levels": 11,
+        "RaceStat": "Strength",
+        "LevelsStat": "Strength",
+        "Skills": [
+          "SkillPersuasion",
+          "SkillKnowledgeWorld",
+          "SkillMobility"
+        ],
+        "Selections": [
+          {
+            "m_Selection": "Blueprint:a7c8b73528d34c2479b4bd638503da1d:PaladinDeitySelection",
+            "m_Features": [
+              "Blueprint:88d5da04361b16746bf5b65795e0c38c:IomedaeFeature"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:02b187038a8dce545bb34bbfb346428d:SelectionMercy",
+            "m_Features": [
+              "Blueprint:e5aa306af9b91974a9b2f2cbe702f562:MercyFatiqued",
+              "Blueprint:19250e5a12db1fc448970b81e0f38922:MercyStaggered",
+              "Blueprint:25641bda25467224e930e8c70eaf9a83:MercyExhausted"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:97e216dbb46ae3c4faef90cf6bbe6fd5:Dodge",
+              "Blueprint:ac57069b6bf8c904086171683992a92a:ShieldFocus",
+              "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
+              "Blueprint:76d4885a395976547a13c5d6bf95b482:ArmorFocusSelection",
+              "Blueprint:422dab7309e1ad343935f33a4d6e9f11:Outflank",
+              "Blueprint:9972f33f977fc724c838e59641b2fca5:PowerAttackFeature",
+              "Blueprint:14a1fc1356df9f146900e1e42142fc9d:VitalStrikeFeature"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus"
+            ],
+            "IsParametrizedFeature": true,
+            "m_ParametrizedFeature": "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
+            "ParamWeaponCategory": "Longsword"
+          },
+          {
+            "m_Selection": "Blueprint:76d4885a395976547a13c5d6bf95b482:ArmorFocusSelection",
+            "m_Features": [
+              "Blueprint:c27e6d2b0d33d42439f512c6d9a6a601:ArmorFocusHeavy"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:ad7dc4eba7bf92f4aba23f716d7a9ba6:PaladinDivineBondSelection",
+            "m_Features": [
+              "Blueprint:e08a817f475c8794aa56fdd904f43a57:WeaponBondProgression"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:f926dabeee7f8a54db8f2010b323383c:BackgroundsBaseSelection",
+            "m_Features": [
+              "Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection",
+            "m_Features": [
+              "Blueprint:9da9faf5f0ef4904db4a59a22dafbb06:BackgroundPickpocket"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:59e7a76987fe3b547b9cce045f4db3e4:DeitySelection",
+            "m_Features": [
+              "Blueprint:88d5da04361b16746bf5b65795e0c38c:IomedaeFeature"
+            ]
+          }
+        ]
+      },
+      {
+        "m_CharacterClass": "Blueprint:bfa11238e7ae3544bbeb4d0b92e897ec:PaladinClass",
+        "m_MemorizeSpells": [],
+        "Levels": 1,
+        "RaceStat": "Strength",
+        "LevelsStat": "Charisma",
+        "Skills": [
+          "SkillPersuasion",
+          "SkillKnowledgeWorld",
+          "SkillMobility"
+        ],
+        "Selections": [
+          {
+            "m_Selection": "Blueprint:02b187038a8dce545bb34bbfb346428d:SelectionMercy",
+            "m_Features": [
+              "Blueprint:d306e052d2f85b24cb5082951459045e:MercyConfused"
+            ]
+          }
+        ]
+      },
+      {
+        "m_CharacterClass": "Blueprint:bfa11238e7ae3544bbeb4d0b92e897ec:PaladinClass",
+        "m_MemorizeSpells": [],
+        "Levels": 8,
+        "RaceStat": "Strength",
+        "LevelsStat": "Charisma",
+        "Skills": [
+          "SkillPersuasion",
+          "SkillKnowledgeWorld",
+          "SkillMobility"
+        ],
+        "Selections": [
+          {
+            "m_Selection": "Blueprint:02b187038a8dce545bb34bbfb346428d:SelectionMercy",
+            "m_Features": [
+              "Blueprint:445c696bead5140459909ffbed14750e:MercyCursed",
+              "Blueprint:62582b4636218d74db34606f872c9c05:MercyParalyzed"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:f4201c85a991369408740c6888362e20:ImprovedCritical",
+              "Blueprint:52913092cd018da47845f36e6fbe240f:VitalStrikeFeatureImproved",
+              "Blueprint:79042cb55f030614ea29956177977c52:GreatFortitude",
+              "Blueprint:e2d1fa11f6b095e4fb2fd1dcf5e36eb3:VitalStrikeFeatureGreater"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:f4201c85a991369408740c6888362e20:ImprovedCritical"
+            ],
+            "IsParametrizedFeature": true,
+            "m_ParametrizedFeature": "Blueprint:f4201c85a991369408740c6888362e20:ImprovedCritical",
+            "ParamWeaponCategory": "Longsword"
+          }
+        ]
+      }
+    ],
+    "AddFacts": [
+      {
+        "m_Facts": [
+          "Blueprint:c0f8c4e513eb493408b8070a1de93fc0:BrewPotions"
+        ]
+      }
+    ]
+  }
+}

@@ -156,12 +156,16 @@
     <Compile Include="Patches\PlanUpdater.cs" />
     <Compile Include="Schemas\Utils.cs" />
     <Compile Include="Schemas\v1\LevelUpPlan.cs" />
+    <Compile Include="Schemas\v1\PregenUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Sample\v1\PregenPaladin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Sample\v1\Seelah.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

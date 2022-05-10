@@ -1,7 +1,10 @@
 ﻿using HarmonyLib;
 using Kingmaker.Blueprints;
+using Kingmaker.Blueprints.CharGen;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.JsonSystem;
+using Kingmaker.ResourceLinks;
+using Kingmaker.UnitLogic.Components;
 using Kingmaker.UnitLogic.FactLogic;
 using LevelUpPlanCustomizer.Base.Schemas;
 using LevelUpPlanCustomizer.Base.Schemas.v1;
@@ -27,6 +30,41 @@ namespace LevelUpPlanCustomizer.Base.Patches
                 Initialized = true;
 
                 UpdateLevelUpPlans();
+                UpdatePregens();
+            }
+
+            private static void UpdatePregens()
+            {
+                LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
+
+                var userPath = $"{Main.ModEntry.Path}Pregens";
+                var info = Directory.CreateDirectory(userPath);
+                foreach (var file in info.GetFiles("*.json", SearchOption.AllDirectories))
+                {
+                    PregenUnit levelUpPlan = null;
+                    using (var reader = file.OpenText())
+                        try
+                        {
+                            var jsonSerializer = new JsonSerializer();
+                            levelUpPlan = jsonSerializer.Deserialize<PregenUnit>(new JsonTextReader(reader));
+                        }
+                        catch (Exception ex)
+                        {
+                            logChannel.Error($"Unable to parse {file}: {ex}");
+                        }
+                    if (levelUpPlan != null)
+                    {
+                        try
+                        {
+                            ApplyPregen(levelUpPlan);
+                            logChannel.Log($"Successfully updated pregen with id: {levelUpPlan.UnitId}");
+                        }
+                        catch (Exception ex)
+                        {
+                            logChannel.Error($"Error when applying {file}: {ex}");
+                        }
+                    }
+                }
             }
 
             private static void UpdateLevelUpPlans()
@@ -63,6 +101,32 @@ namespace LevelUpPlanCustomizer.Base.Patches
                 }
             }
 
+            private static void ApplyPregen(PregenUnit pregenUnit)
+            {
+                var pregenBP = Utils.GetBlueprint<BlueprintUnit>(pregenUnit.UnitId);
+                var race = Utils.GetBlueprint<BlueprintRace>(pregenUnit.m_Race);
+                pregenBP.m_Race = race.ToReference<BlueprintRaceReference>();
+                pregenBP.Alignment = pregenUnit.Alignment;
+                pregenBP.Gender = pregenUnit.Gender;
+                pregenBP.Strength = pregenUnit.Strength;
+                pregenBP.Dexterity = pregenUnit.Dexterity;
+                pregenBP.Constitution = pregenUnit.Constitution;
+                pregenBP.Intelligence = pregenUnit.Intelligence;
+                pregenBP.Wisdom = pregenUnit.Wisdom;
+                pregenBP.Charisma = pregenUnit.Charisma;
+                pregenBP.RemoveComponents<PregenDollSettings>();
+                var doll = new PregenDollSettings()
+                {
+                    Default = new(){
+                        m_RacePreset = race.m_Presets.First()
+                    }
+                };
+                pregenBP.AddComponent(doll);
+                var bpref = pregenBP.m_AddFacts[0];
+                pregenUnit.LevelUpPlan.FeatureList = bpref.Guid.ToString();
+                ApplyPlan(pregenUnit.LevelUpPlan);
+
+            }
             private static void ApplyPlan(LevelUpPlan levelUpPlan)
             {
                 var featureList = Utils.GetBlueprint<BlueprintFeature>(levelUpPlan.FeatureList);
