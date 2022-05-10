@@ -9,7 +9,7 @@ namespace LevelUpPlanCustomizer.Base.Schemas.v1
     {
         public string FeatureList { get; set; }
         public ClassLevel[] Classes { get; set; }
-        public AddFact[] AddFacts { get; set; }
+        public AddFact[] AddFacts { get; set; } = new AddFact[0];
     }
 
     public class ClassLevel

@@ -1,0 +1,188 @@
+﻿{
+	"UnitId": "fad59e6db3aa470ca7e8962e2daa12dc",
+	"Gender": "Male",
+	"m_Race": "0a5d473ead98b0646b94495af250fdc4",
+	"Alignment": "LawfulEvil",
+	"Strength": 16,
+	"Dexterity": 15,
+	"Constition": 12,
+	"Intelligence": 7,
+	"Wisdom": 10,
+	"Charisma": 16,
+	"LevelUpPlan": {
+		"Classes": [
+			{
+				"m_CharacterClass": "Blueprint:e8f21e5b58e0569468e420ebea456124:MonkClass",
+				"m_Archetypes": [ "5868fc82eb11a4244926363983897279" ],
+				"Levels": 1,
+				"RaceStat": "Strength",
+				"LevelsStat": "Strength",
+				"Skills": [
+					"SkillMobility",
+					"SkillKnowledgeArcana",
+					"SkillThievery",
+					"SkillAthletics"
+				],
+				"Selections": [
+					{
+						"m_Selection": "8705b13f703cbdc43ad1d9150f8cacca",
+						"m_Features": [
+							"Blueprint:0c17102f650d9044290922b0fad9132f:CraneStyleFeat"
+						]
+					},
+					{
+						"m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+						"m_Features": [
+							"Blueprint:97e216dbb46ae3c4faef90cf6bbe6fd5:Dodge",
+							"link: 203992ef5b35c864390b4e4a1e200629 (MartialWeaponProficiency :BlueprintFeature)"
+						]
+					},
+					{
+						"m_Selection": "Blueprint:f926dabeee7f8a54db8f2010b323383c:BackgroundsBaseSelection",
+						"m_Features": [
+							"Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection"
+						]
+					},
+					{
+						"m_Selection": "Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection",
+						"m_Features": [
+							"Blueprint:9da9faf5f0ef4904db4a59a22dafbb06:BackgroundPickpocket"
+						]
+					},
+					{
+						"m_Selection": "Blueprint:59e7a76987fe3b547b9cce045f4db3e4:DeitySelection",
+						"m_Features": [
+							"Blueprint:812f6c07148088e41a9ac94b56ac2fc8:UrgathoaFeature"
+						]
+					}
+				]
+			},
+			{
+				"m_CharacterClass": "b3a505fb61437dc4097f43c3f8f9a4cf",
+				"m_MemorizeSpells": [],
+				"Levels": 4,
+				"RaceStat": "Strength",
+				"LevelsStat": "Dexterity",
+				"Skills": [
+					"SkillMobility",
+					"SkillKnowledgeArcana",
+					"SkillThievery",
+					"SkillAthletics"
+				],
+				"m_SelectSpells": [
+					"link: d7fdd79f0f6b6a2418298e936bb68e40 (MagicWeapon :BlueprintAbility)",
+					"link: ef768022b0785eb43a18969903c537c4 (MageShield :BlueprintAbility)",
+					"link: 4ac47ddb9fa1eaf43a1b6809980cfbd2 (MagicMissile :BlueprintAbility)",
+					"link: 2c38da66e5a599347ac95b3294acbe00 (TrueStrike :BlueprintAbility)",
+					"link: f001c73999fb5a543a199f890108d936 (Vanish :BlueprintAbility)",
+					"link: 3e4ab69ada402d145a5e0ad3ad4b8564 (MirrorImage :BlueprintAbility)",
+					"link: 14ec7a4e52e90fa47a4c8d63c69fd5c1 (Blur :BlueprintAbility)"
+				],
+				"Selections": [
+					{
+						"m_Selection": "Blueprint:24bef8d1bee12274686f6da6ccbc8914:Bloodline",
+						"m_Features": [
+							"Blueprint:7bd143ead2d6c3a409aad6ee22effe34:Black"
+						]
+					},
+					{
+						"m_Selection": "Blueprint:d6dd06f454b34014ab0903cb1ed2ade3:SorcBonusFeat",
+						"m_Features": [
+							"Blueprint:f180e72e4a9cbaa4da8be9bc958132ef:Extend"
+						]
+					},
+					{
+						"m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+						"m_Features": [
+							"Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
+							"Blueprint:fbf5d9ce931f47f3a0c818b3f8ef8414:BolsterSpellFeat"
+						]
+					},
+					{
+						"m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+						"m_Features": [
+							"Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus"
+						],
+						"IsParametrizedFeature": true,
+						"m_ParametrizedFeature": "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
+						"ParamWeaponCategory": "Greataxe"
+					}
+				]
+			},
+			{
+				"m_CharacterClass": "Blueprint:72051275b1dbb2d42ba9118237794f7c:DD",
+				"m_MemorizeSpells": [],
+				"Levels": 1,
+				"RaceStat": "Strength",
+				"LevelsStat": "Strength",
+				"Skills": [
+					"SkillMobility",
+					"SkillKnowledgeArcana",
+					"SkillThievery",
+					"SkillAthletics"
+				],
+				"m_SelectSpells": [],
+				"Selections": [
+					{
+						"m_Selection": "Blueprint:da48f9d7f697ae44ca891bfc50727988:Bloodline",
+						"m_Features": [
+							"Blueprint:7bd143ead2d6c3a409aad6ee22effe34:Black"
+						]
+					}
+				]
+			},
+			{
+				"m_CharacterClass": "Blueprint:72051275b1dbb2d42ba9118237794f7c:DD",
+				"m_MemorizeSpells": [],
+				"Levels": 3,
+				"RaceStat": "Strength",
+				"LevelsStat": "Strength",
+				"Skills": [
+					"SkillMobility",
+					"SkillKnowledgeArcana",
+					"SkillThievery",
+					"SkillAthletics"
+				],
+				"m_SelectSpells": [
+					"link: 433b1faf4d02cc34abb0ade5ceda47c4 (ProtectionFromAlignment :BlueprintAbility)",
+					"link: 9f10909f0be1f5141bf1c102041f93d9 (Snowball :BlueprintAbility)",
+					"link: 14ec7a4e52e90fa47a4c8d63c69fd5c1 (Blur :BlueprintAbility)",
+					"link: 82962a820ebc0e7408b8582fdc3f4c0c (SenseVitals :BlueprintAbility)",
+					"link: 4c3d08935262b6544ae97599b3a9556d (BullsStrength :BlueprintAbility)",
+					"link: de7a025d48ad5da4991e7d3c682cf69d (CatsGrace :BlueprintAbility)",
+					"link: ae4d3ad6a8fda1542acf2e9bbc13d113 (FoxsCunning :BlueprintAbility)",
+					"link: 486eaff58293f6441a5c2759c4872f98 (Haste :BlueprintAbility)",
+					"link: 5ab0d42fb68c9e34abae4921822b9d63 (Heroism :BlueprintAbility)",
+					"link: 7bb0c402f7f789d4d9fae8ca87b4c7e2 (ResistEnergyCommunal :BlueprintAbility)",
+					"link: 0f92caa35619f234298d95a4b6dda90d (MagicWeaponGreater :BlueprintAbility)",
+					"link: 903092f6488f9ce45a80943923576ab3 (Displacement :BlueprintAbility)",
+					"link: f34fb78eaaec141469079af124bcfa0f (Enervation :BlueprintAbility)",
+					"link: 4a648b57935a59547b7a2ee86fb4f26a (DimensionDoorBase :BlueprintAbility)",
+					"link: ecaa0def35b38f949bd1976a6c9539e0 (InvisibilityGreater :BlueprintAbility)"
+
+				],
+				"Selections": [
+					{
+						"m_Selection": "Blueprint:8c1ba14c0b6dcdb439c56341385ee474:Spellbook",
+						"m_Features": [
+							"Blueprint:fa2a2469c9ba6d54b8fc2356f4fc0e9e:Sorc"
+						]
+					},
+					{
+						"m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+						"m_Features": [
+							"Blueprint:422dab7309e1ad343935f33a4d6e9f11:Outflank",
+							"Blueprint:bcbd674ec70ff6f4894bb5f07b6f4095:Dazzling Display"
+						]
+					},
+					{
+						"m_Selection": "Blueprint:f4b011d090e8ae543b1441bd594c7bf7:BloodlineFeat",
+						"m_Features": [
+							"Blueprint:9972f33f977fc724c838e59641b2fca5:PowerAttack"
+						]
+					}
+				]
+			}
+		]
+	}
+}

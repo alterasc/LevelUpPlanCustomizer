@@ -156,13 +156,13 @@ namespace LevelUpPlanCustomizer.Base.Patches
                 var r = new AddClassLevels
                 {
                     m_CharacterClass = Utils.GetBlueprintReference<BlueprintCharacterClassReference>(cl.m_CharacterClass),
-                    m_Archetypes = cl.m_Archetypes.Select(c => Utils.GetBlueprintReference<BlueprintArchetypeReference>(c)).ToArray(),
+                    m_Archetypes = cl.m_Archetypes != null ? cl.m_Archetypes.Select(c => Utils.GetBlueprintReference<BlueprintArchetypeReference>(c)).ToArray() : new BlueprintArchetypeReference[0],
                     Levels = cl.Levels,
                     RaceStat = cl.RaceStat,
                     LevelsStat = cl.LevelsStat,
                     Skills = cl.Skills,
-                    m_SelectSpells = cl.m_SelectSpells.Select(c => Utils.GetBlueprintReference<BlueprintAbilityReference>(c)).ToArray(),
-                    m_MemorizeSpells = cl.m_MemorizeSpells.Select(c => Utils.GetBlueprintReference<BlueprintAbilityReference>(c)).ToArray()
+                    m_SelectSpells = cl.m_SelectSpells != null ? cl.m_SelectSpells.Select(c => Utils.GetBlueprintReference<BlueprintAbilityReference>(c)).ToArray() : new BlueprintAbilityReference[0],
+                    m_MemorizeSpells = cl.m_MemorizeSpells != null ? cl.m_MemorizeSpells.Select(c => Utils.GetBlueprintReference<BlueprintAbilityReference>(c)).ToArray() : new BlueprintAbilityReference[0]
                 };
                 AddSelections(cl, r);
                 return r;
@@ -170,22 +170,33 @@ namespace LevelUpPlanCustomizer.Base.Patches
 
             private static void AddSelections(ClassLevel cl, AddClassLevels r)
             {
-                r.Selections = cl.Selections.Select(sel =>
+                if (cl.Selections == null)
                 {
-                    return new SelectionEntry()
+                    r.Selections = new SelectionEntry[0];
+                }
+                else
+                {
+                    r.Selections = cl.Selections.Select(sel =>
                     {
-                        IsParametrizedFeature = sel.IsParametrizedFeature,
-                        IsFeatureSelectMythicSpellbook = sel.IsFeatureSelectMythicSpellbook,
-                        m_Selection = Utils.GetBlueprintReference<BlueprintFeatureSelectionReference>(sel.m_Selection),
-                        m_Features = sel.m_Features.Select(c => Utils.GetBlueprintReference<BlueprintFeatureReference>(c)).ToArray(),
-                        m_ParametrizedFeature = Utils.GetBlueprintReference<BlueprintParametrizedFeatureReference>(sel.m_ParametrizedFeature),
-                        ParamSpellSchool = sel.ParamSpellSchool,
-                        ParamWeaponCategory = sel.ParamWeaponCategory,
-                        Stat = sel.Stat,
-                        m_FeatureSelectMythicSpellbook = Utils.GetBlueprintReference<BlueprintFeatureSelectMythicSpellbookReference>(sel.m_FeatureSelectMythicSpellbook),
-                        m_Spellbook = Utils.GetBlueprintReference<BlueprintSpellbookReference>(sel.m_Spellbook)
-                    };
-                }).ToArray();
+                        if (sel.m_Features == null || sel.m_Features.Length == 0)
+                        {
+                            throw new ArgumentException($"Selection {sel.m_Selection} has no feature choice");
+                        }
+                        return new SelectionEntry()
+                        {
+                            IsParametrizedFeature = sel.IsParametrizedFeature,
+                            IsFeatureSelectMythicSpellbook = sel.IsFeatureSelectMythicSpellbook,
+                            m_Selection = Utils.GetBlueprintReference<BlueprintFeatureSelectionReference>(sel.m_Selection),
+                            m_Features = sel.m_Features.Select(c => Utils.GetBlueprintReference<BlueprintFeatureReference>(c)).ToArray(),
+                            m_ParametrizedFeature = Utils.GetBlueprintReference<BlueprintParametrizedFeatureReference>(sel.m_ParametrizedFeature),
+                            ParamSpellSchool = sel.ParamSpellSchool,
+                            ParamWeaponCategory = sel.ParamWeaponCategory,
+                            Stat = sel.Stat,
+                            m_FeatureSelectMythicSpellbook = Utils.GetBlueprintReference<BlueprintFeatureSelectMythicSpellbookReference>(sel.m_FeatureSelectMythicSpellbook),
+                            m_Spellbook = Utils.GetBlueprintReference<BlueprintSpellbookReference>(sel.m_Spellbook)
+                        };
+                    }).ToArray();
+                }
             }
         }
     }
