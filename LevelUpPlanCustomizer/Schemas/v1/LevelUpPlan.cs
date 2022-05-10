@@ -9,8 +9,6 @@ namespace LevelUpPlanCustomizer.Base.Schemas.v1
     {
         public string FeatureList { get; set; }
         public ClassLevel[] Classes { get; set; }
-        public ClassLevel[] MythicClasses { get; set; }
-
         public AddFact[] AddFacts { get; set; }
     }
 

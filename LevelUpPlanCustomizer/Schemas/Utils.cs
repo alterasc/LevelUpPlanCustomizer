@@ -8,19 +8,23 @@ namespace LevelUpPlanCustomizer.Base.Schemas
 {
     public static class Utils
     {
-        private static readonly Regex OwlcatPattern = new("^Blueprint:[0-9abcdef]{32}:.?");
-        private static readonly string OwlcatNULL = "^Blueprint::NULL";
+        private static readonly Regex OwlcatPattern = new("^!bp_[0-9abcdef]{32}");
+        private static readonly Regex VekPattern = new("^Blueprint:[0-9abcdef]{32}:.?");
+        private static readonly string VekNULL = "^Blueprint::NULL";
         private static readonly Regex BubbleprintsPattern = new("^link: [0-9abcdef]{32} .?");
         private static readonly string BubbleprintsNull = "null";
 
         public static Guid ParseRef(string str)
         {
-            if (str == null || str == "" || str == OwlcatNULL || str == BubbleprintsNull)
+            if (str == null || str == "" || str == VekNULL || str == BubbleprintsNull)
             {
                 return Guid.Empty;
             }
-            else
-                if (OwlcatPattern.Match(str).Success)
+            else if (OwlcatPattern.Match(str).Success)
+            {
+                return Guid.Parse(str.Substring(4, 32));
+            }
+            else if (VekPattern.Match(str).Success)
             {
                 return Guid.Parse(str.Substring(10, 32));
             }

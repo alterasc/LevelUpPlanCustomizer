@@ -71,10 +71,6 @@ namespace LevelUpPlanCustomizer.Base.Patches
                 {
                     addClassLevels.Add(CreateAddClassLevels(cl));
                 }
-                foreach (var cl in levelUpPlan.MythicClasses)
-                {
-                    addClassLevels.Add(CreateAddClassLevels(cl));
-                }
                 var addFacts = levelUpPlan.AddFacts.Select(cl =>
                     new AddFacts()
                     {

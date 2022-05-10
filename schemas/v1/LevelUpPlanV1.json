@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/schemas/v1/LevelUpPlanV1.json",
+  "type": "object",
+  "properties": {
+    "FeatureList": {
+      "type": "string"
+    },
+    "Classes": {
+      "type": "array"
+    },
+    "AddFacts": {
+      "type": "array"
+    }
+  },
+  "required": [
+    "FeatureList",
+    "Classes"
+  ]
+}

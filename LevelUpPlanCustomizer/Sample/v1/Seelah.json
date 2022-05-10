@@ -138,9 +138,7 @@
           "ParamWeaponCategory": "Longsword"
         }
       ]
-    }
-  ],
-  "MythicClasses": [
+    },
     {
       "m_CharacterClass": "Blueprint:530b6a79cb691c24ba99e1577b4beb6d:MythicCompanionClass",
       "Levels": 10,
