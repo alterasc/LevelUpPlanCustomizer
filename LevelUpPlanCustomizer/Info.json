@@ -4,11 +4,11 @@
   "DisplayName": "LevelUp Plan Customizer",
   "EntryMethod": "LevelUpPlanCustomizer.Main.Load",
   "GameVersion": "1.3.0",
-  "HomePage": "",
+  "HomePage": "https://github.com/alterasc/LevelUpPlanCustomizer/releases",
   "Id": "LevelUpPlanCustomizer",
   "ManagerVersion": "0.23.0",
-  "Repository": "",
+  "Repository": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/Repository.json",
   "Requirements": [],
   "LoadAfter": [],
-  "Version": "0.1.0"
+  "Version": "1.0.0"
 }
