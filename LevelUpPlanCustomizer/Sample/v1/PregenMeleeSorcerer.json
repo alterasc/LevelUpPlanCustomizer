@@ -1,188 +1,381 @@
 ﻿{
-	"UnitId": "fad59e6db3aa470ca7e8962e2daa12dc",
-	"Gender": "Male",
-	"m_Race": "0a5d473ead98b0646b94495af250fdc4",
-	"Alignment": "LawfulEvil",
-	"Strength": 16,
-	"Dexterity": 15,
-	"Constition": 12,
-	"Intelligence": 7,
-	"Wisdom": 10,
-	"Charisma": 16,
-	"LevelUpPlan": {
-		"Classes": [
-			{
-				"m_CharacterClass": "Blueprint:e8f21e5b58e0569468e420ebea456124:MonkClass",
-				"m_Archetypes": [ "5868fc82eb11a4244926363983897279" ],
-				"Levels": 1,
-				"RaceStat": "Strength",
-				"LevelsStat": "Strength",
-				"Skills": [
-					"SkillMobility",
-					"SkillKnowledgeArcana",
-					"SkillThievery",
-					"SkillAthletics"
-				],
-				"Selections": [
-					{
-						"m_Selection": "8705b13f703cbdc43ad1d9150f8cacca",
-						"m_Features": [
-							"Blueprint:0c17102f650d9044290922b0fad9132f:CraneStyleFeat"
-						]
-					},
-					{
-						"m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
-						"m_Features": [
-							"Blueprint:97e216dbb46ae3c4faef90cf6bbe6fd5:Dodge",
-							"link: 203992ef5b35c864390b4e4a1e200629 (MartialWeaponProficiency :BlueprintFeature)"
-						]
-					},
-					{
-						"m_Selection": "Blueprint:f926dabeee7f8a54db8f2010b323383c:BackgroundsBaseSelection",
-						"m_Features": [
-							"Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection"
-						]
-					},
-					{
-						"m_Selection": "Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection",
-						"m_Features": [
-							"Blueprint:9da9faf5f0ef4904db4a59a22dafbb06:BackgroundPickpocket"
-						]
-					},
-					{
-						"m_Selection": "Blueprint:59e7a76987fe3b547b9cce045f4db3e4:DeitySelection",
-						"m_Features": [
-							"Blueprint:812f6c07148088e41a9ac94b56ac2fc8:UrgathoaFeature"
-						]
-					}
-				]
-			},
-			{
-				"m_CharacterClass": "b3a505fb61437dc4097f43c3f8f9a4cf",
-				"m_MemorizeSpells": [],
-				"Levels": 4,
-				"RaceStat": "Strength",
-				"LevelsStat": "Dexterity",
-				"Skills": [
-					"SkillMobility",
-					"SkillKnowledgeArcana",
-					"SkillThievery",
-					"SkillAthletics"
-				],
-				"m_SelectSpells": [
-					"link: d7fdd79f0f6b6a2418298e936bb68e40 (MagicWeapon :BlueprintAbility)",
-					"link: ef768022b0785eb43a18969903c537c4 (MageShield :BlueprintAbility)",
-					"link: 4ac47ddb9fa1eaf43a1b6809980cfbd2 (MagicMissile :BlueprintAbility)",
-					"link: 2c38da66e5a599347ac95b3294acbe00 (TrueStrike :BlueprintAbility)",
-					"link: f001c73999fb5a543a199f890108d936 (Vanish :BlueprintAbility)",
-					"link: 3e4ab69ada402d145a5e0ad3ad4b8564 (MirrorImage :BlueprintAbility)",
-					"link: 14ec7a4e52e90fa47a4c8d63c69fd5c1 (Blur :BlueprintAbility)"
-				],
-				"Selections": [
-					{
-						"m_Selection": "Blueprint:24bef8d1bee12274686f6da6ccbc8914:Bloodline",
-						"m_Features": [
-							"Blueprint:7bd143ead2d6c3a409aad6ee22effe34:Black"
-						]
-					},
-					{
-						"m_Selection": "Blueprint:d6dd06f454b34014ab0903cb1ed2ade3:SorcBonusFeat",
-						"m_Features": [
-							"Blueprint:f180e72e4a9cbaa4da8be9bc958132ef:Extend"
-						]
-					},
-					{
-						"m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
-						"m_Features": [
-							"Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
-							"Blueprint:fbf5d9ce931f47f3a0c818b3f8ef8414:BolsterSpellFeat"
-						]
-					},
-					{
-						"m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
-						"m_Features": [
-							"Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus"
-						],
-						"IsParametrizedFeature": true,
-						"m_ParametrizedFeature": "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
-						"ParamWeaponCategory": "Greataxe"
-					}
-				]
-			},
-			{
-				"m_CharacterClass": "Blueprint:72051275b1dbb2d42ba9118237794f7c:DD",
-				"m_MemorizeSpells": [],
-				"Levels": 1,
-				"RaceStat": "Strength",
-				"LevelsStat": "Strength",
-				"Skills": [
-					"SkillMobility",
-					"SkillKnowledgeArcana",
-					"SkillThievery",
-					"SkillAthletics"
-				],
-				"m_SelectSpells": [],
-				"Selections": [
-					{
-						"m_Selection": "Blueprint:da48f9d7f697ae44ca891bfc50727988:Bloodline",
-						"m_Features": [
-							"Blueprint:7bd143ead2d6c3a409aad6ee22effe34:Black"
-						]
-					}
-				]
-			},
-			{
-				"m_CharacterClass": "Blueprint:72051275b1dbb2d42ba9118237794f7c:DD",
-				"m_MemorizeSpells": [],
-				"Levels": 3,
-				"RaceStat": "Strength",
-				"LevelsStat": "Strength",
-				"Skills": [
-					"SkillMobility",
-					"SkillKnowledgeArcana",
-					"SkillThievery",
-					"SkillAthletics"
-				],
-				"m_SelectSpells": [
-					"link: 433b1faf4d02cc34abb0ade5ceda47c4 (ProtectionFromAlignment :BlueprintAbility)",
-					"link: 9f10909f0be1f5141bf1c102041f93d9 (Snowball :BlueprintAbility)",
-					"link: 14ec7a4e52e90fa47a4c8d63c69fd5c1 (Blur :BlueprintAbility)",
-					"link: 82962a820ebc0e7408b8582fdc3f4c0c (SenseVitals :BlueprintAbility)",
-					"link: 4c3d08935262b6544ae97599b3a9556d (BullsStrength :BlueprintAbility)",
-					"link: de7a025d48ad5da4991e7d3c682cf69d (CatsGrace :BlueprintAbility)",
-					"link: ae4d3ad6a8fda1542acf2e9bbc13d113 (FoxsCunning :BlueprintAbility)",
-					"link: 486eaff58293f6441a5c2759c4872f98 (Haste :BlueprintAbility)",
-					"link: 5ab0d42fb68c9e34abae4921822b9d63 (Heroism :BlueprintAbility)",
-					"link: 7bb0c402f7f789d4d9fae8ca87b4c7e2 (ResistEnergyCommunal :BlueprintAbility)",
-					"link: 0f92caa35619f234298d95a4b6dda90d (MagicWeaponGreater :BlueprintAbility)",
-					"link: 903092f6488f9ce45a80943923576ab3 (Displacement :BlueprintAbility)",
-					"link: f34fb78eaaec141469079af124bcfa0f (Enervation :BlueprintAbility)",
-					"link: 4a648b57935a59547b7a2ee86fb4f26a (DimensionDoorBase :BlueprintAbility)",
-					"link: ecaa0def35b38f949bd1976a6c9539e0 (InvisibilityGreater :BlueprintAbility)"
-
-				],
-				"Selections": [
-					{
-						"m_Selection": "Blueprint:8c1ba14c0b6dcdb439c56341385ee474:Spellbook",
-						"m_Features": [
-							"Blueprint:fa2a2469c9ba6d54b8fc2356f4fc0e9e:Sorc"
-						]
-					},
-					{
-						"m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
-						"m_Features": [
-							"Blueprint:422dab7309e1ad343935f33a4d6e9f11:Outflank",
-							"Blueprint:bcbd674ec70ff6f4894bb5f07b6f4095:Dazzling Display"
-						]
-					},
-					{
-						"m_Selection": "Blueprint:f4b011d090e8ae543b1441bd594c7bf7:BloodlineFeat",
-						"m_Features": [
-							"Blueprint:9972f33f977fc724c838e59641b2fca5:PowerAttack"
-						]
-					}
-				]
-			}
-		]
-	}
+  "UnitId": "fad59e6db3aa470ca7e8962e2daa12dc",
+  "Gender": "Male",
+  "m_Race": "0a5d473ead98b0646b94495af250fdc4",
+  "Alignment": "LawfulEvil",
+  "Strength": 16,
+  "Dexterity": 15,
+  "Constition": 12,
+  "Intelligence": 7,
+  "Wisdom": 10,
+  "Charisma": 16,
+  "LevelUpPlan": {
+    "Classes": [
+      {
+        "m_CharacterClass": "Blueprint:e8f21e5b58e0569468e420ebea456124:MonkClass",
+        "m_Archetypes": [
+          "5868fc82eb11a4244926363983897279"
+        ],
+        "Levels": 1,
+        "RaceStat": "Strength",
+        "LevelsStat": "Strength",
+        "Skills": [
+          "SkillMobility",
+          "SkillKnowledgeArcana",
+          "SkillThievery",
+          "SkillAthletics"
+        ],
+        "Selections": [
+          {
+            "m_Selection": "8705b13f703cbdc43ad1d9150f8cacca",
+            "m_Features": [
+              "Blueprint:0c17102f650d9044290922b0fad9132f:CraneStyleFeat"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:97e216dbb46ae3c4faef90cf6bbe6fd5:Dodge",
+              "link: 203992ef5b35c864390b4e4a1e200629 (MartialWeaponProficiency :BlueprintFeature)"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:f926dabeee7f8a54db8f2010b323383c:BackgroundsBaseSelection",
+            "m_Features": [
+              "Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:e17f74060f864ff459393e11d5e7fe2f:BackgroundsStreetUrchinSelection",
+            "m_Features": [
+              "Blueprint:9da9faf5f0ef4904db4a59a22dafbb06:BackgroundPickpocket"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:59e7a76987fe3b547b9cce045f4db3e4:DeitySelection",
+            "m_Features": [
+              "Blueprint:812f6c07148088e41a9ac94b56ac2fc8:UrgathoaFeature"
+            ]
+          }
+        ]
+      },
+      {
+        "m_CharacterClass": "Blueprint:b3a505fb61437dc4097f43c3f8f9a4cf:Sorcerer",
+        "m_MemorizeSpells": [],
+        "Levels": 4,
+        "RaceStat": "Strength",
+        "LevelsStat": "Dexterity",
+        "Skills": [
+          "SkillMobility",
+          "SkillKnowledgeArcana",
+          "SkillThievery",
+          "SkillAthletics"
+        ],
+        "m_SelectSpells": [
+          "link: d7fdd79f0f6b6a2418298e936bb68e40 (MagicWeapon :BlueprintAbility)",
+          "link: ef768022b0785eb43a18969903c537c4 (MageShield :BlueprintAbility)",
+          "link: 4ac47ddb9fa1eaf43a1b6809980cfbd2 (MagicMissile :BlueprintAbility)",
+          "link: 2c38da66e5a599347ac95b3294acbe00 (TrueStrike :BlueprintAbility)",
+          "link: f001c73999fb5a543a199f890108d936 (Vanish :BlueprintAbility)",
+          "link: 3e4ab69ada402d145a5e0ad3ad4b8564 (MirrorImage :BlueprintAbility)",
+          "link: 14ec7a4e52e90fa47a4c8d63c69fd5c1 (Blur :BlueprintAbility)"
+        ],
+        "Selections": [
+          {
+            "m_Selection": "Blueprint:24bef8d1bee12274686f6da6ccbc8914:Bloodline",
+            "m_Features": [
+              "Blueprint:7bd143ead2d6c3a409aad6ee22effe34:Black"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:d6dd06f454b34014ab0903cb1ed2ade3:SorcBonusFeat",
+            "m_Features": [
+              "Blueprint:f180e72e4a9cbaa4da8be9bc958132ef:Extend"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
+              "Blueprint:fbf5d9ce931f47f3a0c818b3f8ef8414:BolsterSpellFeat"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus"
+            ],
+            "IsParametrizedFeature": true,
+            "m_ParametrizedFeature": "Blueprint:1e1f627d26ad36f43bbd26cc2bf8ac7e:WeaponFocus",
+            "ParamWeaponCategory": "Greataxe"
+          }
+        ]
+      },
+      {
+        "m_CharacterClass": "Blueprint:72051275b1dbb2d42ba9118237794f7c:DD",
+        "m_MemorizeSpells": [],
+        "Levels": 4,
+        "RaceStat": "Strength",
+        "LevelsStat": "Strength",
+        "Skills": [
+          "SkillMobility",
+          "SkillKnowledgeArcana",
+          "SkillThievery",
+          "SkillAthletics"
+        ],
+        "m_SelectSpells": [
+          "link: 433b1faf4d02cc34abb0ade5ceda47c4 (ProtectionFromAlignment :BlueprintAbility)",
+          "link: 9f10909f0be1f5141bf1c102041f93d9 (Snowball :BlueprintAbility)",
+          "link: 14ec7a4e52e90fa47a4c8d63c69fd5c1 (Blur :BlueprintAbility)",
+          "link: 82962a820ebc0e7408b8582fdc3f4c0c (SenseVitals :BlueprintAbility)",
+          "link: 4c3d08935262b6544ae97599b3a9556d (BullsStrength :BlueprintAbility)",
+          "link: de7a025d48ad5da4991e7d3c682cf69d (CatsGrace :BlueprintAbility)",
+          "link: ae4d3ad6a8fda1542acf2e9bbc13d113 (FoxsCunning :BlueprintAbility)",
+          "link: 486eaff58293f6441a5c2759c4872f98 (Haste :BlueprintAbility)",
+          "link: 5ab0d42fb68c9e34abae4921822b9d63 (Heroism :BlueprintAbility)",
+          "link: 7bb0c402f7f789d4d9fae8ca87b4c7e2 (ResistEnergyCommunal :BlueprintAbility)",
+          "link: 0f92caa35619f234298d95a4b6dda90d (MagicWeaponGreater :BlueprintAbility)",
+          "link: 903092f6488f9ce45a80943923576ab3 (Displacement :BlueprintAbility)",
+          "link: f34fb78eaaec141469079af124bcfa0f (Enervation :BlueprintAbility)",
+          "link: 4a648b57935a59547b7a2ee86fb4f26a (DimensionDoorBase :BlueprintAbility)",
+          "link: ecaa0def35b38f949bd1976a6c9539e0 (InvisibilityGreater :BlueprintAbility)"
+        ],
+        "Selections": [
+          {
+            "m_Selection": "Blueprint:da48f9d7f697ae44ca891bfc50727988:Bloodline",
+            "m_Features": [
+              "Blueprint:7bd143ead2d6c3a409aad6ee22effe34:Black"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:8c1ba14c0b6dcdb439c56341385ee474:Spellbook",
+            "m_Features": [
+              "Blueprint:fa2a2469c9ba6d54b8fc2356f4fc0e9e:Sorc"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:422dab7309e1ad343935f33a4d6e9f11:Outflank",
+              "Blueprint:bcbd674ec70ff6f4894bb5f07b6f4095:Dazzling Display"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:f4b011d090e8ae543b1441bd594c7bf7:BloodlineFeat",
+            "m_Features": [
+              "Blueprint:9972f33f977fc724c838e59641b2fca5:PowerAttack"
+            ]
+          }
+        ]
+      },
+      {
+        "m_CharacterClass": "Blueprint:de52b73972f0ed74c87f8f6a8e20b542:EldritchKnightClass",
+        "m_MemorizeSpells": [],
+        "Levels": 10,
+        "RaceStat": "Strength",
+        "LevelsStat": "Strength",
+        "Skills": [
+          "SkillMobility",
+          "SkillKnowledgeArcana",
+          "SkillThievery",
+          "SkillAthletics"
+        ],
+        "m_SelectSpells": [
+          "link: 433b1faf4d02cc34abb0ade5ceda47c4 (ProtectionFromAlignment :BlueprintAbility)",
+          "link: 9f10909f0be1f5141bf1c102041f93d9 (Snowball :BlueprintAbility)",
+          "link: 14ec7a4e52e90fa47a4c8d63c69fd5c1 (Blur :BlueprintAbility)",
+          "link: 82962a820ebc0e7408b8582fdc3f4c0c (SenseVitals :BlueprintAbility)",
+          "link: 4c3d08935262b6544ae97599b3a9556d (BullsStrength :BlueprintAbility)",
+          "link: de7a025d48ad5da4991e7d3c682cf69d (CatsGrace :BlueprintAbility)",
+          "link: ae4d3ad6a8fda1542acf2e9bbc13d113 (FoxsCunning :BlueprintAbility)",
+          "link: 486eaff58293f6441a5c2759c4872f98 (Haste :BlueprintAbility)",
+          "link: 5ab0d42fb68c9e34abae4921822b9d63 (Heroism :BlueprintAbility)",
+          "link: 7bb0c402f7f789d4d9fae8ca87b4c7e2 (ResistEnergyCommunal :BlueprintAbility)",
+          "link: 0f92caa35619f234298d95a4b6dda90d (MagicWeaponGreater :BlueprintAbility)",
+          "link: 903092f6488f9ce45a80943923576ab3 (Displacement :BlueprintAbility)",
+          "link: f34fb78eaaec141469079af124bcfa0f (Enervation :BlueprintAbility)",
+          "link: 4a648b57935a59547b7a2ee86fb4f26a (DimensionDoorBase :BlueprintAbility)",
+          "link: ecaa0def35b38f949bd1976a6c9539e0 (InvisibilityGreater :BlueprintAbility)",
+          "link: ecaa0def35b38f949bd1976a6c9539e0 (InvisibilityGreater :BlueprintAbility)",
+          "link: f72f8f03bf0136c4180cd1d70eb773a5 (ControlledFireball :BlueprintAbility)",
+          "link: 76a629d019275b94184a1a8733cac45e (ProtectionFromEnergyCommunal :BlueprintAbility)",
+          "link: cf6c901fb7acc904e85c63b342e9c949 (ConfusionSpell :BlueprintAbility)",
+          "link: dc6af3b4fd149f841912d8a3ce0983de (FalseLifeGreater :BlueprintAbility)",
+          "link: d2aeac47450c76347aebbc02e4f463e0 (Fear :BlueprintAbility)",
+          "link: 5e826bcdfde7f82468776b55315b2403 (DragonsBreath :BlueprintAbility)",
+          "link: 5d4028eb28a106d4691ed1b92bbb1915 (BeastShapeII :BlueprintAbility)",
+          "link: 20b548bf09bb3ea4bafea78dcb4f3db6 (Echolocation :BlueprintAbility)",
+          "link: 75a10d5a635986641bfbcceceec87217 (AngelicAspect :BlueprintAbility)",
+          "link: 07b608fab304f894880898dc0764e6e5 (Geniekind :BlueprintAbility)",
+          "link: 9b93040dad242eb43ac7de6bb6547030 (BeastShapeIII :BlueprintAbility)",
+          "link: 12fb4a4c22549c74d949e2916a2f0b6a (PhantasmalWeb :BlueprintAbility)",
+          "link: 1cde0691195feae45bab5b83ea3f221e (WrackingRay :BlueprintAbility)",
+          "link: 8fb1a1670b6e1f84b89ea846f589b627 (Thoughtsense :BlueprintAbility)",
+          "link: e15e5e7045fda2244b98c8f010adfe31 (HeroismGreater :BlueprintAbility)",
+          "link: 27203d62eb3d4184c9aced94f22e1806 (Transformation :BlueprintAbility)",
+          "link: 093ed1d67a539ad4c939d9d05cfe192c (Sirocco :BlueprintAbility)",
+          "link: f0f761b808dc4b149b08eaf44b99f633 (DispelMagicGreater :BlueprintAbility)",
+          "link: f767399367df54645ac620ef7b2062bb (FormOfTheDragonI :BlueprintAbility)",
+          "link: a9a52760290591844a96d0109e30e04d (UndeathToDeath :BlueprintAbility)",
+          "link: 1f6c94d56f178b84ead4c02f1b1e1c48 (CatsGraceMass :BlueprintAbility)",
+          "link: 6a234c6dcde7ae94e94e9c36fd1163a7 (BullsStrengthMass :BlueprintAbility)",
+          "link: 3e4d3b9a5bd03734d9b053b9067c2f38 (WavesOfExhaustion :BlueprintAbility)",
+          "link: da1b292d91ba37948893cdbe9ea89e28 (LegendaryProportions :BlueprintAbility)",
+          "link: 08255ea4cdd812341af93f9cd113acb9 (ShadowConjurationGreater :BlueprintAbility)",
+          "link: 666556ded3a32f34885e8c318c3a0ced (FormOfTheDragonII :BlueprintAbility)",
+          "link: f333185ae986b2a45823cce86535a122 (CircleOfClarity :BlueprintAbility)",
+          "link: 5c8cde7f0dcec4e49bfa2632dfe2ecc0 (KiShout :BlueprintAbility)",
+          "link: df7d13c967bce6a40bec3ba7c9f0e64c (ResonatingWord :BlueprintAbility)",
+          "link: b22fd434bdb60fb4ba1068206402c4cf (PrismaticSpray :BlueprintAbility)",
+          "link: e788b02f8d21014488067bdd3ba7b325 (FrightfulAspect :BlueprintAbility)",
+          "link: 7ef49f184922063499b8f1346fb7f521 (Seamantle :BlueprintAbility)",
+          "link: 1cdc4ad4c208246419b98a35539eafa6 (FormOfTheDragonIII :BlueprintAbility)",
+          "link: 42aa71adc7343714fa92e471baa98d42 (ProtectionFromSpells :BlueprintAbility)",
+          "link: df2a0ba6b6dcecf429cbb80a56fee5cf (MindBlank :BlueprintAbility)",
+          "link: 740d943e42b60f64a8de74926ba6ddf7 (EuphoricTranquilityCast :BlueprintAbility)",
+          "link: 6101d0f0720927e4ca413de7b3c4b7e5 (BestowCurseGreater :BlueprintAbility)",
+          "link: b4afacd337dac4a40a769a567c038ab7 (Soulreaver :BlueprintAbility)",
+          "link: 1f01a098d737ec6419aedc4e7ad61fdd (Foresight :BlueprintAbility)",
+          "link: 87a29febd010993419f2a4a9bee11cfc (MindBlankCommunal :BlueprintAbility)",
+          "link: 22b9044aa229815429d57d0a30e4b739 (Shapechange :BlueprintAbility)",
+          "link: 43740dab07286fe4aa00a6ee104ce7c1 (HeroicInvocation :BlueprintAbility)",
+          "link: 37302f72b06ced1408bf5bb965766d46 (EnergyDrain :BlueprintAbility)",
+          "link: 70e12191790f69a439ea0132c75f83aa (Shades :BlueprintAbility)",
+          "link: d8144161e352ca846a73cf90e85bf9ac (Tsunami :BlueprintAbility)",
+          "link: 2f8a67c483dfa0f439b293e094ca9e3c (PowerWordKill :BlueprintAbility)"
+        ],
+        "Selections": [
+          {
+            "m_Selection": "Blueprint:da03141df23f3fe45b0c7c323a8e5a0e:EldritchKnightFeatSelection",
+            "m_Features": [
+              "Blueprint:61a17ccbbb3d79445b0926347ec07577:ShatterDefenses",
+              "Blueprint:31470b17e8446ae4ea0dacd6c5817d86:WeaponSpecialization",
+              "Blueprint:09c9e82965fb4334b984a1e9df3bd088:WeaponFocusGreater"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:dc3ab8d0484467a4787979d93114ebc3:EldritchKnightSpellbookSelection",
+            "m_Features": [
+              "Blueprint:89d2b9f096b54804c8350dd2a899f8a4:Sorc"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:f4201c85a991369408740c6888362e20:ImprovedCritical",
+              "Blueprint:85f3340093d144dd944fff9a9adfd2f2:SelectiveSpellFeat",
+              "Blueprint:af0aae1b973114f47a19ea532237b5fc:CraneStyleWingFeat",
+              "Blueprint:59eb2a5507975244c893402d582bf77b:CraneStyleRiposteFeat",
+              "Blueprint:797f25d709f559546b29e7bcb181cc74:Improved Initiative"
+            ]
+          },
+          {
+            "m_Selection": "Blueprint:da03141df23f3fe45b0c7c323a8e5a0e:EldritchKnightFeatSelection",
+            "m_Features": [
+              "Blueprint:31470b17e8446ae4ea0dacd6c5817d86:WeaponSpecialization"
+            ],
+            "IsParametrizedFeature": true,
+            "m_ParametrizedFeature": "Blueprint:31470b17e8446ae4ea0dacd6c5817d86:WeaponSpecialization",
+            "ParamWeaponCategory": "Greataxe"
+          },
+          {
+            "m_Selection": "Blueprint:da03141df23f3fe45b0c7c323a8e5a0e:EldritchKnightFeatSelection",
+            "m_Features": [
+              "Blueprint:09c9e82965fb4334b984a1e9df3bd088:WeaponFocusGreater"
+            ],
+            "IsParametrizedFeature": true,
+            "m_ParametrizedFeature": "Blueprint:09c9e82965fb4334b984a1e9df3bd088:WeaponFocusGreater",
+            "ParamWeaponCategory": "Greataxe"
+          },
+          {
+            "m_Selection": "Blueprint:247a4068296e8be42890143f451b4b45:BasicFeatSelection",
+            "m_Features": [
+              "Blueprint:f4201c85a991369408740c6888362e20:ImprovedCritical"
+            ],
+            "IsParametrizedFeature": true,
+            "m_ParametrizedFeature": "Blueprint:f4201c85a991369408740c6888362e20:ImprovedCritical",
+            "ParamWeaponCategory": "Greataxe"
+          }
+        ]
+      },
+      {
+        "m_CharacterClass": "Blueprint:b3a505fb61437dc4097f43c3f8f9a4cf:Sorcerer",
+        "m_MemorizeSpells": [],
+        "Levels": 1,
+        "RaceStat": "Strength",
+        "LevelsStat": "Strength",
+        "Skills": [
+          "SkillMobility",
+          "SkillKnowledgeArcana",
+          "SkillThievery",
+          "SkillAthletics"
+        ],
+        "m_SelectSpells": [
+          "link: 433b1faf4d02cc34abb0ade5ceda47c4 (ProtectionFromAlignment :BlueprintAbility)",
+          "link: 9f10909f0be1f5141bf1c102041f93d9 (Snowball :BlueprintAbility)",
+          "link: 14ec7a4e52e90fa47a4c8d63c69fd5c1 (Blur :BlueprintAbility)",
+          "link: 82962a820ebc0e7408b8582fdc3f4c0c (SenseVitals :BlueprintAbility)",
+          "link: 4c3d08935262b6544ae97599b3a9556d (BullsStrength :BlueprintAbility)",
+          "link: de7a025d48ad5da4991e7d3c682cf69d (CatsGrace :BlueprintAbility)",
+          "link: ae4d3ad6a8fda1542acf2e9bbc13d113 (FoxsCunning :BlueprintAbility)",
+          "link: 486eaff58293f6441a5c2759c4872f98 (Haste :BlueprintAbility)",
+          "link: 5ab0d42fb68c9e34abae4921822b9d63 (Heroism :BlueprintAbility)",
+          "link: 7bb0c402f7f789d4d9fae8ca87b4c7e2 (ResistEnergyCommunal :BlueprintAbility)",
+          "link: 0f92caa35619f234298d95a4b6dda90d (MagicWeaponGreater :BlueprintAbility)",
+          "link: 903092f6488f9ce45a80943923576ab3 (Displacement :BlueprintAbility)",
+          "link: f34fb78eaaec141469079af124bcfa0f (Enervation :BlueprintAbility)",
+          "link: 4a648b57935a59547b7a2ee86fb4f26a (DimensionDoorBase :BlueprintAbility)",
+          "link: ecaa0def35b38f949bd1976a6c9539e0 (InvisibilityGreater :BlueprintAbility)",
+          "link: ecaa0def35b38f949bd1976a6c9539e0 (InvisibilityGreater :BlueprintAbility)",
+          "link: f72f8f03bf0136c4180cd1d70eb773a5 (ControlledFireball :BlueprintAbility)",
+          "link: 76a629d019275b94184a1a8733cac45e (ProtectionFromEnergyCommunal :BlueprintAbility)",
+          "link: cf6c901fb7acc904e85c63b342e9c949 (ConfusionSpell :BlueprintAbility)",
+          "link: dc6af3b4fd149f841912d8a3ce0983de (FalseLifeGreater :BlueprintAbility)",
+          "link: d2aeac47450c76347aebbc02e4f463e0 (Fear :BlueprintAbility)",
+          "link: 5e826bcdfde7f82468776b55315b2403 (DragonsBreath :BlueprintAbility)",
+          "link: 5d4028eb28a106d4691ed1b92bbb1915 (BeastShapeII :BlueprintAbility)",
+          "link: 20b548bf09bb3ea4bafea78dcb4f3db6 (Echolocation :BlueprintAbility)",
+          "link: 75a10d5a635986641bfbcceceec87217 (AngelicAspect :BlueprintAbility)",
+          "link: 07b608fab304f894880898dc0764e6e5 (Geniekind :BlueprintAbility)",
+          "link: 9b93040dad242eb43ac7de6bb6547030 (BeastShapeIII :BlueprintAbility)",
+          "link: 12fb4a4c22549c74d949e2916a2f0b6a (PhantasmalWeb :BlueprintAbility)",
+          "link: 1cde0691195feae45bab5b83ea3f221e (WrackingRay :BlueprintAbility)",
+          "link: 8fb1a1670b6e1f84b89ea846f589b627 (Thoughtsense :BlueprintAbility)",
+          "link: e15e5e7045fda2244b98c8f010adfe31 (HeroismGreater :BlueprintAbility)",
+          "link: 27203d62eb3d4184c9aced94f22e1806 (Transformation :BlueprintAbility)",
+          "link: 093ed1d67a539ad4c939d9d05cfe192c (Sirocco :BlueprintAbility)",
+          "link: f0f761b808dc4b149b08eaf44b99f633 (DispelMagicGreater :BlueprintAbility)",
+          "link: f767399367df54645ac620ef7b2062bb (FormOfTheDragonI :BlueprintAbility)",
+          "link: a9a52760290591844a96d0109e30e04d (UndeathToDeath :BlueprintAbility)",
+          "link: 1f6c94d56f178b84ead4c02f1b1e1c48 (CatsGraceMass :BlueprintAbility)",
+          "link: 6a234c6dcde7ae94e94e9c36fd1163a7 (BullsStrengthMass :BlueprintAbility)",
+          "link: 3e4d3b9a5bd03734d9b053b9067c2f38 (WavesOfExhaustion :BlueprintAbility)",
+          "link: da1b292d91ba37948893cdbe9ea89e28 (LegendaryProportions :BlueprintAbility)",
+          "link: 08255ea4cdd812341af93f9cd113acb9 (ShadowConjurationGreater :BlueprintAbility)",
+          "link: 666556ded3a32f34885e8c318c3a0ced (FormOfTheDragonII :BlueprintAbility)",
+          "link: f333185ae986b2a45823cce86535a122 (CircleOfClarity :BlueprintAbility)",
+          "link: 5c8cde7f0dcec4e49bfa2632dfe2ecc0 (KiShout :BlueprintAbility)",
+          "link: df7d13c967bce6a40bec3ba7c9f0e64c (ResonatingWord :BlueprintAbility)",
+          "link: b22fd434bdb60fb4ba1068206402c4cf (PrismaticSpray :BlueprintAbility)",
+          "link: e788b02f8d21014488067bdd3ba7b325 (FrightfulAspect :BlueprintAbility)",
+          "link: 7ef49f184922063499b8f1346fb7f521 (Seamantle :BlueprintAbility)",
+          "link: 1cdc4ad4c208246419b98a35539eafa6 (FormOfTheDragonIII :BlueprintAbility)",
+          "link: 42aa71adc7343714fa92e471baa98d42 (ProtectionFromSpells :BlueprintAbility)",
+          "link: df2a0ba6b6dcecf429cbb80a56fee5cf (MindBlank :BlueprintAbility)",
+          "link: 740d943e42b60f64a8de74926ba6ddf7 (EuphoricTranquilityCast :BlueprintAbility)",
+          "link: 6101d0f0720927e4ca413de7b3c4b7e5 (BestowCurseGreater :BlueprintAbility)",
+          "link: b4afacd337dac4a40a769a567c038ab7 (Soulreaver :BlueprintAbility)",
+          "link: 1f01a098d737ec6419aedc4e7ad61fdd (Foresight :BlueprintAbility)",
+          "link: 87a29febd010993419f2a4a9bee11cfc (MindBlankCommunal :BlueprintAbility)",
+          "link: 22b9044aa229815429d57d0a30e4b739 (Shapechange :BlueprintAbility)",
+          "link: 43740dab07286fe4aa00a6ee104ce7c1 (HeroicInvocation :BlueprintAbility)",
+          "link: 37302f72b06ced1408bf5bb965766d46 (EnergyDrain :BlueprintAbility)",
+          "link: 70e12191790f69a439ea0132c75f83aa (Shades :BlueprintAbility)",
+          "link: d8144161e352ca846a73cf90e85bf9ac (Tsunami :BlueprintAbility)",
+          "link: 2f8a67c483dfa0f439b293e094ca9e3c (PowerWordKill :BlueprintAbility)"
+        ],
+        "Selections": []
+      }
+    ]
+  }
 }

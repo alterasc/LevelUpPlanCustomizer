@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		schemas\v1\LevelUpPlanV1.json = schemas\v1\LevelUpPlanV1.json
 		LICENSE = LICENSE
+		schemas\v1\PregenV1.json = schemas\v1\PregenV1.json
 		README.md = README.md
 	EndProjectSection
 EndProject
