@@ -4,17 +4,262 @@
   "type": "object",
   "properties": {
     "FeatureList": {
-      "type": "string"
+      "$ref": "#/$defs/BPRef"
     },
     "Classes": {
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "m_CharacterClass": {
+            "$ref": "#/$defs/BPRef"
+          },
+          "m_Archetypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BPRef"
+            }
+          },
+          "Levels": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "RaceStat": {
+            "$ref": "#/$defs/Stat"
+          },
+          "LevelsStat": {
+            "$ref": "#/$defs/Stat"
+          },
+          "Skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Skill"
+            },
+            "minItems": 1
+          },
+          "m_MemorizeSpells": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BPRef"
+            }
+          },
+          "m_SelectSpells": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BPRef"
+            }
+          },
+          "Selections": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "m_Selection": {
+                  "$ref": "#/$defs/BPRef"
+                },
+                "m_Features": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/BPRef"
+                  },
+                  "minItems": 1
+                },
+                "IsParametrizedFeature": {
+                  "type": "boolean"
+                },
+                "m_ParametrizedFeature": {
+                  "$ref": "#/$defs/BPRef"
+                },
+                "ParamWeaponCategory": {
+                  "$ref": "#/$defs/WeaponType"
+                },
+                "ParamSpellSchool": {
+                  "$ref": "#/$defs/SpellSchool"
+                },
+                "Stat": {
+                  "type": "string"
+                },
+                "m_FeatureSelectMythicSpellbook": {
+                  "$ref": "#/$defs/BPRef"
+                },
+                "m_Spellbook": {
+                  "$ref": "#/$defs/BPRef"
+                }
+              },
+              "required": [
+                "m_Selection",
+                "m_Features"
+              ]
+            }
+          }
+        },
+        "required": [
+          "m_CharacterClass",
+          "Levels"
+        ]
+      }
     },
     "AddFacts": {
-      "type": "array"
+      "type": "array",
+      "items": {
+        "properties": {
+          "m_Facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BPRef"
+            }
+          },
+          "CasterLevel": {
+            "type": "integer"
+          },
+          "MinDifficulty": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "required": [
-    "FeatureList",
     "Classes"
-  ]
+  ],
+  "$defs": {
+    "BPRef": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "[0-9abcdef]{32}"
+    },
+    "Stat": {
+      "type": [
+        "string"
+      ],
+      "enum": [
+        "Strength",
+        "Dexterity",
+        "Constition",
+        "Intelligence",
+        "Wisdom",
+        "Charisma"
+      ]
+    },
+    "Skill": {
+      "type": [
+        "string"
+      ],
+      "enum": [
+        "SkillMobility",
+        "SkillAthletics",
+        "SkillPersuasion",
+        "SkillThievery",
+        "SkillLoreNature",
+        "SkillPerception",
+        "SkillStealth",
+        "SkillUseMagicDevice",
+        "SkillLoreReligion",
+        "SkillKnowledgeWorld",
+        "SkillKnowledgeArcana"
+      ]
+    },
+    "WeaponType": {
+      "type": [
+        "string"
+      ],
+      "enum": [
+        "UnarmedStrike",
+        "Dagger",
+        "LightMace",
+        "PunchingDagger",
+        "Sickle",
+        "Club",
+        "HeavyMace",
+        "Shortspear",
+        "Greatclub",
+        "Longspear",
+        "Quarterstaff",
+        "Spear",
+        "Trident",
+        "Dart",
+        "LightCrossbow",
+        "HeavyCrossbow",
+        "Javelin",
+        "Sling",
+        "Handaxe",
+        "Kukri",
+        "LightHammer",
+        "LightPick",
+        "Shortsword",
+        "Starknife",
+        "WeaponLightShield",
+        "SpikedLightShield",
+        "Battleaxe",
+        "Flail",
+        "HeavyPick",
+        "Longsword",
+        "Rapier",
+        "Scimitar",
+        "Warhammer",
+        "WeaponHeavyShield",
+        "SpikedHeavyShield",
+        "EarthBreaker",
+        "Falchion",
+        "Glaive",
+        "Greataxe",
+        "Greatsword",
+        "HeavyFlail",
+        "Scythe",
+        "Shortbow",
+        "Longbow",
+        "Kama",
+        "Nunchaku",
+        "Sai",
+        "Siangham",
+        "BastardSword",
+        "DuelingSword",
+        "DwarvenWaraxe",
+        "Estoc",
+        "Falcata",
+        "Tongi",
+        "ElvenCurvedBlade",
+        "Fauchard",
+        "HandCrossbow",
+        "LightRepeatingCrossbow",
+        "HeavyRepeatingCrossbow",
+        "Shuriken",
+        "SlingStaff",
+        "Touch",
+        "Ray",
+        "Bomb",
+        "Bite",
+        "Claw",
+        "Gore",
+        "OtherNaturalWeapons",
+        "Bardiche",
+        "DoubleSword",
+        "DoubleAxe",
+        "Urgrosh",
+        "HookedHammer",
+        "KineticBlast",
+        "ThrowingAxe",
+        "Tail"
+      ]
+    },
+    "SpellSchool": {
+      "type": [
+        "string"
+      ],
+      "enum": [
+        "None",
+        "Abjuration",
+        "Conjuration",
+        "Divination",
+        "Enchantment",
+        "Evocation",
+        "Illusion",
+        "Necromancy",
+        "Transmutation",
+        "Universalist"
+      ]
+    }
+  }
 }

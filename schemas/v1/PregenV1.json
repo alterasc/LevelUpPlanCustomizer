@@ -4,14 +4,74 @@
   "type": "object",
   "properties": {
     "UnitId": {
-      "type": "string"
+      "type": "string",
+      "pattern": "[0-9abcdef]{32}"
+    },
+    "Gender": {
+      "type": "string",
+      "enum": [
+        "Male",
+        "Female"
+      ]
+    },
+    "m_Race": {
+      "type": "string",
+      "pattern": "[0-9abcdef]{32}"
+    },
+    "Alignment": {
+      "type": "string",
+      "enum": [
+        "LawfulGood",
+        "NeutralGood",
+        "ChaoticGood",
+        "LawfulNeutral",
+        "TrueNeutral",
+        "ChaoticNeutral",
+        "LawfulEvil",
+        "NeutralEvil",
+        "ChaoticEvil"
+      ]
+    },
+    "Strength": {
+      "$ref": "#/$defs/Stat"
+    },
+    "Dexterity": {
+      "$ref": "#/$defs/Stat"
+    },
+    "Constitution": {
+      "$ref": "#/$defs/Stat"
+    },
+    "Intelligence": {
+      "$ref": "#/$defs/Stat"
+    },
+    "Wisdom": {
+      "$ref": "#/$defs/Stat"
+    },
+    "Charisma": {
+      "$ref": "#/$defs/Stat"
     },
     "LevelUpPlan": {
-      "type": "object"
+      "$ref": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/schemas/v1/LevelUpPlanV1.json"
     }
   },
   "required": [
     "UnitId",
+    "Gender",
+    "m_Race",
+    "Alignment",
+    "Strength",
+    "Dexterity",
+    "Constition",
+    "Intelligence",
+    "Wisdom",
+    "Charisma",
     "LevelUpPlan"
-  ]
+  ],
+  "$defs": {
+    "Stat": {
+      "type": "integer",
+      "minimum": 7,
+      "maximum": 18
+    }
+  }
 }

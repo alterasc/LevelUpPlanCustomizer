@@ -1,4 +1,5 @@
 ﻿{
+  "$schema": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/schemas/v1/LevelUpPlanV1.json",
   "FeatureList": "777ae11136378a64883059457966a325",
   "Classes": [
     {
