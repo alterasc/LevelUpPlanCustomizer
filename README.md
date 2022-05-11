@@ -35,4 +35,4 @@ Start a new game, use Toybox to level up to 20, and then it's all just pressing 
 
 ## How to write feature list or pregen.  
 Take a look at [How to.md](/How%20to.md), I try to describe how it works, but it still requires a bit of technical knowledge and you will probably need additional tools.   
-Look at provided samples. Seelah alternative build is an easy example (just lvl20 paladin). Pregen is a Monk(SF)1/Sorc4/DD4/Ek10/Sorc1 gish, and it show how multiclassed builds work. Note - neither of two builds are recommended, they're just samples.
+Look at provided samples. Seelah alternative build is an easy example (just lvl20 paladin). Pregen is a Monk(SF)1/Sorc4/DD4/Ek10/Sorc1 gish, and it shows how multiclassed builds work. Note - neither of two builds are recommended, they're just samples.

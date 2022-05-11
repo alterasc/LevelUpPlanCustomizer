@@ -108,6 +108,18 @@ You can see working example of custom build in Samples folder.
 
 ## So you got (vague) idea of the structure, what's next?
 
+If you're starting from empty, first thing I recommend is adding `$schema` property. This will allow you to perform basic validation of your file.
+
+Schema for feature lists:  
+```json
+"$schema": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/schemas/v1/LevelUpPlanV1.json"
+```
+Schema for pregens:
+```json
+"$schema": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/schemas/v1/PregenV1.json"
+```
+If you don't have text editor that can do validation against schema automatically, I recommend Visual Studio Code.
+
 Next is you will need to go through blueprints to look at ids. No way around it.
 That said, this is not something particularly complex. 
 
@@ -127,7 +139,7 @@ Only gameplay related parameters can be defined.
 UnitId is id of pregen to replace. Sample Sorcerer gish build replaces Rogue pregen.   
 
 All other parameters should be self-explanatory.  
-Game does not check stat values. Nor does my mod. If you start with higher stats than legally allowed, it's on you.
+Game does not check stat values. Nor does my mod. If you start with higher stats than legally allowed, it's on you. Stats are defined without race bonuses.
 Things like race heritage all are all defined in LevelUpPlan. LevelUpPlan FeatureList field value when used as part of pregen is not required, and if you set it, it's value will be ignored.
 
 You can't set mythic progression for main character pregen. If you do so, it all will be applied right at the start of the game, and you'll start as MR10 character.
