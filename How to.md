@@ -291,3 +291,6 @@ A: Because while I could do that for feats, there's a lot of selections where th
 
 Q: Does it support modded setups?
 A: Yes. You would need to get feature ids after from mod folder, or with [Data Viewer](https://www.nexusmods.com/pathfinderwrathoftherighteous/mods/9)
+
+Q: Does this mod support DLC pregens and charaters?   
+A: Yes. But you'll have to find their GUIDs yourself.   
