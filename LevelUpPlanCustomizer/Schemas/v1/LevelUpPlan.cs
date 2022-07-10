@@ -3,7 +3,7 @@ using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
 using Kingmaker.Settings;
 
-namespace LevelUpPlanCustomizer.Base.Schemas.v1
+namespace LevelUpPlanCustomizer.Schemas.v1
 {
     public class LevelUpPlan
     {

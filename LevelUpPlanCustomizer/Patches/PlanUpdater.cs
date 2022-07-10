@@ -1,13 +1,10 @@
 ﻿using HarmonyLib;
 using Kingmaker.Blueprints;
-using Kingmaker.Blueprints.CharGen;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.JsonSystem;
-using Kingmaker.ResourceLinks;
 using Kingmaker.UnitLogic.Components;
 using Kingmaker.UnitLogic.FactLogic;
-using LevelUpPlanCustomizer.Base.Schemas;
-using LevelUpPlanCustomizer.Base.Schemas.v1;
+using LevelUpPlanCustomizer.Schemas.v1;
 using Newtonsoft.Json;
 using Owlcat.Runtime.Core.Logging;
 using System;
@@ -15,7 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace LevelUpPlanCustomizer.Base.Patches
+namespace LevelUpPlanCustomizer.Patches
 {
     class PlanUpdater
     {
@@ -117,7 +114,8 @@ namespace LevelUpPlanCustomizer.Base.Patches
                 pregenBP.RemoveComponents<PregenDollSettings>();
                 var doll = new PregenDollSettings()
                 {
-                    Default = new(){
+                    Default = new()
+                    {
                         m_RacePreset = race.m_Presets.First()
                     }
                 };

@@ -1,12 +1,7 @@
 ﻿using Kingmaker.Blueprints;
 using Kingmaker.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LevelUpPlanCustomizer.Base.Schemas.v1
+namespace LevelUpPlanCustomizer.Schemas.v1
 {
     public class PregenUnit
     {
@@ -33,5 +28,5 @@ namespace LevelUpPlanCustomizer.Base.Schemas.v1
         public string PregenDescription { get; set; }
         public string PregenClass { get; set; }
         public string PregenRole { get; set; }
-    }    
+    }
 }

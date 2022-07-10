@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace LevelUpPlanCustomizer.Base.Schemas
+namespace LevelUpPlanCustomizer
 {
     public static class Utils
     {
@@ -141,7 +141,7 @@ namespace LevelUpPlanCustomizer.Base.Schemas
 
         internal static T[] AppendToArray<T>(this T[] array, T value)
         {
-            int num = (array != null) ? array.Length : 0;
+            int num = array != null ? array.Length : 0;
             T[] array2 = new T[num + 1];
             if (num > 0)
             {
