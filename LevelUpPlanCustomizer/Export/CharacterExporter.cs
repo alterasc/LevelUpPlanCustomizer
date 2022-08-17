@@ -51,7 +51,7 @@ namespace LevelUpPlanCustomizer.Export
 
         static void getStats(Kingmaker.EntitySystem.Entities.UnitEntityData mc, out Dictionary<StatType, int> attributes, out IDictionary<StatType, int> levelUps)
         {
-            attributes = mc.Stats.Attributes.Select(a => (a.Type, a.BaseValue)).ToDictionary(a => a.Type, a => a.BaseValue);
+            attributes = mc.Stats.Attributes.ToDictionary(a => a.Type, a => a.BaseValue);
             levelUps = new Dictionary<StatType, int>();
             var statLevelUps = mc.Progression.CharacterLevel / 4;
             if (statLevelUps > 0)

@@ -151,6 +151,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Export\BlueprintProgressionCalculator.cs" />
     <Compile Include="Export\CharacterExporter.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Patches\AlwaysAvailableAutoLevelup.cs" />
