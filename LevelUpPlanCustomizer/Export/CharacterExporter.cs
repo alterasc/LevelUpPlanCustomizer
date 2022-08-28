@@ -12,7 +12,7 @@ namespace LevelUpPlanCustomizer.Export
 {
     internal class CharacterExporter
     {
-        public static PregenUnit exportMC()
+        public static PregenUnit ExportMC()
         {
             var player = Game.Instance.Player;
             Kingmaker.EntitySystem.Entities.UnitEntityData mc = player.MainCharacter.Value;
@@ -40,18 +40,55 @@ namespace LevelUpPlanCustomizer.Export
             mc.Progression.ClassesOrder.ForEach(x => sbClassOrder.AppendLine(x.ToString()));
             pregen.UnitId = sbClassOrder.ToString();
             var selections = mc.Progression.Selections;
+
+            var levelUpPlan = new LevelUpPlan();
+            pregen.LevelUpPlan = levelUpPlan;
+            var tmpList = new List<ClassLevel>();
+            try
+            {
+                for (int i = 0; i < mc.Progression.ClassesOrder.Count; i++)
+                {
+                    BlueprintCharacterClass characterClass = mc.Progression.ClassesOrder[i];
+                    var classLevel = new ClassLevel
+                    {
+                        m_CharacterClass = characterClass.AssetGuid.m_Guid.ToString(),
+                        m_Archetypes = mc.Progression.GetClassData(characterClass).Archetypes.Select(x => x.AssetGuid.m_Guid.ToString()).ToArray(),
+                        Levels = 1
+                    };
+                    if ((i + 1) % 4 == 0)
+                    {
+                        var stat = levelUps.Keys.First();
+                        classLevel.LevelsStat = stat;
+                        if (levelUps[stat] == 1)
+                        {
+                            levelUps.Remove(stat);
+                        }
+                        else
+                        {
+                            levelUps[stat] = levelUps[stat] - 1;
+                        }
+                    }
+                    tmpList.Add(classLevel);
+                }
+                levelUpPlan.Classes = tmpList.ToArray();
+            }
+            catch (System.Exception)
+            {
+                return pregen;
+            }
+
             StringBuilder sb = new();
             foreach (var selection in selections)
-            {                
+            {
                 Kingmaker.UnitLogic.FeatureSelectionData value = selection.Value;
                 if (value.Source.Blueprint is BlueprintProgression obj)
                 {
                     foreach (var sel in value.m_SelectionsByLevel)
-                    {                        
+                    {
                         int res = BlueprintProgressionCalculator.FindCharLevel(mc, obj, sel.Key);
                         sb.AppendLine($"At {sel.Key} (clvl {res}) in progression {value.Source.Blueprint} selection {selection.Key} took {sel.Value.First()}");
                     }
-                    
+
                 }
             }
             pregen.m_Race = sb.ToString();
@@ -97,7 +134,7 @@ namespace LevelUpPlanCustomizer.Export
 
                 while (statLevelUps > 0)
                 {
-                    var highest = attributes.MaxBy(a => a.Value);                    
+                    var highest = attributes.MaxBy(a => a.Value);
                     attributes[highest.Key]--;
                     var newV = attributes[highest.Key];
                     statPB -= pointBuy[newV + 1] - pointBuy[newV];

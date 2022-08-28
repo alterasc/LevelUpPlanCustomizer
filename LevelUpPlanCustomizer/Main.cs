@@ -64,7 +64,7 @@ namespace LevelUpPlanCustomizer
             {                
                 try
                 {
-                    var pregen = CharacterExporter.exportMC();
+                    var pregen = CharacterExporter.ExportMC();
                     var jsonSerializer = new JsonSerializer();
                     jsonSerializer.Formatting = Formatting.Indented;
                     jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
