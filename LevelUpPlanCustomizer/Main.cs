@@ -61,10 +61,10 @@ namespace LevelUpPlanCustomizer
             GUILayout.Label(mc.CharacterName, GUILayout.ExpandWidth(false));
             GUILayout.Space(10);
             if (GUILayout.RepeatButton("Export", GUILayout.ExpandWidth(false)))
-            {
-                var pregen = CharacterExporter.exportMC();
+            {                
                 try
                 {
+                    var pregen = CharacterExporter.exportMC();
                     var jsonSerializer = new JsonSerializer();
                     jsonSerializer.Formatting = Formatting.Indented;
                     jsonSerializer.NullValueHandling = NullValueHandling.Ignore;

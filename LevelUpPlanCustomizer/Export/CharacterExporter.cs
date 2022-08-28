@@ -2,9 +2,11 @@
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Utility;
+using LevelUpPlanCustomizer.Base.Export;
 using LevelUpPlanCustomizer.Schemas.v1;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace LevelUpPlanCustomizer.Export
 {
@@ -34,18 +36,25 @@ namespace LevelUpPlanCustomizer.Export
             pregen.Wisdom = attributes[StatType.Wisdom];
             pregen.Charisma = attributes[StatType.Charisma];
 
+            var sbClassOrder = new StringBuilder();
+            mc.Progression.ClassesOrder.ForEach(x => sbClassOrder.AppendLine(x.ToString()));
+            pregen.UnitId = sbClassOrder.ToString();
             var selections = mc.Progression.Selections;
-
+            StringBuilder sb = new();
             foreach (var selection in selections)
-            {
-                var key = selection.Key;
+            {                
                 Kingmaker.UnitLogic.FeatureSelectionData value = selection.Value;
                 if (value.Source.Blueprint is BlueprintProgression obj)
                 {
-
+                    foreach (var sel in value.m_SelectionsByLevel)
+                    {                        
+                        int res = BlueprintProgressionCalculator.FindCharLevel(mc, obj, sel.Key);
+                        sb.AppendLine($"At {sel.Key} (clvl {res}) in progression {value.Source.Blueprint} selection {selection.Key} took {sel.Value.First()}");
+                    }
+                    
                 }
             }
-
+            pregen.m_Race = sb.ToString();
             return pregen;
         }
 
@@ -73,17 +82,17 @@ namespace LevelUpPlanCustomizer.Export
                 };
                 var statPB = 0;
 
-                foreach (var attr in attributes)
+                foreach (var attrKey in attributes.Keys.ToList())
                 {
-                    var baseValue = attr.Value;
+                    var baseValue = attributes[attrKey];
                     if (baseValue > 18)
                     {
-                        levelUps.TryGetValue(attr.Key, out var ups);
-                        levelUps[attr.Key] = ups + (baseValue - 18);
+                        levelUps.TryGetValue(attrKey, out var ups);
+                        levelUps[attrKey] = ups + (baseValue - 18);
                         statLevelUps -= (baseValue - 18);
-                        attributes[attr.Key] = 18;
+                        attributes[attrKey] = 18;
                     }
-                    statPB += pointBuy[attributes[attr.Key]];
+                    statPB += pointBuy[attributes[attrKey]];
                 }
 
                 while (statLevelUps > 0)
