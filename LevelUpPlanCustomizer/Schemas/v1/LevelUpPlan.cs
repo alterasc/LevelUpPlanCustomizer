@@ -33,8 +33,8 @@ namespace LevelUpPlanCustomizer.Schemas.v1
         public string m_Selection { get; set; }
         public string[] m_Features { get; set; } = new string[0];
         public string m_ParametrizedFeature { get; set; }
-        public SpellSchool ParamSpellSchool { get; set; } = SpellSchool.None;
-        public WeaponCategory ParamWeaponCategory { get; set; } = WeaponCategory.UnarmedStrike;
+        public SpellSchool? ParamSpellSchool { get; set; }
+        public WeaponCategory? ParamWeaponCategory { get; set; }
 
         public StatType Stat { get; set; }
         public string m_FeatureSelectMythicSpellbook { get; set; }

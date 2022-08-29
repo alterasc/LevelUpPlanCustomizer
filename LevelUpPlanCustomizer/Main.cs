@@ -64,7 +64,7 @@ namespace LevelUpPlanCustomizer
             {                
                 try
                 {
-                    var pregen = CharacterExporter.ExportMC();
+                    var pregen = CharacterExporter.ExportMC(out var log);
                     var jsonSerializer = new JsonSerializer();
                     jsonSerializer.Formatting = Formatting.Indented;
                     jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
@@ -75,7 +75,7 @@ namespace LevelUpPlanCustomizer
                         jsonTextWriter.Formatting = jsonSerializer.Formatting;
                         jsonSerializer.Serialize(jsonTextWriter, pregen);
                     }
-                    Settings.MyTextOption = stringWriter.ToString();
+                    Settings.MyTextOption = log + "\n\n" + stringWriter.ToString();
                 }
                 catch (Exception ex)
                 {

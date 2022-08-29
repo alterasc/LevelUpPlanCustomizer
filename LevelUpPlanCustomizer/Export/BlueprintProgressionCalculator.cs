@@ -47,9 +47,10 @@ namespace LevelUpPlanCustomizer.Base.Export
         {
             IDictionary<BlueprintCharacterClass, ClassArchetypeData> classes = new Dictionary<BlueprintCharacterClass, ClassArchetypeData>();
             var progression = unit.Progression;
-            for (int i = 0; i < progression.m_ClassesOrder.Count; i++)
+            var nonMythicClassOrder = progression.m_ClassesOrder.Where(x => !x.IsMythic).ToList();
+            for (int i = 0; i < nonMythicClassOrder.Count; i++)
             {
-                BlueprintCharacterClass classOrder = progression.m_ClassesOrder[i];
+                BlueprintCharacterClass classOrder = nonMythicClassOrder[i];
                 classes.TryGetValue(classOrder, out var myClassData);
                 if (myClassData == null)
                 {

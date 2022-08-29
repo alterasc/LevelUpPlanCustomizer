@@ -187,8 +187,8 @@ namespace LevelUpPlanCustomizer.Patches
                             m_Selection = Utils.GetBlueprintReference<BlueprintFeatureSelectionReference>(sel.m_Selection),
                             m_Features = sel.m_Features.Select(c => Utils.GetBlueprintReference<BlueprintFeatureReference>(c)).ToArray(),
                             m_ParametrizedFeature = Utils.GetBlueprintReference<BlueprintParametrizedFeatureReference>(sel.m_ParametrizedFeature),
-                            ParamSpellSchool = sel.ParamSpellSchool,
-                            ParamWeaponCategory = sel.ParamWeaponCategory,
+                            ParamSpellSchool = sel.ParamSpellSchool ?? Kingmaker.Blueprints.Classes.Spells.SpellSchool.None,
+                            ParamWeaponCategory = sel.ParamWeaponCategory ?? Kingmaker.Enums.WeaponCategory.UnarmedStrike,
                             Stat = sel.Stat,
                             m_FeatureSelectMythicSpellbook = Utils.GetBlueprintReference<BlueprintFeatureSelectMythicSpellbookReference>(sel.m_FeatureSelectMythicSpellbook),
                             m_Spellbook = Utils.GetBlueprintReference<BlueprintSpellbookReference>(sel.m_Spellbook)
