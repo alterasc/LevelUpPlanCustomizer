@@ -73,8 +73,12 @@ namespace LevelUpPlanCustomizer
                     using (JsonTextWriter jsonTextWriter = new(stringWriter))
                     {
                         jsonTextWriter.Formatting = jsonSerializer.Formatting;
-                        jsonSerializer.Serialize(jsonTextWriter, pregen);
+                        jsonSerializer.Serialize(jsonTextWriter, pregen);                        
                     }
+                    var userPath = $"{Main.ModEntry.Path}Pregens";
+                    var info = Directory.CreateDirectory(userPath);
+                                       
+                    File.WriteAllText(Path.Combine(userPath, "export.json"), stringWriter.ToString());
                     Settings.MyTextOption = log + "\n\n" + stringWriter.ToString();
                 }
                 catch (Exception ex)

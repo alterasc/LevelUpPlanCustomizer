@@ -17,8 +17,8 @@ namespace LevelUpPlanCustomizer.Schemas.v1
         public string m_CharacterClass { get; set; }
         public string[] m_Archetypes { get; set; } = new string[0];
         public int Levels { get; set; }
-        public StatType RaceStat { get; set; }
-        public StatType LevelsStat { get; set; }
+        public StatType? RaceStat { get; set; }
+        public StatType? LevelsStat { get; set; }
         public StatType[] Skills { get; set; } = new StatType[0];
         public string[] m_SelectSpells { get; set; } = new string[0];
         public string[] m_MemorizeSpells { get; set; } = new string[0];
@@ -28,15 +28,15 @@ namespace LevelUpPlanCustomizer.Schemas.v1
 
     public class SelectionClass
     {
-        public bool IsParametrizedFeature { get; set; } = false;
-        public bool IsFeatureSelectMythicSpellbook { get; set; } = false;
+        public bool? IsParametrizedFeature { get; set; }
+        public bool? IsFeatureSelectMythicSpellbook { get; set; }
         public string m_Selection { get; set; }
         public string[] m_Features { get; set; } = new string[0];
         public string m_ParametrizedFeature { get; set; }
         public SpellSchool? ParamSpellSchool { get; set; }
         public WeaponCategory? ParamWeaponCategory { get; set; }
 
-        public StatType Stat { get; set; }
+        public StatType? Stat { get; set; }
         public string m_FeatureSelectMythicSpellbook { get; set; }
         public string m_Spellbook { get; set; }
     }
