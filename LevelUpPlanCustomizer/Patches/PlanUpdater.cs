@@ -38,23 +38,23 @@ namespace LevelUpPlanCustomizer.Patches
                 var info = Directory.CreateDirectory(userPath);
                 foreach (var file in info.GetFiles("*.json", SearchOption.AllDirectories))
                 {
-                    PregenUnit levelUpPlan = null;
+                    PregenUnit pregenUnit = null;
                     using (var reader = file.OpenText())
                         try
                         {
                             var jsonSerializer = new JsonSerializer();
-                            levelUpPlan = jsonSerializer.Deserialize<PregenUnit>(new JsonTextReader(reader));
+                            pregenUnit = jsonSerializer.Deserialize<PregenUnit>(new JsonTextReader(reader));
                         }
                         catch (Exception ex)
                         {
                             logChannel.Error($"Unable to parse {file}: {ex}");
                         }
-                    if (levelUpPlan != null)
+                    if (pregenUnit != null)
                     {
                         try
                         {
-                            ApplyPregen(levelUpPlan);
-                            logChannel.Log($"Successfully updated pregen with id: {levelUpPlan.UnitId}");
+                            ApplyPregen(pregenUnit);
+                            logChannel.Log($"Successfully updated pregen with id: {pregenUnit.UnitId}");
                         }
                         catch (Exception ex)
                         {
