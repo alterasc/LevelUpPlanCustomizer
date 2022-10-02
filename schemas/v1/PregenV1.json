@@ -18,7 +18,7 @@
       "type": "string",
       "pattern": "[0-9abcdef]{32}"
     },
-    "PregenUnitComp": {
+    "PregenUnitComponent": {
       "type": "object",
       "properties": {
         "PregenName": {
