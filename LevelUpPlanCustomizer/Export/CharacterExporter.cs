@@ -136,15 +136,20 @@ namespace LevelUpPlanCustomizer.Export
                     {
                         foreach (var selectedItem in sel.Value)
                         {
-                            sb.AppendLine($"At lvl 1 in race {value.Source.Blueprint} selection {selection.Key} took {selectedItem}");
-                            SelectionClass[] planSelections = levelUpPlan.Classes[0].Selections ?? new SelectionClass[0];
+                            var slvl = 0;
+                            if (sel.Key > 1)
+                            {
+                                slvl = sel.Key - 1;
+                            }
+                            sb.AppendLine($"At lvl {slvl + 1} in race {value.Source.Blueprint} selection {selection.Key} took {selectedItem}");
+                            SelectionClass[] planSelections = levelUpPlan.Classes[slvl].Selections ?? new SelectionClass[0];
                             var selClass = new SelectionClass()
                             {
                                 m_Selection = $"Blueprint:{selection.Key.AssetGuid}:{selection.Key}",
                                 m_Features = new string[] { $"Blueprint:{selectedItem.AssetGuid}:{selectedItem}" }
                             };
                             planSelections = planSelections.Append(selClass).ToArray();
-                            levelUpPlan.Classes[0].Selections = planSelections;
+                            levelUpPlan.Classes[slvl].Selections = planSelections;
                         }
                     }
 

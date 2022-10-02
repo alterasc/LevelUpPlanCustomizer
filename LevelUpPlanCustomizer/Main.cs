@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Kingmaker;
+using LevelUpPlanCustomizer.Base.Import;
 using LevelUpPlanCustomizer.Export;
 using LevelUpPlanCustomizer.Patches;
 using Newtonsoft.Json;
@@ -61,9 +62,29 @@ namespace LevelUpPlanCustomizer
             GUILayout.BeginHorizontal();
             GUILayout.Label(mc.CharacterName, GUILayout.ExpandWidth(false));
             GUILayout.Space(10);
-            if (GUILayout.RepeatButton("Export as Rix, the Rogue", GUILayout.ExpandWidth(false)))
+            if (GUILayout.RepeatButton("Export in place of Taolynn the Cavalier", GUILayout.ExpandWidth(false)))
+            {
+                ExportMC("57c2aaeb11ee4f8d81f0a57974a94f1b");
+            }
+            if (GUILayout.RepeatButton("Export in place of Sordara the Cleric", GUILayout.ExpandWidth(false)))
+            {
+                ExportMC("d27dd725873142039c6015fbf49ac621");
+            }
+            if (GUILayout.RepeatButton("Export in place of Yunelard the Fighter", GUILayout.ExpandWidth(false)))
+            {
+                ExportMC("8abbe46e26844e02a39645ae34913612");
+            }
+            if (GUILayout.RepeatButton("Export in place of Rix the Rogue", GUILayout.ExpandWidth(false)))
             {
                 ExportMC("fad59e6db3aa470ca7e8962e2daa12dc");
+            }
+            if (GUILayout.RepeatButton("Export in place of Marnun the Slayer", GUILayout.ExpandWidth(false)))
+            {
+                ExportMC("2160635e9bba4b9e81a5cfcd45e3d141");
+            }
+            if (GUILayout.RepeatButton("Export in place of Aengi the Sorcerer", GUILayout.ExpandWidth(false)))
+            {
+                ExportMC("1f6d72fd52ce418fb677db2243ea4de5");
             }
             GUILayout.EndHorizontal();
 
@@ -117,7 +138,7 @@ namespace LevelUpPlanCustomizer
                 }
                 File.WriteAllText(Path.Combine(userPath, exportFileName), stringWriter.ToString());
                 Settings.MyTextOption = log + "\n\n" + stringWriter.ToString();
-                PlanUpdater.BlueprintsCache_Init_Patch.UpdatePregens();
+                CharacterImporter.UpdatePregens();
             }
             catch (Exception ex)
             {

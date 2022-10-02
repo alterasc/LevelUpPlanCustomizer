@@ -153,6 +153,7 @@
   <ItemGroup>
     <Compile Include="Export\BlueprintProgressionCalculator.cs" />
     <Compile Include="Export\CharacterExporter.cs" />
+    <Compile Include="Import\CharacterImporter.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Patches\AlwaysAvailableAutoLevelup.cs" />
     <Compile Include="Patches\PlanUpdater.cs" />
