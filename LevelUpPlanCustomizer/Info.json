@@ -9,6 +9,6 @@
   "ManagerVersion": "0.23.0",
   "Repository": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/Repository.json",
   "Requirements": [],
-  "LoadAfter": [],
+  "LoadAfter": [ "MewsiferConsole.Mod" ],
   "Version": "1.0.1"
 }
