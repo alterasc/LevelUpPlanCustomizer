@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using Kingmaker;
 using LevelUpPlanCustomizer.Export;
+using LevelUpPlanCustomizer.Patches;
 using Newtonsoft.Json;
 using System;
 using System.Globalization;
@@ -60,31 +61,9 @@ namespace LevelUpPlanCustomizer
             GUILayout.BeginHorizontal();
             GUILayout.Label(mc.CharacterName, GUILayout.ExpandWidth(false));
             GUILayout.Space(10);
-            if (GUILayout.RepeatButton("Export", GUILayout.ExpandWidth(false)))
-            {                
-                try
-                {
-                    var pregen = CharacterExporter.ExportMC(out var log);
-                    var jsonSerializer = new JsonSerializer();
-                    jsonSerializer.Formatting = Formatting.Indented;
-                    jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
-                    jsonSerializer.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-                    StringWriter stringWriter = new(new StringBuilder(256), CultureInfo.InvariantCulture);
-                    using (JsonTextWriter jsonTextWriter = new(stringWriter))
-                    {
-                        jsonTextWriter.Formatting = jsonSerializer.Formatting;
-                        jsonSerializer.Serialize(jsonTextWriter, pregen);                        
-                    }
-                    var userPath = $"{Main.ModEntry.Path}Pregens";
-                    var info = Directory.CreateDirectory(userPath);
-                                       
-                    File.WriteAllText(Path.Combine(userPath, "export.json"), stringWriter.ToString());
-                    Settings.MyTextOption = log + "\n\n" + stringWriter.ToString();
-                }
-                catch (Exception ex)
-                {
-                    Settings.MyTextOption = ex.ToString();
-                }
+            if (GUILayout.RepeatButton("Export as Rix, the Rogue", GUILayout.ExpandWidth(false)))
+            {
+                ExportMC("fad59e6db3aa470ca7e8962e2daa12dc");
             }
             GUILayout.EndHorizontal();
 
@@ -102,6 +81,50 @@ namespace LevelUpPlanCustomizer
 
         }
 
+        private static string MakeValidFileName(string name)
+        {
+            string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(System.IO.Path.GetInvalidFileNameChars()));
+            string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+
+            return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
+        }
+
+        private static void ExportMC(string unitId)
+        {
+            try
+            {
+                var pregen = CharacterExporter.ExportMC(unitId, out var log);
+                var jsonSerializer = new JsonSerializer();
+                jsonSerializer.Formatting = Formatting.Indented;
+                jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
+                jsonSerializer.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                StringWriter stringWriter = new(new StringBuilder(256), CultureInfo.InvariantCulture);
+                using (JsonTextWriter jsonTextWriter = new(stringWriter))
+                {
+                    jsonTextWriter.Formatting = jsonSerializer.Formatting;
+                    jsonSerializer.Serialize(jsonTextWriter, pregen);
+                }
+                var userPath = $"{Main.ModEntry.Path}Pregens";
+                var info = Directory.CreateDirectory(userPath);
+                var exportFileName = "export.json";
+                if (pregen.PregenUnitComponent.PregenName.Length > 0)
+                {
+                    var sanizedFileName = MakeValidFileName(pregen.PregenUnitComponent.PregenName);
+                    if (sanizedFileName.Length > 0)
+                    {
+                        exportFileName = $"{sanizedFileName}.json";
+                    }
+                }
+                File.WriteAllText(Path.Combine(userPath, exportFileName), stringWriter.ToString());
+                Settings.MyTextOption = log + "\n\n" + stringWriter.ToString();
+                PlanUpdater.BlueprintsCache_Init_Patch.UpdatePregens();
+            }
+            catch (Exception ex)
+            {
+                Settings.MyTextOption = ex.ToString();
+            }
+        }
+
         static void OnSaveGUI(UnityModManager.ModEntry modEntry)
         {
             Settings.Save(modEntry);
@@ -116,7 +139,7 @@ namespace LevelUpPlanCustomizer
 
         public override void Save(UnityModManager.ModEntry modEntry)
         {
-            
+
         }
     }
 }

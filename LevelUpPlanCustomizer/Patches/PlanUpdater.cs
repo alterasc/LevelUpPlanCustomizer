@@ -18,7 +18,7 @@ namespace LevelUpPlanCustomizer.Patches
     class PlanUpdater
     {
         [HarmonyPatch(typeof(BlueprintsCache), "Init")]
-        static class BlueprintsCache_Init_Patch
+        internal static class BlueprintsCache_Init_Patch
         {
             static bool Initialized;
 
@@ -32,7 +32,7 @@ namespace LevelUpPlanCustomizer.Patches
                 UpdatePregens();
             }
 
-            private static void UpdatePregens()
+            internal static void UpdatePregens()
             {
                 LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
 

@@ -13,7 +13,7 @@ namespace LevelUpPlanCustomizer.Export
 {
     internal class CharacterExporter
     {
-        public static PregenUnit ExportMC(out string log)
+        public static PregenUnit ExportMC(string unitId, out string log)
         {
             StringBuilder sb = new();
             var player = Game.Instance.Player;
@@ -22,7 +22,7 @@ namespace LevelUpPlanCustomizer.Export
 
             var pregen = new PregenUnit();
 
-            pregen.UnitId = "fad59e6db3aa470ca7e8962e2daa12dc";
+            pregen.UnitId = unitId;
             pregen.Gender = mc.Gender;
             pregen.m_Race = mc.Progression.m_Race.AssetGuid.ToString();
             pregen.Alignment = mc.Alignment.ValueVisible;
@@ -82,6 +82,14 @@ namespace LevelUpPlanCustomizer.Export
                     m_Archetypes = mc.Progression.GetClassData(characterClass).Archetypes.Select(x => $"Blueprint:{x.AssetGuid}:{x}").ToArray(),
                     Levels = 1
                 };
+                foreach (var spellbook in mc.Descriptor.m_Spellbooks)
+                {
+                    var cClass = spellbook.Key.m_CharacterClass;
+                    if (cClass.Guid == characterClass.AssetGuid)
+                    {
+                        classLevel.m_SelectSpells = spellbook.Value.GetAllKnownSpells().Select(x => $"Blueprint:{x.Blueprint.AssetGuid}:{x.Blueprint}").ToArray();
+                    }
+                }
                 //set stat levelups
                 try
                 {
