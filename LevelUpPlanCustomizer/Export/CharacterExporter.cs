@@ -58,10 +58,16 @@ namespace LevelUpPlanCustomizer.Export
 
         static void setSkills(LevelUpPlan levelUpPlan, Kingmaker.EntitySystem.Entities.UnitEntityData mc, StringBuilder sb)
         {
+            var skills = new StatType[] { StatType.SkillAthletics, StatType.SkillMobility, StatType.SkillThievery, StatType.SkillStealth, StatType.SkillKnowledgeArcana,
+                StatType.SkillKnowledgeWorld, StatType.SkillLoreNature, StatType.SkillLoreReligion, StatType.SkillPerception, StatType.SkillPersuasion, StatType.SkillUseMagicDevice};
+            var levelSkills = mc.Stats.AllStats
+                .Where(x => skills.Contains(x.Type) && x.BaseValue > 0)
+                .OrderByDescending(x => x.BaseValue)
+                .Select(x => x.Type)
+                .ToArray();
             foreach (var item in levelUpPlan.Classes)
             {
-                item.Skills = new StatType[] { StatType.SkillAthletics, StatType.SkillMobility, StatType.SkillThievery, StatType.SkillStealth, StatType.SkillKnowledgeArcana,
-                StatType.SkillKnowledgeWorld, StatType.SkillLoreNature, StatType.SkillLoreReligion, StatType.SkillPerception, StatType.SkillPersuasion, StatType.SkillUseMagicDevice};
+                item.Skills = levelSkills;
             }
         }
 
