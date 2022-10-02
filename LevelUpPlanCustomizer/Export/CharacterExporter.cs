@@ -26,7 +26,10 @@ namespace LevelUpPlanCustomizer.Export
             pregen.Gender = mc.Gender;
             pregen.m_Race = mc.Progression.m_Race.AssetGuid.ToString();
             pregen.Alignment = mc.Alignment.ValueVisible;
-
+            pregen.PregenUnitComponent = new PregenUnitComp
+            {
+                PregenName = mc.CharacterName
+            };
             //get stats
             getStats(mc, out var attributes, out var levelUps);
 
@@ -122,7 +125,7 @@ namespace LevelUpPlanCustomizer.Export
                 if (value.Source.Blueprint is BlueprintRace objRace)
                 {
                     foreach (var sel in value.m_SelectionsByLevel)
-                    {                                                
+                    {
                         foreach (var selectedItem in sel.Value)
                         {
                             sb.AppendLine($"At lvl 1 in race {value.Source.Blueprint} selection {selection.Key} took {selectedItem}");

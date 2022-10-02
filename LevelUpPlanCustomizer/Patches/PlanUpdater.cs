@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Kingmaker.Blueprints;
+using Kingmaker.Blueprints.CharGen;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.UnitLogic.Components;
@@ -21,6 +22,7 @@ namespace LevelUpPlanCustomizer.Patches
         {
             static bool Initialized;
 
+            [HarmonyPostfix]
             static void Postfix()
             {
                 if (Initialized) return;
@@ -111,6 +113,15 @@ namespace LevelUpPlanCustomizer.Patches
                 pregenBP.Intelligence = pregenUnit.Intelligence;
                 pregenBP.Wisdom = pregenUnit.Wisdom;
                 pregenBP.Charisma = pregenUnit.Charisma;
+                var pgUC = pregenUnit.PregenUnitComponent;
+                if (pgUC != null)
+                {
+                    var pregenUnitComponent = pregenBP.GetComponent<PregenUnitComponent>();
+                    if (pgUC.PregenName != null && pgUC.PregenName.Length > 0)
+                    {
+                        pregenUnitComponent.PregenName = Utils.CreateLocalizedString($"{pregenUnit.UnitId}.PregenName", pgUC.PregenName);
+                    }
+                }
                 pregenBP.RemoveComponents<PregenDollSettings>();
                 var doll = new PregenDollSettings()
                 {

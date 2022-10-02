@@ -18,6 +18,14 @@
       "type": "string",
       "pattern": "[0-9abcdef]{32}"
     },
+    "PregenUnitComp": {
+      "type": "object",
+      "properties": {
+        "PregenName": {
+          "type": "string"
+        }
+      }
+    },
     "Alignment": {
       "type": "string",
       "enum": [

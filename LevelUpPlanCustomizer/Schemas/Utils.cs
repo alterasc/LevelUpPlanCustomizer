@@ -1,4 +1,5 @@
 ﻿using Kingmaker.Blueprints;
+using Kingmaker.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -150,6 +151,12 @@ namespace LevelUpPlanCustomizer
 
             array2[num] = value;
             return array2;
+        }
+        internal static LocalizedString CreateLocalizedString(string key, string value)
+        {
+            var localizedString = new LocalizedString() { m_Key = key };
+            LocalizationManager.CurrentPack.PutString(key, value);
+            return localizedString;
         }
     }
 }
