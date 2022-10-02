@@ -1,5 +1,5 @@
 ﻿{
-  "$schema": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/schemas/v1/PregenV1.json",
+  "$schema": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/main/schemas/v1/PregenV1.json",
   "UnitId": "fad59e6db3aa470ca7e8962e2daa12dc",
   "Gender": "Male",
   "m_Race": "0a5d473ead98b0646b94495af250fdc4",

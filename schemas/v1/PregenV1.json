@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$id": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/schemas/v1/PregenV1.json",
+  "$id": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/main/schemas/v1/PregenV1.json",
   "type": "object",
   "properties": {
     "UnitId": {
