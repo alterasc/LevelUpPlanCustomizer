@@ -1,15 +1,18 @@
 ﻿using HarmonyLib;
+using Kingmaker;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Class.LevelUp;
 using Kingmaker.UnitLogic.Class.LevelUp.Actions;
+using Owlcat.Runtime.Core.Logging;
+using System.Collections.Generic;
 
 namespace LevelUpPlanCustomizer.Patches
 {
     class AlwaysAvailableAutoLevelup
     {
         /*
-         *Patch for enabling auto-level regardless of difficulty setting          
+         * Patch for enabling auto-level regardless of difficulty setting          
          */
         [HarmonyPatch(typeof(LevelUpController), nameof(LevelUpController.IsPlanEnabled))]
         static class LevelUpController_IsPlanEnabled_Patch
@@ -18,6 +21,50 @@ namespace LevelUpPlanCustomizer.Patches
             static bool Prefix(ref bool __result, UnitEntityData unit, bool ignoreSettings = false)
             {
                 __result = true;
+                return false;
+            }
+        }
+
+        /*
+         * Patch for fixing skill points not being taken when archetype adds skillpoints
+         * and spells when spellbook is changed
+         */
+        [HarmonyPatch(typeof(LevelUpController), nameof(LevelUpController.ApplyLevelUpActions))]
+        static class LevelUpController_ApplyLevelUpActions_Patch
+        {
+            [HarmonyPrefix]
+            static bool Prefix(ref List<ILevelUpAction> __result, LevelUpController __instance, UnitEntityData unit)
+            {
+                LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
+                logChannel.Log("Called ApplyLevelUpActions");
+                List<ILevelUpAction> levelUpActionList = new List<ILevelUpAction>();
+                foreach (ILevelUpAction levelUpAction in __instance.LevelUpActions)
+                {
+                    if (!levelUpAction.Check(__instance.State, unit.Descriptor))
+                    {
+                        PFLog.Default.Log("Invalid action: " + levelUpAction?.ToString());
+                        if (levelUpAction is SpendSkillPoint && __instance.IsAutoLevelup)
+                        {
+                            levelUpActionList.Add(levelUpAction);
+                            levelUpAction.Apply(__instance.State, unit.Descriptor);
+                            __instance.State.OnApplyAction();
+                        }
+                        if (levelUpAction is SelectSpell)
+                        {
+                            levelUpActionList.Add(levelUpAction);
+                            levelUpAction.Apply(__instance.State, unit.Descriptor);
+                            __instance.State.OnApplyAction();
+                        }
+                    }
+                    else
+                    {
+                        levelUpActionList.Add(levelUpAction);
+                        levelUpAction.Apply(__instance.State, unit.Descriptor);
+                        __instance.State.OnApplyAction();
+                    }
+                }
+                unit.Progression.ReapplyFeaturesOnLevelUp();
+                __result = levelUpActionList;
                 return false;
             }
         }
@@ -38,7 +85,6 @@ namespace LevelUpPlanCustomizer.Patches
                     __result = false;
                     return false;
                 }
-                FeatureSelectionState selectionState = __instance.GetSelectionState(state);
                 var controller = Kingmaker.Game.Instance?.LevelUpController;
                 if (controller != null && controller.IsAutoLevelup)
                 {

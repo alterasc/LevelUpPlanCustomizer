@@ -138,7 +138,7 @@ namespace LevelUpPlanCustomizer
                     }
                 }
                 File.WriteAllText(Path.Combine(userPath, exportFileName), stringWriter.ToString());
-                //Settings.MyTextOption = log + "\n\n" + stringWriter.ToString();
+                Settings.MyTextOption = log + "\n\n" + stringWriter.ToString();
                 CharacterImporter.UpdatePregens();
             }
             catch (Exception ex)
