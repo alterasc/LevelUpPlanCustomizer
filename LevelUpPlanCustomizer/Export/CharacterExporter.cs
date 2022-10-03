@@ -1,6 +1,8 @@
 ﻿using Kingmaker;
+using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Selection;
+using Kingmaker.EntitySystem.Entities;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Utility;
 using LevelUpPlanCustomizer.Base.Export;
@@ -13,25 +15,22 @@ namespace LevelUpPlanCustomizer.Export
 {
     internal class CharacterExporter
     {
-        public static PregenUnit ExportMC(string unitId, out string log)
+        public static PregenUnit ExportAsPregen(UnitEntityData unit, string unitId, out string log)
         {
             StringBuilder sb = new();
-            var player = Game.Instance.Player;
-            Kingmaker.EntitySystem.Entities.UnitEntityData mc = player.MainCharacter.Value;
-            var stats = mc.Stats;
-
-            var pregen = new PregenUnit();
-
-            pregen.UnitId = unitId;
-            pregen.Gender = mc.Gender;
-            pregen.m_Race = mc.Progression.m_Race.AssetGuid.ToString();
-            pregen.Alignment = mc.Alignment.ValueVisible;
-            pregen.PregenUnitComponent = new PregenUnitComp
+            var pregen = new PregenUnit
             {
-                PregenName = mc.CharacterName
+                UnitId = unitId,
+                Gender = unit.Gender,
+                m_Race = unit.Progression.m_Race.AssetGuid.ToString(),
+                Alignment = unit.Alignment.ValueVisible,
+                PregenUnitComponent = new PregenUnitComp
+                {
+                    PregenName = unit.CharacterName
+                }
             };
             //get stats
-            getStats(mc, out var attributes, out var levelUps);
+            getStats(unit, out var attributes, out var levelUps);
 
             pregen.Strength = attributes[StatType.Strength];
             pregen.Dexterity = attributes[StatType.Dexterity];
@@ -44,16 +43,48 @@ namespace LevelUpPlanCustomizer.Export
             pregen.LevelUpPlan = levelUpPlan;
 
             //set ClassOrder
-            setClassOrder(levelUpPlan, mc, sb, levelUps);
+            setClassOrder(levelUpPlan, unit, sb, levelUps);
 
             //set skills
-            setSkills(levelUpPlan, mc, sb);
+            setSkills(levelUpPlan, unit, sb);
 
             // selection
-            getSelections(levelUpPlan, mc, sb);
+            getSelections(levelUpPlan, unit, sb);
 
             log = sb.ToString();
             return pregen;
+        }
+
+        public static LevelUpPlan ExportAsFeatureList(UnitEntityData unit, out string log)
+        {
+            StringBuilder sb = new();
+
+            var levelUpPlan = new LevelUpPlan();
+            var maybeFeatureList = unit.Blueprint.m_AddFacts.Select(x => x.GetBlueprint()).Where(x => x is BlueprintFeature y)
+                .Select(x => x as BlueprintFeature)
+                .FirstOrDefault(x => x.GetComponent<AddClassLevels>() != null);
+
+            if (maybeFeatureList == null)
+            {
+                log = sb.ToString();
+                return levelUpPlan;
+            }
+            levelUpPlan.FeatureList = $"Blueprint:{maybeFeatureList.AssetGuid}:{maybeFeatureList}";
+
+            //get stats
+            getStatsForCompanion(unit, out var levelUps);
+
+            //set ClassOrder
+            setClassOrder(levelUpPlan, unit, sb, levelUps);
+
+            //set skills
+            setSkills(levelUpPlan, unit, sb);
+
+            // selection
+            getSelections(levelUpPlan, unit, sb);
+
+            log = sb.ToString();
+            return levelUpPlan;
         }
 
         static void setSkills(LevelUpPlan levelUpPlan, Kingmaker.EntitySystem.Entities.UnitEntityData mc, StringBuilder sb)
@@ -71,10 +102,10 @@ namespace LevelUpPlanCustomizer.Export
             }
         }
 
-        static void setClassOrder(LevelUpPlan levelUpPlan, Kingmaker.EntitySystem.Entities.UnitEntityData mc, StringBuilder sb, IDictionary<StatType, int> levelUps)
+        static void setClassOrder(LevelUpPlan levelUpPlan, UnitEntityData unit, StringBuilder sb, IDictionary<StatType, int> levelUps)
         {
-            var lvl = mc.Progression.CharacterLevel;
-            var classOrder = mc.Progression.ClassesOrder;
+            var lvl = unit.Progression.CharacterLevel;
+            var classOrder = unit.Progression.ClassesOrder;
             var tmpList = new List<ClassLevel>();
             //set class order
             var nonMythicClasses = classOrder.Where(x => !x.IsMythic).ToList();
@@ -85,15 +116,19 @@ namespace LevelUpPlanCustomizer.Export
                 var classLevel = new ClassLevel
                 {
                     m_CharacterClass = $"Blueprint:{characterClass.AssetGuid}:{characterClass}",
-                    m_Archetypes = mc.Progression.GetClassData(characterClass).Archetypes.Select(x => $"Blueprint:{x.AssetGuid}:{x}").ToArray(),
+                    m_Archetypes = unit.Progression.GetClassData(characterClass).Archetypes.Select(x => $"Blueprint:{x.AssetGuid}:{x}").ToArray(),
                     Levels = 1
                 };
-                foreach (var spellbook in mc.Descriptor.m_Spellbooks)
+                foreach (var spellbook in unit.Descriptor.m_Spellbooks)
                 {
-                    var cClass = spellbook.Key.m_CharacterClass;
-                    if (cClass.Guid == characterClass.AssetGuid)
+                    if (!spellbook.Key.AllSpellsKnown)
                     {
-                        classLevel.m_SelectSpells = spellbook.Value.GetAllKnownSpells().Select(x => $"Blueprint:{x.Blueprint.AssetGuid}:{x.Blueprint}").ToArray();
+                        var cClass = spellbook.Key.m_CharacterClass;
+                        if (cClass.Guid == characterClass.AssetGuid)
+                        {
+                            classLevel.m_SelectSpells = spellbook.Value.GetAllKnownSpells()
+                                .Where(x => x.SpellLevel > 0).Select(x => $"Blueprint:{x.Blueprint.AssetGuid}:{x.Blueprint}").ToArray();
+                        }
                     }
                 }
                 //set stat levelups
@@ -123,16 +158,18 @@ namespace LevelUpPlanCustomizer.Export
             levelUpPlan.Classes = tmpList.ToArray();
         }
 
-        static void getSelections(LevelUpPlan levelUpPlan, Kingmaker.EntitySystem.Entities.UnitEntityData mc, StringBuilder sb)
+        static void getSelections(LevelUpPlan levelUpPlan, UnitEntityData unit, StringBuilder sb)
         {
-            var selections = mc.Progression.Selections;
-            var mythicFeatSelection = Utils.GetBlueprint<BlueprintFeatureSelection>("9ee0f6745f555484299b0a1563b99d81");
-            var mythicAbilitySelection = Utils.GetBlueprint<BlueprintFeatureSelection>("ba0e5a900b775be4a99702f1ed08914d");
-
+            var selections = unit.Progression.Selections;
+            var selectionSkips = new List<BlueprintFeatureSelection>() {
+                Utils.GetBlueprint<BlueprintFeatureSelection>("9ee0f6745f555484299b0a1563b99d81"),
+                Utils.GetBlueprint<BlueprintFeatureSelection>("ba0e5a900b775be4a99702f1ed08914d"),
+                Utils.GetBlueprint<BlueprintFeatureSelection>("1421e0034a3afac458de08648d06faf0")
+            };
             foreach (var selection in selections)
             {
                 Kingmaker.UnitLogic.FeatureSelectionData value = selection.Value;
-                if (selection.Key == mythicFeatSelection || selection.Key == mythicAbilitySelection)
+                if (selectionSkips.Contains(selection.Key))
                 {
                     continue;
                 }
@@ -164,7 +201,7 @@ namespace LevelUpPlanCustomizer.Export
                 {
                     foreach (var sel in value.m_SelectionsByLevel)
                     {
-                        int cLvl = BlueprintProgressionCalculator.FindCharLevel(mc, obj, sel.Key);
+                        int cLvl = BlueprintProgressionCalculator.FindCharLevel(unit, obj, sel.Key);
                         foreach (var selectedItem in sel.Value)
                         {
                             sb.AppendLine($"At {sel.Key} (clvl {cLvl}) in progression {value.Source.Blueprint} selection {selection.Key} took {selectedItem}");
@@ -187,7 +224,7 @@ namespace LevelUpPlanCustomizer.Export
                                     };
                                     selParamed.IsParametrizedFeature = true;
                                     selParamed.m_ParametrizedFeature = $"Blueprint:{selectedItem.AssetGuid}:{selectedItem}";
-                                    var enumer = mc.Progression.Features.Enumerable.First(x => x.Blueprint == paramFeature);
+                                    var enumer = unit.Progression.Features.Enumerable.First(x => x.Blueprint == paramFeature);
                                     if (paramFeature.ParameterType == FeatureParameterType.WeaponCategory)
                                     {
                                         sb.AppendLine($"At {sel.Key} (clvl {cLvl}) in progression " +
@@ -231,11 +268,11 @@ namespace LevelUpPlanCustomizer.Export
             }
         }
 
-        static void getStats(Kingmaker.EntitySystem.Entities.UnitEntityData mc, out Dictionary<StatType, int> attributes, out IDictionary<StatType, int> levelUps)
+        static void getStats(UnitEntityData unit, out Dictionary<StatType, int> attributes, out IDictionary<StatType, int> levelUps)
         {
-            attributes = mc.Stats.Attributes.ToDictionary(a => a.Type, a => a.BaseValue);
+            attributes = unit.Stats.Attributes.ToDictionary(a => a.Type, a => a.BaseValue);
             levelUps = new Dictionary<StatType, int>();
-            var statLevelUps = mc.Progression.CharacterLevel / 4;
+            var statLevelUps = unit.Progression.CharacterLevel / 4;
             if (statLevelUps > 0)
             {
                 IDictionary<int, int> pointBuy = new Dictionary<int, int>()
@@ -281,6 +318,40 @@ namespace LevelUpPlanCustomizer.Export
                 if (statPB != 25)
                 {
                     // log it
+                }
+            }
+        }
+
+        static void getStatsForCompanion(UnitEntityData unit, out IDictionary<StatType, int> levelUps)
+        {
+            var attributes = unit.Stats.Attributes.ToDictionary(a => a.Type, a => a.BaseValue);
+            levelUps = new Dictionary<StatType, int>();
+            var statLevelUps = unit.Progression.CharacterLevel / 4;
+            if (statLevelUps > 0)
+            {
+                if (unit.Stats.Strength > unit.Blueprint.Strength)
+                {
+                    levelUps[StatType.Strength] = unit.Stats.Strength - unit.Blueprint.Strength;
+                }
+                if (unit.Stats.Dexterity > unit.Blueprint.Dexterity)
+                {
+                    levelUps[StatType.Dexterity] = unit.Stats.Dexterity - unit.Blueprint.Dexterity;
+                }
+                if (unit.Stats.Constitution > unit.Blueprint.Constitution)
+                {
+                    levelUps[StatType.Constitution] = unit.Stats.Constitution - unit.Blueprint.Constitution;
+                }
+                if (unit.Stats.Intelligence > unit.Blueprint.Intelligence)
+                {
+                    levelUps[StatType.Intelligence] = unit.Stats.Intelligence - unit.Blueprint.Intelligence;
+                }
+                if (unit.Stats.Wisdom > unit.Blueprint.Wisdom)
+                {
+                    levelUps[StatType.Wisdom] = unit.Stats.Wisdom - unit.Blueprint.Wisdom;
+                }
+                if (unit.Stats.Charisma > unit.Blueprint.Charisma)
+                {
+                    levelUps[StatType.Charisma] = unit.Stats.Charisma - unit.Blueprint.Charisma;
                 }
             }
         }

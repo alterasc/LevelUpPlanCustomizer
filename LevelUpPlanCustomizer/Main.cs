@@ -1,5 +1,9 @@
 ﻿using HarmonyLib;
 using Kingmaker;
+using Kingmaker.Blueprints.Root;
+using Kingmaker.Dungeon;
+using Kingmaker.EntitySystem.Entities;
+using Kingmaker.UnitLogic;
 using LevelUpPlanCustomizer.Base.Import;
 using LevelUpPlanCustomizer.Export;
 using LevelUpPlanCustomizer.Patches;
@@ -7,6 +11,7 @@ using Newtonsoft.Json;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityModManagerNet;
@@ -50,57 +55,74 @@ namespace LevelUpPlanCustomizer
         static void OnGUI(UnityModManager.ModEntry modEntry)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Label("TextArea", GUILayout.ExpandWidth(false));
             GUILayout.Space(10);
-            Settings.MyTextOption = GUILayout.TextArea(Settings.MyTextOption, GUILayout.Width(300f));
             GUILayout.EndHorizontal();
 
             var player = Game.Instance.Player;
             var activeCompanions = player.ActiveCompanions;
 
             var mc = player.MainCharacter.Value;
+            GUIExportAsPregen(mc);
+            var campaign = Game.Instance.Player.Campaign;
+            var MainCampaign = Utils.GetBlueprint<BlueprintCampaign>("fd2e11ebb8a14d6599450fc27f03486a");
+            //var Dlc1Campaign = Utils.GetBlueprint<BlueprintCampaign>("e1bde745d6ad47c0bc9fb8e479b29153");
+            //var Dlc2Campaign = Utils.GetBlueprint<BlueprintCampaign>("e1bde745d6ad47c0bc9fb8e479b29153");
+            var Dlc3Campaign = Utils.GetBlueprint<BlueprintCampaign>("e1bde745d6ad47c0bc9fb8e479b29153");
+            if (campaign == MainCampaign)
+            {
+                foreach (var comp in activeCompanions.Where(x => x.IsStoryCompanion()))
+                {
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(comp.CharacterName, GUILayout.Width(140));
+                    comp.IsStoryCompanion();
+                    GUILayout.Space(10);
+                    if (GUILayout.RepeatButton("Export", GUILayout.ExpandWidth(false)))
+                    {
+                        ExportUnitAsFeatureList(comp);
+                    }
+                    GUILayout.EndHorizontal();
+                }
+            }
+            else if (campaign == Dlc3Campaign)
+            {
+                foreach (var comp in activeCompanions)
+                {
+                    GUIExportAsPregen(comp);
+                }
+            }
+        }
+
+        private static void GUIExportAsPregen(UnitEntityData mc)
+        {
             GUILayout.BeginHorizontal();
-            GUILayout.Label(mc.CharacterName, GUILayout.ExpandWidth(false));
-            GUILayout.Space(40);
+            GUILayout.Label(mc.CharacterName, GUILayout.Width(140));
+            GUILayout.Space(10);
             GUILayout.Label("Export in place of", GUILayout.ExpandWidth(false));
             if (GUILayout.RepeatButton("Taolynn the Cavalier", GUILayout.ExpandWidth(false)))
             {
-                ExportMC("57c2aaeb11ee4f8d81f0a57974a94f1b");
+                ExportUnitAsPregen(mc, "57c2aaeb11ee4f8d81f0a57974a94f1b");
             }
             if (GUILayout.RepeatButton("Sordara the Cleric", GUILayout.ExpandWidth(false)))
             {
-                ExportMC("d27dd725873142039c6015fbf49ac621");
+                ExportUnitAsPregen(mc, "d27dd725873142039c6015fbf49ac621");
             }
             if (GUILayout.RepeatButton("Yunelard the Fighter", GUILayout.ExpandWidth(false)))
             {
-                ExportMC("8abbe46e26844e02a39645ae34913612");
+                ExportUnitAsPregen(mc, "8abbe46e26844e02a39645ae34913612");
             }
             if (GUILayout.RepeatButton("Rix the Rogue", GUILayout.ExpandWidth(false)))
             {
-                ExportMC("fad59e6db3aa470ca7e8962e2daa12dc");
+                ExportUnitAsPregen(mc, "fad59e6db3aa470ca7e8962e2daa12dc");
             }
             if (GUILayout.RepeatButton("Marnun the Slayer", GUILayout.ExpandWidth(false)))
             {
-                ExportMC("2160635e9bba4b9e81a5cfcd45e3d141");
+                ExportUnitAsPregen(mc, "2160635e9bba4b9e81a5cfcd45e3d141");
             }
             if (GUILayout.RepeatButton("Aengi the Sorcerer", GUILayout.ExpandWidth(false)))
             {
-                ExportMC("1f6d72fd52ce418fb677db2243ea4de5");
+                ExportUnitAsPregen(mc, "1f6d72fd52ce418fb677db2243ea4de5");
             }
             GUILayout.EndHorizontal();
-
-            foreach (var comp in activeCompanions)
-            {
-                GUILayout.BeginHorizontal();
-                GUILayout.Label(comp.CharacterName, GUILayout.ExpandWidth(false));
-                GUILayout.Space(10);
-                if (GUILayout.RepeatButton("Export", GUILayout.ExpandWidth(false)))
-                {
-                    Settings.MyTextOption = comp.Blueprint.AssetGuid.ToString();
-                }
-                GUILayout.EndHorizontal();
-            }
-
         }
 
         private static string MakeValidFileName(string name)
@@ -111,11 +133,11 @@ namespace LevelUpPlanCustomizer
             return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
         }
 
-        private static void ExportMC(string unitId)
+        private static void ExportUnitAsPregen(UnitEntityData unit, string unitId)
         {
             try
             {
-                var pregen = CharacterExporter.ExportMC(unitId, out var log);
+                var pregen = CharacterExporter.ExportAsPregen(unit, unitId, out var log);
                 var jsonSerializer = new JsonSerializer();
                 jsonSerializer.Formatting = Formatting.Indented;
                 jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
@@ -126,7 +148,7 @@ namespace LevelUpPlanCustomizer
                     jsonTextWriter.Formatting = jsonSerializer.Formatting;
                     jsonSerializer.Serialize(jsonTextWriter, pregen);
                 }
-                var userPath = $"{Main.ModEntry.Path}Pregens";
+                var userPath = $"{ModEntry.Path}Pregens";
                 var info = Directory.CreateDirectory(userPath);
                 var exportFileName = "export.json";
                 if (pregen.PregenUnitComponent.PregenName.Length > 0)
@@ -138,12 +160,46 @@ namespace LevelUpPlanCustomizer
                     }
                 }
                 File.WriteAllText(Path.Combine(userPath, exportFileName), stringWriter.ToString());
-                Settings.MyTextOption = log + "\n\n" + stringWriter.ToString();
                 CharacterImporter.UpdatePregens();
             }
             catch (Exception ex)
             {
-                Settings.MyTextOption = ex.ToString();
+
+            }
+        }
+
+        private static void ExportUnitAsFeatureList(UnitEntityData unit)
+        {
+            try
+            {
+                var featureList = CharacterExporter.ExportAsFeatureList(unit, out var log);
+                var jsonSerializer = new JsonSerializer();
+                jsonSerializer.Formatting = Formatting.Indented;
+                jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
+                jsonSerializer.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                StringWriter stringWriter = new(new StringBuilder(256), CultureInfo.InvariantCulture);
+                using (JsonTextWriter jsonTextWriter = new(stringWriter))
+                {
+                    jsonTextWriter.Formatting = jsonSerializer.Formatting;
+                    jsonSerializer.Serialize(jsonTextWriter, featureList);
+                }
+                var userPath = $"{ModEntry.Path}FeatureLists";
+                var info = Directory.CreateDirectory(userPath);
+                var exportFileName = "export.json";                
+                if (unit.CharacterName.Length > 0)
+                {
+                    var sanizedFileName = MakeValidFileName(unit.CharacterName);
+                    if (sanizedFileName.Length > 0)
+                    {
+                        exportFileName = $"{sanizedFileName}.json";
+                    }
+                }
+                File.WriteAllText(Path.Combine(userPath, exportFileName), stringWriter.ToString());
+                CharacterImporter.UpdatePregens();
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
