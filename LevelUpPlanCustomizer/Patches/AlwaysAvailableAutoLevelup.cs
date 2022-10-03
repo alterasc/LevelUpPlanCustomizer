@@ -37,7 +37,7 @@ namespace LevelUpPlanCustomizer.Patches
             {
                 LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
                 logChannel.Log("Called ApplyLevelUpActions");
-                List<ILevelUpAction> levelUpActionList = new List<ILevelUpAction>();
+                List<ILevelUpAction> levelUpActionList = new();
                 foreach (ILevelUpAction levelUpAction in __instance.LevelUpActions)
                 {
                     if (!levelUpAction.Check(__instance.State, unit.Descriptor))
@@ -49,7 +49,7 @@ namespace LevelUpPlanCustomizer.Patches
                             levelUpAction.Apply(__instance.State, unit.Descriptor);
                             __instance.State.OnApplyAction();
                         }
-                        if (levelUpAction is SelectSpell)
+                        if (levelUpAction is SelectSpell && __instance.IsAutoLevelup)
                         {
                             levelUpActionList.Add(levelUpAction);
                             levelUpAction.Apply(__instance.State, unit.Descriptor);
