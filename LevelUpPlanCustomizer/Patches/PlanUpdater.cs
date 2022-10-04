@@ -17,11 +17,9 @@ namespace LevelUpPlanCustomizer.Patches
                 if (Initialized) return;
                 Initialized = true;
 
-                CharacterImporter.UpdateLevelUpPlans();
+                CharacterImporter.UpdateFeatureLists();
                 CharacterImporter.UpdatePregens();
             }
-
-            
         }
     }
 }

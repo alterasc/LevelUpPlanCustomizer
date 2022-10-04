@@ -160,6 +160,7 @@
     <Compile Include="Schemas\Utils.cs" />
     <Compile Include="Schemas\v1\LevelUpPlan.cs" />
     <Compile Include="Schemas\v1\PregenUnit.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.json">

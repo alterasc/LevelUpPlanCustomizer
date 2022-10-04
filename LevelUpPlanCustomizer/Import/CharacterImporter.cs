@@ -15,13 +15,18 @@ namespace LevelUpPlanCustomizer.Base.Import
 {
     internal class CharacterImporter
     {
-        internal static void UpdatePregens()
+        internal static void UpdatePregens(string filePattern = null)
         {
             LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
 
             var userPath = $"{Main.ModEntry.Path}Pregens";
             var info = Directory.CreateDirectory(userPath);
-            foreach (var file in info.GetFiles("*.json", SearchOption.AllDirectories))
+            string pattern = "*.json";
+            if (filePattern != null)
+            {
+                pattern = filePattern;
+            }
+            foreach (var file in info.GetFiles(pattern, SearchOption.AllDirectories))
             {
                 PregenUnit pregenUnit = null;
                 using (var reader = file.OpenText())
@@ -49,13 +54,18 @@ namespace LevelUpPlanCustomizer.Base.Import
             }
         }
 
-        internal static void UpdateLevelUpPlans()
+        internal static void UpdateFeatureLists(string filePattern = null)
         {
             LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
 
             var userPath = $"{Main.ModEntry.Path}FeatureLists";
             var info = Directory.CreateDirectory(userPath);
-            foreach (var file in info.GetFiles("*.json", SearchOption.AllDirectories))
+            string pattern = "*.json";
+            if (filePattern != null)
+            {
+                pattern = filePattern;
+            }
+            foreach (var file in info.GetFiles(pattern, SearchOption.AllDirectories))
             {
                 LevelUpPlan levelUpPlan = null;
                 using (var reader = file.OpenText())
@@ -166,7 +176,7 @@ namespace LevelUpPlanCustomizer.Base.Import
             if (cl.Selections == null)
             {
                 r.Selections = new SelectionEntry[0];
-                logChannel.Error($"NO SELECTION AT {r.m_CharacterClass}");
+                logChannel.Log($"NO SELECTION AT {r.m_CharacterClass}");
             }
             else
             {
@@ -176,7 +186,7 @@ namespace LevelUpPlanCustomizer.Base.Import
                     {
                         throw new ArgumentException($"Selection {sel.m_Selection} has no feature choice");
                     }
-                    logChannel.Error($"ADDING SELECTION AT {r.m_CharacterClass}: SELECTION: {sel.m_Selection}, FEATURE {sel.m_Features.First()}");
+                    logChannel.Log($"ADDING SELECTION AT {r.m_CharacterClass}: SELECTION: {sel.m_Selection}, FEATURE {sel.m_Features.First()}");
                     return new SelectionEntry()
                     {
                         IsParametrizedFeature = sel.IsParametrizedFeature ?? false,

@@ -1,13 +1,13 @@
 ﻿using HarmonyLib;
 using Kingmaker;
 using Kingmaker.Blueprints.Root;
-using Kingmaker.Dungeon;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
+using LevelUpPlanCustomizer.Base;
 using LevelUpPlanCustomizer.Base.Import;
 using LevelUpPlanCustomizer.Export;
-using LevelUpPlanCustomizer.Patches;
 using Newtonsoft.Json;
+using Owlcat.Runtime.Core.Logging;
 using System;
 using System.Globalization;
 using System.IO;
@@ -28,8 +28,8 @@ namespace LevelUpPlanCustomizer
         public static UnityModManager.ModEntry ModEntry;
         static bool Load(UnityModManager.ModEntry modEntry)
         {
-            Settings = Settings.Load<Settings>(modEntry);
             var harmony = new Harmony(modEntry.Info.Id);
+            Settings = UnityModManager.ModSettings.Load<Settings>(modEntry);
             ModEntry = modEntry;
             modEntry.OnToggle = OnToggle;
             modEntry.OnGUI = OnGUI;
@@ -54,20 +54,39 @@ namespace LevelUpPlanCustomizer
 
         static void OnGUI(UnityModManager.ModEntry modEntry)
         {
+            GUILayout.Label("Always available auto level");
+            Settings.AlwaysAutoLevel = GUILayout.Toggle(Settings.AlwaysAutoLevel, "Always allow auto level");
+            GUILayout.Label("Archetype skill/spell fix");
+            Settings.PatchApplyLevelUpActions = GUILayout.Toggle(Settings.PatchApplyLevelUpActions, "Experimental patch to fix issues with archetype skills and spellbooks");
+            GUILayout.Label("Archetype feature selection fix");
+            Settings.PatchSelectFeature = GUILayout.Toggle(Settings.PatchSelectFeature, "Experimental patch to fix issues with archetype features");
+
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
             GUILayout.EndHorizontal();
 
-            var player = Game.Instance.Player;
-            var activeCompanions = player.ActiveCompanions;
-
-            var mc = player.MainCharacter.Value;
+            var player = Game.Instance?.Player;
+            if (player == null)
+            {
+                return;
+            }
+            var mc = player?.MainCharacter.Value;
+            if (mc == null)
+            {
+                return;
+            }
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("-----------------------------------------------------");
+            GUILayout.EndHorizontal();
             GUIExportAsPregen(mc);
             var campaign = Game.Instance.Player.Campaign;
             var MainCampaign = Utils.GetBlueprint<BlueprintCampaign>("fd2e11ebb8a14d6599450fc27f03486a");
-            //var Dlc1Campaign = Utils.GetBlueprint<BlueprintCampaign>("e1bde745d6ad47c0bc9fb8e479b29153");
-            //var Dlc2Campaign = Utils.GetBlueprint<BlueprintCampaign>("e1bde745d6ad47c0bc9fb8e479b29153");
             var Dlc3Campaign = Utils.GetBlueprint<BlueprintCampaign>("e1bde745d6ad47c0bc9fb8e479b29153");
+            var activeCompanions = player.ActiveCompanions;
+            if (activeCompanions == null)
+            {
+                return;
+            }
             if (campaign == MainCampaign)
             {
                 foreach (var comp in activeCompanions.Where(x => x.IsStoryCompanion()))
@@ -160,11 +179,12 @@ namespace LevelUpPlanCustomizer
                     }
                 }
                 File.WriteAllText(Path.Combine(userPath, exportFileName), stringWriter.ToString());
-                CharacterImporter.UpdatePregens();
+                CharacterImporter.UpdatePregens(exportFileName);
             }
             catch (Exception ex)
             {
-
+                LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
+                logChannel.Error("Error during pregen export: {}", ex.Message);
             }
         }
 
@@ -185,7 +205,7 @@ namespace LevelUpPlanCustomizer
                 }
                 var userPath = $"{ModEntry.Path}FeatureLists";
                 var info = Directory.CreateDirectory(userPath);
-                var exportFileName = "export.json";                
+                var exportFileName = "export.json";
                 if (unit.CharacterName.Length > 0)
                 {
                     var sanizedFileName = MakeValidFileName(unit.CharacterName);
@@ -195,29 +215,18 @@ namespace LevelUpPlanCustomizer
                     }
                 }
                 File.WriteAllText(Path.Combine(userPath, exportFileName), stringWriter.ToString());
-                CharacterImporter.UpdatePregens();
+                CharacterImporter.UpdateFeatureLists(exportFileName);
             }
             catch (Exception ex)
             {
-
+                LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
+                logChannel.Error("Error during feature list export: {}", ex.Message);
             }
         }
 
         static void OnSaveGUI(UnityModManager.ModEntry modEntry)
         {
             Settings.Save(modEntry);
-        }
-    }
-
-    public class Settings : UnityModManager.ModSettings
-    {
-        public float MyFloatOption = 2f;
-        public bool MyBoolOption = true;
-        public string MyTextOption = "Hello";
-
-        public override void Save(UnityModManager.ModEntry modEntry)
-        {
-
         }
     }
 }

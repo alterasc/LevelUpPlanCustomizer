@@ -20,6 +20,10 @@ namespace LevelUpPlanCustomizer.Patches
             [HarmonyPrefix]
             static bool Prefix(ref bool __result, UnitEntityData unit, bool ignoreSettings = false)
             {
+                if (!Main.Settings.AlwaysAutoLevel)
+                {
+                    return true;
+                }
                 __result = true;
                 return false;
             }
@@ -35,6 +39,10 @@ namespace LevelUpPlanCustomizer.Patches
             [HarmonyPrefix]
             static bool Prefix(ref List<ILevelUpAction> __result, LevelUpController __instance, UnitEntityData unit)
             {
+                if (!Main.Settings.PatchApplyLevelUpActions)
+                {
+                    return true;
+                }
                 LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
                 logChannel.Log("Called ApplyLevelUpActions");
                 List<ILevelUpAction> levelUpActionList = new();
@@ -80,6 +88,10 @@ namespace LevelUpPlanCustomizer.Patches
             [HarmonyPrefix]
             static bool Prefix(ref bool __result, SelectFeature __instance, LevelUpState state, UnitDescriptor unit)
             {
+                if (!Main.Settings.PatchSelectFeature)
+                {
+                    return true;
+                }
                 if (__instance.Item == null)
                 {
                     __result = false;
