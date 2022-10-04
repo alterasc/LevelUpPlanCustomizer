@@ -3,12 +3,12 @@
   "Author": "AlterAsc",
   "DisplayName": "LevelUp Plan Customizer",
   "EntryMethod": "LevelUpPlanCustomizer.Main.Load",
-  "GameVersion": "1.3.0",
+  "GameVersion": "2.0.0",
   "HomePage": "https://github.com/alterasc/LevelUpPlanCustomizer/releases",
   "Id": "LevelUpPlanCustomizer",
   "ManagerVersion": "0.23.0",
-  "Repository": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/master/Repository.json",
+  "Repository": "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/main/Repository.json",
   "Requirements": [],
   "LoadAfter": [ "MewsiferConsole.Mod" ],
-  "Version": "1.0.1"
+  "Version": "2.0.0"
 }

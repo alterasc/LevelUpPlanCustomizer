@@ -2,7 +2,7 @@
 
 Allows you to customize pregens and companions automatic level up builds and enables auto level regardless of difficulty setting.
 
-Now with export for MC and story companions!
+Now with export for MC and story companions! (See How to try it section)
 
 ## IMPORTANT: By itself this mod does NOT change any in game builds. Until you add them yourself, the only effect will be avilability of automatic level up regardless on setting.
 
@@ -39,9 +39,12 @@ Clarfification on last point: this is done by bypassing the check of game settin
 
 ## How to try it 
 
-Take [PregenMeleeSorcerer.json](LevelUpPlanCustomizer/Sample/v1/PregenMeleeSorcerer.json) from Samples/v1 folder in mod folder and put it in Pregens/ folder (you can create it or mod will create this folder if it doesn't exist).  
-This replaces pregen of default Rogue pregen. Name and portrait on selection screen will be default, but you will notice the class will be Monk. Because that's what taken at lvl1.  
-Start a new game, use Toybox to level up to 20, and then it's all just pressing next.
+1. Load one of your saves.
+2. Export your MC overwriting one of the standard pregens.
+3. (Optional) Close the game and go open pregen in Pregens folder (file should be named after your character) and adjust skills taken and spells learned.
+4. Start new game with it.
+5. Toybox yourself to 20
+6. Enjoy clicking next while seeing levels go by. Hopefully :)
 
 
 ## How to write feature list or pregen.  
