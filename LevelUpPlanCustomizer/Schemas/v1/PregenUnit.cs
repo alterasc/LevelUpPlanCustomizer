@@ -1,10 +1,14 @@
 ﻿using Kingmaker.Blueprints;
 using Kingmaker.Enums;
+using Newtonsoft.Json;
 
 namespace LevelUpPlanCustomizer.Schemas.v1
 {
     public class PregenUnit
     {
+
+        [JsonProperty("$schema")]
+        public string Schema { get; set; } = "";
         public string UnitId { get; set; }
         public PregenUnitComp PregenUnitComponent { get; set; }
 

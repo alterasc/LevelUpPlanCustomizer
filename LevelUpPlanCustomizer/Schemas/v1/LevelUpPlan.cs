@@ -2,11 +2,14 @@
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
 using Kingmaker.Settings;
+using Newtonsoft.Json;
 
 namespace LevelUpPlanCustomizer.Schemas.v1
 {
     public class LevelUpPlan
     {
+        [JsonProperty("$schema")]
+        public string Schema { get; set; } = "";
         public string FeatureList { get; set; }
         public ClassLevel[] Classes { get; set; }
         public AddFact[] AddFacts { get; set; } = new AddFact[0];

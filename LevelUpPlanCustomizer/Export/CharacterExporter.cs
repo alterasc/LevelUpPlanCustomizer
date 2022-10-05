@@ -52,6 +52,7 @@ namespace LevelUpPlanCustomizer.Export
             getSelections(levelUpPlan, unit, sb);
 
             log = sb.ToString();
+            pregen.Schema = "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/main/schemas/v1/PregenV1.json";
             return pregen;
         }
 
@@ -84,6 +85,7 @@ namespace LevelUpPlanCustomizer.Export
             getSelections(levelUpPlan, unit, sb);
 
             log = sb.ToString();
+            levelUpPlan.Schema = "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/main/schemas/v1/LevelUpPlanV1.json";
             return levelUpPlan;
         }
 
