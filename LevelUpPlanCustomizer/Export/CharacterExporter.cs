@@ -1,5 +1,4 @@
-﻿using Kingmaker;
-using Kingmaker.Blueprints;
+﻿using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.EntitySystem.Entities;
@@ -125,11 +124,14 @@ namespace LevelUpPlanCustomizer.Export
                 {
                     if (!spellbook.Key.AllSpellsKnown)
                     {
-                        var cClass = spellbook.Key.m_CharacterClass;
-                        if (cClass.Guid == characterClass.AssetGuid)
+                        var classWithSpellBook = unit.Progression.Classes.FirstOrDefault(x => x.Spellbook == spellbook.Key && x.CharacterClass == characterClass);
+                        if (classWithSpellBook != null)
                         {
                             classLevel.m_SelectSpells = spellbook.Value.GetAllKnownSpells()
-                                .Where(x => x.SpellLevel > 0).Select(x => $"Blueprint:{x.Blueprint.AssetGuid}:{x.Blueprint}").ToArray();
+                                .Where(x => !x.IsFromMythicSpellList)
+                                .Where(x => x.SpellLevel > 0)
+                                .OrderByDescending(x => x.SpellLevel)
+                                .Select(x => $"Blueprint:{x.Blueprint.AssetGuid}:{x.Blueprint}").ToArray();
                         }
                     }
                 }
