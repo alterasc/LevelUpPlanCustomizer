@@ -6,7 +6,7 @@ Now with export for MC and story companions! (See How to try it section)
 
 ## IMPORTANT: By itself this mod does NOT change any in game builds. Until you add them yourself, the only effect will be avilability of automatic level up regardless on setting.
 
-Clarfification on last point: this is done by bypassing the check of game setting entirely. So even if 'Off' is selected, auto level can happen until you take control of leveling process.
+Clarification on last point: this is done by bypassing the check of game setting entirely. So even if 'Off' is selected, auto level can happen until you take control of levelling process.
 
 
 ## How it works
@@ -62,4 +62,4 @@ Possibility: something-something that I haven't encountered.
 Solution: try temporarily disabling experimental patches and reloading the game. If that doesn't help you will have to continue manually. If you want to help me troubleshoot please prepare pregen that you loaded and save file. (Or better yet if you have archive manager, open save with it since it's just a zip file and extract party.json out of it - that's the only file of interest).
 
 
-If something during manual leveling process seem to go wrong, try disabling "experimental" patches and restarting the game.  
+If something during manual leveling process seems to go wrong, try disabling "experimental" patches and restarting the game.  
