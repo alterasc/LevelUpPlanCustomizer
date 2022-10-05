@@ -4,7 +4,6 @@ using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Class.LevelUp;
 using Kingmaker.UnitLogic.Class.LevelUp.Actions;
-using Owlcat.Runtime.Core.Logging;
 using System.Collections.Generic;
 
 namespace LevelUpPlanCustomizer.Patches
@@ -43,8 +42,6 @@ namespace LevelUpPlanCustomizer.Patches
                 {
                     return true;
                 }
-                LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
-                logChannel.Log("Called ApplyLevelUpActions");
                 List<ILevelUpAction> levelUpActionList = new();
                 foreach (ILevelUpAction levelUpAction in __instance.LevelUpActions)
                 {
