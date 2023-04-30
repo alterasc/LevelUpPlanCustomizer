@@ -100,6 +100,11 @@ namespace LevelUpPlanCustomizer.Patches
                     __result = true;
                     return false;
                 }
+                if (unit != null && unit.CharacterName == "Player Character")
+                {
+                    __result = true;
+                    return false;
+                }
                 return true;
             }
         }
