@@ -44,6 +44,7 @@
     <NoWarn>
 
 0649</NoWarn>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <Target Name="RemoveLib" BeforeTargets="Clean" Condition="Exists('$(SolutionDir)lib')">
     <RemoveDir Directories="$(SolutionDir)lib" />
@@ -156,6 +157,7 @@
     <Compile Include="Import\CharacterImporter.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Patches\AlwaysAvailableAutoLevelup.cs" />
+    <Compile Include="Patches\Datasaver.cs" />
     <Compile Include="Patches\PlanUpdater.cs" />
     <Compile Include="Schemas\Utils.cs" />
     <Compile Include="Schemas\v1\LevelUpPlan.cs" />

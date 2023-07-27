@@ -1,10 +1,13 @@
 ﻿using HarmonyLib;
-using Kingmaker;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Class.LevelUp;
 using Kingmaker.UnitLogic.Class.LevelUp.Actions;
+using LevelUpPlanCustomizer.Base.Patches;
+using Owlcat.Runtime.Core.Logging;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 
 namespace LevelUpPlanCustomizer.Patches
 {
@@ -28,49 +31,98 @@ namespace LevelUpPlanCustomizer.Patches
             }
         }
 
-        /*
-         * Patch for fixing skill points not being taken when archetype adds skillpoints
-         * and spells when spellbook is changed
-         */
+
         [HarmonyPatch(typeof(LevelUpController), nameof(LevelUpController.ApplyLevelUpActions))]
         static class LevelUpController_ApplyLevelUpActions_Patch
         {
-            [HarmonyPrefix]
-            static bool Prefix(ref List<ILevelUpAction> __result, LevelUpController __instance, UnitEntityData unit)
+
+            /*
+             * Patch for fixing skill points not being taken when archetype adds skillpoints
+             * and spells when spellbook is changed
+             */
+            [HarmonyTranspiler]
+            static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
-                if (!Main.Settings.PatchApplyLevelUpActions)
+                if (!Main.Settings.PatchSelectFeature)
                 {
-                    return true;
+                    return instructions;
                 }
-                List<ILevelUpAction> levelUpActionList = new();
-                foreach (ILevelUpAction levelUpAction in __instance.LevelUpActions)
+                try
                 {
-                    if (!levelUpAction.Check(__instance.State, unit.Descriptor))
+                    var code = new List<CodeInstruction>(instructions);
+                    var fCallVirtFind = 0;
+                    System.Type[] parameterTypes = new System.Type[] { typeof(string), typeof(object[]) };
+                    MethodInfo logMethod = AccessTools.Method(typeof(LogChannel), nameof(LogChannel.Log), parameterTypes);
+
+                    for (int i = 0; i < code.Count; i++)
                     {
-                        PFLog.Default.Log("Invalid action: " + levelUpAction?.ToString());
-                        if (levelUpAction is SpendSkillPoint && __instance.IsAutoLevelup)
+                        if (code[i].Calls(logMethod))
                         {
-                            levelUpActionList.Add(levelUpAction);
-                            levelUpAction.Apply(__instance.State, unit.Descriptor);
-                            __instance.State.OnApplyAction();
-                        }
-                        if (levelUpAction is SelectSpell && __instance.IsAutoLevelup)
-                        {
-                            levelUpActionList.Add(levelUpAction);
-                            levelUpAction.Apply(__instance.State, unit.Descriptor);
-                            __instance.State.OnApplyAction();
+                            fCallVirtFind = i;
+                            break;
                         }
                     }
-                    else
+                    if (fCallVirtFind != 0)
                     {
-                        levelUpActionList.Add(levelUpAction);
-                        levelUpAction.Apply(__instance.State, unit.Descriptor);
-                        __instance.State.OnApplyAction();
+                        var newCode =
+                          new List<CodeInstruction>()
+                          {
+                                new CodeInstruction(OpCodes.Ldarg_0),
+                                new CodeInstruction(OpCodes.Ldarg_1),
+                                new CodeInstruction(OpCodes.Ldloc_0),
+                                new CodeInstruction(OpCodes.Ldloc_2),
+                                CodeInstruction.Call(typeof(AlwaysAvailableAutoLevelup), nameof(AlwaysAvailableAutoLevelup.ApplySkillSpellInsert)),
+                          };
+                        code.InsertRange(fCallVirtFind, newCode);
+                    }
+                    return code;
+                }
+                catch (System.Exception e)
+                {
+                    LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
+                    logChannel.Error("Failed to apply transpiler to LevelUpController.ApplyLevelUpActions: {}", e.Message);
+                    return instructions;
+                }
+            }
+            /**
+             * Postfix to record skills taken and spells learned
+             */
+            [HarmonyPostfix]
+            static void Postfix(ref List<ILevelUpAction> __result, LevelUpController __instance, UnitEntityData unit)
+            {
+                var record = GlobalRecord.Instance.ForCharacter(unit);
+                var nextCharacterLevel = __instance.State.NextCharacterLevel;
+                record.ResetAtLevel(nextCharacterLevel);
+                foreach (var action in __result)
+                {
+                    if (action is SpendSkillPoint spendSkillPoint)
+                    {
+                        var lvlupaction = new SpendSkillPointAction
+                        {
+                            Skill = spendSkillPoint.Skill
+                        };
+                        record.AddAtLevel(nextCharacterLevel, lvlupaction);
+                    }
+                    else if (action is SelectSpell selectSpell)
+                    {
+                        var lvlupaction = new SelectSpellAction
+                        {
+                            Spell = selectSpell.Spell.AssetGuid.m_Guid.ToString(),
+                            Spellbook = selectSpell.Spellbook.AssetGuid.m_Guid.ToString()
+                        };
+                        record.AddAtLevel(nextCharacterLevel, lvlupaction);
                     }
                 }
-                unit.Progression.ReapplyFeaturesOnLevelUp();
-                __result = levelUpActionList;
-                return false;
+            }
+        }
+
+        static void ApplySkillSpellInsert(LevelUpController __instance, UnitEntityData unit, List<ILevelUpAction> levelUpActionList, ILevelUpAction levelUpAction)
+        {
+            if ((levelUpAction is SpendSkillPoint || levelUpAction is SelectSpell) && __instance.IsAutoLevelup)
+            {
+                levelUpActionList.Add(levelUpAction);
+                levelUpAction.Apply(__instance.State, unit.Descriptor);
+                __instance.State.OnApplyAction();
             }
         }
 
@@ -100,7 +152,7 @@ namespace LevelUpPlanCustomizer.Patches
                     __result = true;
                     return false;
                 }
-                if (unit != null && unit.CharacterName == "Player Character")
+                if (unit != null && state.Mode == LevelUpState.CharBuildMode.CharGen && unit.CharacterName == "Player Character")
                 {
                     __result = true;
                     return false;
