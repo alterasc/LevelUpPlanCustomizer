@@ -5,6 +5,7 @@ using Kingmaker.EntitySystem.Entities;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Utility;
 using LevelUpPlanCustomizer.Base.Export;
+using LevelUpPlanCustomizer.Base.Patches;
 using LevelUpPlanCustomizer.Schemas.v1;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace LevelUpPlanCustomizer.Export
             setClassOrder(levelUpPlan, unit, sb, levelUps);
 
             //set skills
-            setSkills(levelUpPlan, unit, sb);
+            SetSkills(levelUpPlan, unit, sb);
 
             // selection
             getSelections(levelUpPlan, unit, sb);
@@ -78,7 +79,7 @@ namespace LevelUpPlanCustomizer.Export
             setClassOrder(levelUpPlan, unit, sb, levelUps);
 
             //set skills
-            setSkills(levelUpPlan, unit, sb);
+            SetSkills(levelUpPlan, unit, sb);
 
             // selection
             getSelections(levelUpPlan, unit, sb);
@@ -88,18 +89,31 @@ namespace LevelUpPlanCustomizer.Export
             return levelUpPlan;
         }
 
-        static void setSkills(LevelUpPlan levelUpPlan, Kingmaker.EntitySystem.Entities.UnitEntityData mc, StringBuilder sb)
+        static void SetSkills(LevelUpPlan levelUpPlan, UnitEntityData mc, StringBuilder sb)
         {
             var skills = new StatType[] { StatType.SkillAthletics, StatType.SkillMobility, StatType.SkillThievery, StatType.SkillStealth, StatType.SkillKnowledgeArcana,
                 StatType.SkillKnowledgeWorld, StatType.SkillLoreNature, StatType.SkillLoreReligion, StatType.SkillPerception, StatType.SkillPersuasion, StatType.SkillUseMagicDevice};
+            //all skills character put points in descending order of points invested
             var levelSkills = mc.Stats.AllStats
                 .Where(x => skills.Contains(x.Type) && x.BaseValue > 0)
                 .OrderByDescending(x => x.BaseValue)
                 .Select(x => x.Type)
                 .ToArray();
-            foreach (var item in levelUpPlan.Classes)
+
+            for (var i = 0; i < levelUpPlan.Classes.Count(); i++)
             {
-                item.Skills = levelSkills;
+                var classTaken = levelUpPlan.Classes[i];
+                var characterLevel = i + 1;
+                var charRecord = GlobalRecord.Instance.ForCharacter(mc).LevelUpActions.TryGetValue(characterLevel, out var actions);
+                if (actions != null)
+                {
+                    classTaken.Skills = actions.OfType<SpendSkillPointAction>().Select(x => x.Skill).ToArray();
+                }
+                else
+                {
+                    //if no record of skills taken was found, level all skills leveled.
+                    classTaken.Skills = levelSkills;
+                }
             }
         }
 
