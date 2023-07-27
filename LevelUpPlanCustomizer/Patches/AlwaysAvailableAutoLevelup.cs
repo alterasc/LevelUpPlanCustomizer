@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Kingmaker;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Class.LevelUp;
@@ -90,6 +91,7 @@ namespace LevelUpPlanCustomizer.Patches
             [HarmonyPostfix]
             static void Postfix(ref List<ILevelUpAction> __result, LevelUpController __instance, UnitEntityData unit)
             {
+                if (!unit.IsPlayerFaction || !Game.Instance.Player.AllCharacters.Contains(unit)) return;
                 var record = GlobalRecord.Instance.ForCharacter(unit);
                 var nextCharacterLevel = __instance.State.NextCharacterLevel;
                 record.ResetAtLevel(nextCharacterLevel);
@@ -109,6 +111,14 @@ namespace LevelUpPlanCustomizer.Patches
                         {
                             Spell = selectSpell.Spell.AssetGuid.m_Guid.ToString(),
                             Spellbook = selectSpell.Spellbook.AssetGuid.m_Guid.ToString()
+                        };
+                        record.AddAtLevel(nextCharacterLevel, lvlupaction);
+                    }
+                    else if (action is SpendAttributePoint addStatPoint)
+                    {
+                        var lvlupaction = new SpendAttributePointAction
+                        {
+                            Attribute = addStatPoint.Attribute
                         };
                         record.AddAtLevel(nextCharacterLevel, lvlupaction);
                     }

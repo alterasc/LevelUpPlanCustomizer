@@ -117,6 +117,10 @@ namespace LevelUpPlanCustomizer.Base.Patches
         public string Spell;
         public string Spellbook;
     }
+    public class SpendAttributePointAction : ILevelupAction
+    {
+        public StatType Attribute;
+    }
 
     public class GlobalRecord
     {
