@@ -3,6 +3,7 @@ using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.EntitySystem.Stats;
+using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.Utility;
 using LevelUpPlanCustomizer.Base.Export;
 using LevelUpPlanCustomizer.Base.Patches;
@@ -43,7 +44,7 @@ namespace LevelUpPlanCustomizer.Export
             pregen.LevelUpPlan = levelUpPlan;
 
             //set ClassOrder
-            setClassOrder(levelUpPlan, unit, sb, levelUps);
+            SetClassOrder(levelUpPlan, unit, sb, levelUps);
 
             //set skills
             SetSkills(levelUpPlan, unit, sb);
@@ -76,7 +77,7 @@ namespace LevelUpPlanCustomizer.Export
             getStatsForCompanion(unit, out var levelUps);
 
             //set ClassOrder
-            setClassOrder(levelUpPlan, unit, sb, levelUps);
+            SetClassOrder(levelUpPlan, unit, sb, levelUps);
 
             //set skills
             SetSkills(levelUpPlan, unit, sb);
@@ -117,7 +118,7 @@ namespace LevelUpPlanCustomizer.Export
             }
         }
 
-        static void setClassOrder(LevelUpPlan levelUpPlan, UnitEntityData unit, StringBuilder sb, IDictionary<StatType, int> levelUps)
+        static void SetClassOrder(LevelUpPlan levelUpPlan, UnitEntityData unit, StringBuilder sb, IDictionary<StatType, int> levelUps)
         {
             var lvl = unit.Progression.CharacterLevel;
             var classOrder = unit.Progression.ClassesOrder;
@@ -127,6 +128,7 @@ namespace LevelUpPlanCustomizer.Export
             nonMythicClasses.ForEach(x => sb.AppendLine($"Took class: {x}"));
             for (int i = 0; i < nonMythicClasses.Count; i++)
             {
+                var nextLevel = i + 1;
                 BlueprintCharacterClass characterClass = nonMythicClasses[i];
                 var classLevel = new ClassLevel
                 {
@@ -138,21 +140,42 @@ namespace LevelUpPlanCustomizer.Export
                 {
                     if (!spellbook.Key.AllSpellsKnown)
                     {
-                        var classWithSpellBook = unit.Progression.Classes.FirstOrDefault(x => x.Spellbook == spellbook.Key && x.CharacterClass == characterClass);
-                        if (classWithSpellBook != null)
+                        GlobalRecord.Instance.ForCharacter(unit).LevelUpActions.TryGetValue(nextLevel, out var recActions);
+
+                        List<string> spellsTolearn = new();
+                        if (recActions != null)
                         {
-                            classLevel.m_SelectSpells = spellbook.Value.GetAllKnownSpells()
+                            spellsTolearn = recActions.OfType<SelectSpellAction>().Where(x => x.Spellbook == spellbook.Key.AssetGuid.m_Guid.ToString())
+                                .Select(x => ResourcesLibrary.TryGetBlueprint<BlueprintAbility>(BlueprintGuid.Parse(x.Spell)))
+                                .NotNull()
+                                .Select(x => $"Blueprint:{x.AssetGuid}:{x}").ToList();
+                        }
+
+
+                        //trying to get additional spells to be safe - for prepared arcane casters who can learn spells from scrolls
+                        //or if there's no record
+                        var classWithSpellBook = unit.Progression.Classes.FirstOrDefault(x => x.Spellbook == spellbook.Key && x.CharacterClass == characterClass);
+                        if (classWithSpellBook != null && (spellbook.Key.CanCopyScrolls || spellsTolearn.Count == 0))
+                        {
+                            var addSpells = spellbook.Value.GetAllKnownSpells()
                                 .Where(x => !x.IsFromMythicSpellList)
                                 .Where(x => x.SpellLevel > 0)
                                 .OrderByDescending(x => x.SpellLevel)
-                                .Select(x => $"Blueprint:{x.Blueprint.AssetGuid}:{x.Blueprint}").ToArray();
+                                .Select(x => $"Blueprint:{x.Blueprint.AssetGuid}:{x.Blueprint}")
+                                .Where(x => !spellsTolearn.Contains(x));
+                            spellsTolearn.AddRange(addSpells);
+
+                        }
+                        if (spellsTolearn.Count > 0)
+                        {
+                            classLevel.m_SelectSpells = spellsTolearn.ToArray();
                         }
                     }
                 }
                 //set stat levelups
                 try
                 {
-                    if ((i + 1) % 4 == 0)
+                    if (nextLevel % 4 == 0)
                     {
                         var stat = levelUps.Keys.First();
                         classLevel.LevelsStat = stat;

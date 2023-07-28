@@ -91,7 +91,9 @@ namespace LevelUpPlanCustomizer.Patches
             [HarmonyPostfix]
             static void Postfix(ref List<ILevelUpAction> __result, LevelUpController __instance, UnitEntityData unit)
             {
-                if (!unit.IsPlayerFaction || !Game.Instance.Player.AllCharacters.Contains(unit)) return;
+                if (!unit.IsPlayerFaction || !Game.Instance.Player.AllCharacters.Contains(unit) 
+                    || __instance.State.Mode == LevelUpState.CharBuildMode.Mythic) return;
+                
                 var record = GlobalRecord.Instance.ForCharacter(unit);
                 var nextCharacterLevel = __instance.State.NextCharacterLevel;
                 record.ResetAtLevel(nextCharacterLevel);
