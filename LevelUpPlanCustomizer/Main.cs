@@ -92,10 +92,10 @@ namespace LevelUpPlanCustomizer
                 foreach (var comp in activeCompanions.Where(x => x.IsStoryCompanion()))
                 {
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label(comp.CharacterName, GUILayout.Width(140));
+                    GUILayout.Label(comp.CharacterName, GUILayout.Width(240));
                     comp.IsStoryCompanion();
                     GUILayout.Space(10);
-                    if (GUILayout.RepeatButton("Export", GUILayout.ExpandWidth(false)))
+                    if (GUILayout.Button("Export", GUILayout.ExpandWidth(false)))
                     {
                         ExportUnitAsFeatureList(comp);
                     }
@@ -114,30 +114,30 @@ namespace LevelUpPlanCustomizer
         private static void GUIExportAsPregen(UnitEntityData mc)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Label(mc.CharacterName, GUILayout.Width(140));
+            GUILayout.Label(mc.CharacterName, GUILayout.Width(240));
             GUILayout.Space(10);
             GUILayout.Label("Export in place of", GUILayout.ExpandWidth(false));
-            if (GUILayout.RepeatButton("Taolynn the Cavalier", GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button("Taolynn the Cavalier", GUILayout.ExpandWidth(false)))
             {
                 ExportUnitAsPregen(mc, "57c2aaeb11ee4f8d81f0a57974a94f1b");
             }
-            if (GUILayout.RepeatButton("Sordara the Cleric", GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button("Sordara the Cleric", GUILayout.ExpandWidth(false)))
             {
                 ExportUnitAsPregen(mc, "d27dd725873142039c6015fbf49ac621");
             }
-            if (GUILayout.RepeatButton("Yunelard the Fighter", GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button("Yunelard the Fighter", GUILayout.ExpandWidth(false)))
             {
                 ExportUnitAsPregen(mc, "8abbe46e26844e02a39645ae34913612");
             }
-            if (GUILayout.RepeatButton("Rix the Rogue", GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button("Rix the Rogue", GUILayout.ExpandWidth(false)))
             {
                 ExportUnitAsPregen(mc, "fad59e6db3aa470ca7e8962e2daa12dc");
             }
-            if (GUILayout.RepeatButton("Marnun the Slayer", GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button("Marnun the Slayer", GUILayout.ExpandWidth(false)))
             {
                 ExportUnitAsPregen(mc, "2160635e9bba4b9e81a5cfcd45e3d141");
             }
-            if (GUILayout.RepeatButton("Aengi the Sorcerer", GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button("Aengi the Sorcerer", GUILayout.ExpandWidth(false)))
             {
                 ExportUnitAsPregen(mc, "1f6d72fd52ce418fb677db2243ea4de5");
             }
@@ -180,6 +180,8 @@ namespace LevelUpPlanCustomizer
                 }
                 File.WriteAllText(Path.Combine(userPath, exportFileName), stringWriter.ToString());
                 CharacterImporter.UpdatePregens(exportFileName);
+                LogChannel logChannel = LogChannelFactory.GetOrCreate("Mods");
+                logChannel.Log($"Successfully exported {exportFileName}");
             }
             catch (Exception ex)
             {
