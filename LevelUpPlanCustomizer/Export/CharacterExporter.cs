@@ -71,7 +71,7 @@ namespace LevelUpPlanCustomizer.Export
                 log = sb.ToString();
                 return levelUpPlan;
             }
-            levelUpPlan.FeatureList = $"Blueprint:{maybeFeatureList.AssetGuid}:{maybeFeatureList}";
+            levelUpPlan.FeatureList = maybeFeatureList.ToBuildExportString();
 
             //get stats
             GetStatsForCompanion(unit, out var levelUps);
@@ -132,8 +132,8 @@ namespace LevelUpPlanCustomizer.Export
                 BlueprintCharacterClass characterClass = nonMythicClasses[i];
                 var classLevel = new ClassLevel
                 {
-                    m_CharacterClass = $"Blueprint:{characterClass.AssetGuid}:{characterClass}",
-                    m_Archetypes = unit.Progression.GetClassData(characterClass).Archetypes.Select(x => $"Blueprint:{x.AssetGuid}:{x}").ToArray(),
+                    m_CharacterClass = characterClass.ToBuildExportString(),
+                    m_Archetypes = unit.Progression.GetClassData(characterClass).Archetypes.Select(x => x.ToBuildExportString()).ToArray(),
                     Levels = 1
                 };
                 foreach (var spellbook in unit.Descriptor.m_Spellbooks)
@@ -148,7 +148,7 @@ namespace LevelUpPlanCustomizer.Export
                             spellsTolearn = recActions.OfType<SelectSpellAction>().Where(x => x.Spellbook == spellbook.Key.AssetGuid.m_Guid.ToString())
                                 .Select(x => ResourcesLibrary.TryGetBlueprint<BlueprintAbility>(BlueprintGuid.Parse(x.Spell)))
                                 .NotNull()
-                                .Select(x => $"Blueprint:{x.AssetGuid}:{x}").ToList();
+                                .Select(x => x.ToBuildExportString()).ToList();
                         }
 
 
@@ -161,7 +161,7 @@ namespace LevelUpPlanCustomizer.Export
                                 .Where(x => !x.IsFromMythicSpellList)
                                 .Where(x => x.SpellLevel > 0)
                                 .OrderByDescending(x => x.SpellLevel)
-                                .Select(x => $"Blueprint:{x.Blueprint.AssetGuid}:{x.Blueprint}")
+                                .Select(x => x.Blueprint.ToBuildExportString())
                                 .Where(x => !spellsTolearn.Contains(x));
                             spellsTolearn.AddRange(addSpells);
 
@@ -194,9 +194,9 @@ namespace LevelUpPlanCustomizer.Export
         {
             var selections = unit.Progression.Selections;
             var selectionSkips = new List<BlueprintFeatureSelection>() {
-                Common.MyUtils.GetBlueprint<BlueprintFeatureSelection>("9ee0f6745f555484299b0a1563b99d81"),
-                Common.MyUtils.GetBlueprint<BlueprintFeatureSelection>("ba0e5a900b775be4a99702f1ed08914d"),
-                Common.MyUtils.GetBlueprint<BlueprintFeatureSelection>("1421e0034a3afac458de08648d06faf0")
+                MyUtils.GetBlueprint<BlueprintFeatureSelection>("9ee0f6745f555484299b0a1563b99d81"),
+                MyUtils.GetBlueprint<BlueprintFeatureSelection>("ba0e5a900b775be4a99702f1ed08914d"),
+                MyUtils.GetBlueprint<BlueprintFeatureSelection>("1421e0034a3afac458de08648d06faf0")
             };
             foreach (var selection in selections)
             {
@@ -220,8 +220,8 @@ namespace LevelUpPlanCustomizer.Export
                             SelectionClass[] planSelections = levelUpPlan.Classes[slvl].Selections ?? new SelectionClass[0];
                             var selClass = new SelectionClass()
                             {
-                                m_Selection = $"Blueprint:{selection.Key.AssetGuid}:{selection.Key}",
-                                m_Features = new string[] { $"Blueprint:{selectedItem.AssetGuid}:{selectedItem}" }
+                                m_Selection = selection.Key.ToBuildExportString(),
+                                m_Features = new string[] { selectedItem.ToBuildExportString() }
                             };
                             planSelections = planSelections.Append(selClass).ToArray();
                             levelUpPlan.Classes[slvl].Selections = planSelections;
@@ -240,8 +240,8 @@ namespace LevelUpPlanCustomizer.Export
                             SelectionClass[] planSelections = levelUpPlan.Classes[cLvl - 1].Selections ?? new SelectionClass[0];
                             var selClass = new SelectionClass()
                             {
-                                m_Selection = $"Blueprint:{selection.Key.AssetGuid}:{selection.Key}",
-                                m_Features = new string[] { $"Blueprint:{selectedItem.AssetGuid}:{selectedItem}" }
+                                m_Selection = selection.Key.ToBuildExportString(),
+                                m_Features = new string[] { selectedItem.ToBuildExportString() }
                             };
                             planSelections = planSelections.Append(selClass).ToArray();
 
@@ -251,11 +251,11 @@ namespace LevelUpPlanCustomizer.Export
                                 {
                                     var selParamed = new SelectionClass()
                                     {
-                                        m_Selection = $"Blueprint:{selection.Key.AssetGuid}:{selection.Key}",
-                                        m_Features = new string[] { $"Blueprint:{selectedItem.AssetGuid}:{selectedItem}" }
+                                        m_Selection = selection.Key.ToBuildExportString(),
+                                        m_Features = new string[] { selectedItem.ToBuildExportString() }
                                     };
                                     selParamed.IsParametrizedFeature = true;
-                                    selParamed.m_ParametrizedFeature = $"Blueprint:{selectedItem.AssetGuid}:{selectedItem}";
+                                    selParamed.m_ParametrizedFeature = selectedItem.ToBuildExportString();
                                     var enumer = unit.Progression.Features.Enumerable.First(x => x.Blueprint == paramFeature);
                                     if (paramFeature.ParameterType == FeatureParameterType.WeaponCategory)
                                     {

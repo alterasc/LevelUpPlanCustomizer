@@ -158,5 +158,7 @@ namespace LevelUpPlanCustomizer.Common
             LocalizationManager.CurrentPack.PutString(key, value);
             return localizedString;
         }
+
+        public static string ToBuildExportString(this SimpleBlueprint obj) => $"Blueprint:{obj.AssetGuid}:{obj}";
     }
 }
