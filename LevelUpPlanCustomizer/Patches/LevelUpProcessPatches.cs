@@ -4,7 +4,6 @@ using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Class.LevelUp;
 using Kingmaker.UnitLogic.Class.LevelUp.Actions;
-using LevelUpPlanCustomizer.Base.Patches;
 using Owlcat.Runtime.Core.Logging;
 using System.Collections.Generic;
 using System.Reflection;
@@ -12,7 +11,7 @@ using System.Reflection.Emit;
 
 namespace LevelUpPlanCustomizer.Patches
 {
-    class AlwaysAvailableAutoLevelup
+    class LevelUpProcessPatches
     {
         /*
          * Patch for enabling auto-level regardless of difficulty setting          
@@ -34,7 +33,7 @@ namespace LevelUpPlanCustomizer.Patches
 
 
         [HarmonyPatch(typeof(LevelUpController), nameof(LevelUpController.ApplyLevelUpActions))]
-        static class LevelUpController_ApplyLevelUpActions_Patch
+        static class LevelUpController_ApplyLevelUpActions_Patches
         {
 
             /*
@@ -72,7 +71,7 @@ namespace LevelUpPlanCustomizer.Patches
                                 new CodeInstruction(OpCodes.Ldarg_1),
                                 new CodeInstruction(OpCodes.Ldloc_0),
                                 new CodeInstruction(OpCodes.Ldloc_2),
-                                CodeInstruction.Call(typeof(AlwaysAvailableAutoLevelup), nameof(AlwaysAvailableAutoLevelup.ApplySkillSpellInsert)),
+                                CodeInstruction.Call(typeof(LevelUpController_ApplyLevelUpActions_Patches), nameof(LevelUpController_ApplyLevelUpActions_Patches.ApplySkillSpellInsert)),
                           };
                         code.InsertRange(fCallVirtFind, newCode);
                     }
@@ -91,9 +90,9 @@ namespace LevelUpPlanCustomizer.Patches
             [HarmonyPostfix]
             static void Postfix(ref List<ILevelUpAction> __result, LevelUpController __instance, UnitEntityData unit)
             {
-                if (!unit.IsPlayerFaction || !Game.Instance.Player.AllCharacters.Contains(unit) 
+                if (!unit.IsPlayerFaction || !Game.Instance.Player.AllCharacters.Contains(unit)
                     || __instance.State.Mode == LevelUpState.CharBuildMode.Mythic) return;
-                
+
                 var record = GlobalRecord.Instance.ForCharacter(unit);
                 var nextCharacterLevel = __instance.State.NextCharacterLevel;
                 record.ResetAtLevel(nextCharacterLevel);
@@ -126,17 +125,18 @@ namespace LevelUpPlanCustomizer.Patches
                     }
                 }
             }
-        }
 
-        static void ApplySkillSpellInsert(LevelUpController __instance, UnitEntityData unit, List<ILevelUpAction> levelUpActionList, ILevelUpAction levelUpAction)
-        {
-            if ((levelUpAction is SpendSkillPoint || levelUpAction is SelectSpell) && __instance.IsAutoLevelup)
+            static void ApplySkillSpellInsert(LevelUpController __instance, UnitEntityData unit, List<ILevelUpAction> levelUpActionList, ILevelUpAction levelUpAction)
             {
-                levelUpActionList.Add(levelUpAction);
-                levelUpAction.Apply(__instance.State, unit.Descriptor);
-                __instance.State.OnApplyAction();
+                if ((levelUpAction is SpendSkillPoint || levelUpAction is SelectSpell) && __instance.IsAutoLevelup)
+                {
+                    levelUpActionList.Add(levelUpAction);
+                    levelUpAction.Apply(__instance.State, unit.Descriptor);
+                    __instance.State.OnApplyAction();
+                }
             }
         }
+
 
         /**
          * Patch to fix selections from archetypes failing to get checked as valid
@@ -158,7 +158,7 @@ namespace LevelUpPlanCustomizer.Patches
                     __result = false;
                     return false;
                 }
-                var controller = Kingmaker.Game.Instance?.LevelUpController;
+                var controller = Game.Instance?.LevelUpController;
                 if (controller != null && controller.IsAutoLevelup)
                 {
                     __result = true;

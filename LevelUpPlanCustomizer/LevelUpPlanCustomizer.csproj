@@ -156,13 +156,14 @@
     <Compile Include="Export\CharacterExporter.cs" />
     <Compile Include="Import\CharacterImporter.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="Patches\AlwaysAvailableAutoLevelup.cs" />
+    <Compile Include="Patches\LevelUpProcessPatches.cs" />
     <Compile Include="Patches\Datasaver.cs" />
     <Compile Include="Patches\PlanUpdater.cs" />
-    <Compile Include="Schemas\Utils.cs" />
+    <Compile Include="Common\MyUtils.cs" />
     <Compile Include="Schemas\v1\LevelUpPlan.cs" />
     <Compile Include="Schemas\v1\PregenUnit.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Common\Characters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.json">

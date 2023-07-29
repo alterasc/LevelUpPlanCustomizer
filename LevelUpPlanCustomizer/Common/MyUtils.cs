@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace LevelUpPlanCustomizer
+namespace LevelUpPlanCustomizer.Common
 {
-    public static class Utils
+    public static class MyUtils
     {
         private static readonly Regex OwlcatPattern = new("^!bp_[0-9abcdef]{32}");
         private static readonly Regex VekPattern = new("^Blueprint:[0-9abcdef]{32}:.?");

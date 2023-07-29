@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 using Kingmaker.Blueprints.JsonSystem;
-using LevelUpPlanCustomizer.Base.Import;
+using LevelUpPlanCustomizer.Import;
 
 namespace LevelUpPlanCustomizer.Patches
 {

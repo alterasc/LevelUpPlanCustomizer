@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace LevelUpPlanCustomizer.Base.Patches
+namespace LevelUpPlanCustomizer.Patches
 {
     [HarmonyPatch]
     static class SaveHooker

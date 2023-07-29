@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LevelUpPlanCustomizer.Base.Export
+namespace LevelUpPlanCustomizer.Export
 {
     internal class ClassArchetypeData
     {

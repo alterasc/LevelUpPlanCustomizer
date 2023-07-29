@@ -3,9 +3,8 @@ using Kingmaker;
 using Kingmaker.Blueprints.Root;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic;
-using LevelUpPlanCustomizer.Base;
-using LevelUpPlanCustomizer.Base.Import;
 using LevelUpPlanCustomizer.Export;
+using LevelUpPlanCustomizer.Import;
 using Newtonsoft.Json;
 using Owlcat.Runtime.Core.Logging;
 using System;
@@ -59,7 +58,7 @@ namespace LevelUpPlanCustomizer
             GUILayout.Label("Archetype skill/spell fix");
             Settings.PatchApplyLevelUpActions = GUILayout.Toggle(Settings.PatchApplyLevelUpActions, "Experimental patch to fix issues with archetype skills and spellbooks");
             GUILayout.Label("Archetype feature selection fix");
-            Settings.PatchSelectFeature = GUILayout.Toggle(Settings.PatchSelectFeature, "Experimental patch to fix issues with archetype features");
+            Settings.PatchSelectFeature = GUILayout.Toggle(Settings.PatchSelectFeature, "Experimental patch to fix issues with archetype features (requires restart to change)");
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
@@ -80,8 +79,8 @@ namespace LevelUpPlanCustomizer
             GUILayout.EndHorizontal();
             GUIExportAsPregen(mc);
             var campaign = Game.Instance.Player.Campaign;
-            var MainCampaign = Utils.GetBlueprint<BlueprintCampaign>("fd2e11ebb8a14d6599450fc27f03486a");
-            var Dlc3Campaign = Utils.GetBlueprint<BlueprintCampaign>("e1bde745d6ad47c0bc9fb8e479b29153");
+            var MainCampaign = Common.MyUtils.GetBlueprint<BlueprintCampaign>("fd2e11ebb8a14d6599450fc27f03486a");
+            var Dlc3Campaign = Common.MyUtils.GetBlueprint<BlueprintCampaign>("e1bde745d6ad47c0bc9fb8e479b29153");
             var activeCompanions = player.ActiveCompanions;
             if (activeCompanions == null)
             {

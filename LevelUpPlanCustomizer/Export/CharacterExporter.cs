@@ -5,8 +5,8 @@ using Kingmaker.EntitySystem.Entities;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.Utility;
-using LevelUpPlanCustomizer.Base.Export;
-using LevelUpPlanCustomizer.Base.Patches;
+using LevelUpPlanCustomizer.Common;
+using LevelUpPlanCustomizer.Patches;
 using LevelUpPlanCustomizer.Schemas.v1;
 using System.Collections.Generic;
 using System.Linq;
@@ -194,9 +194,9 @@ namespace LevelUpPlanCustomizer.Export
         {
             var selections = unit.Progression.Selections;
             var selectionSkips = new List<BlueprintFeatureSelection>() {
-                Utils.GetBlueprint<BlueprintFeatureSelection>("9ee0f6745f555484299b0a1563b99d81"),
-                Utils.GetBlueprint<BlueprintFeatureSelection>("ba0e5a900b775be4a99702f1ed08914d"),
-                Utils.GetBlueprint<BlueprintFeatureSelection>("1421e0034a3afac458de08648d06faf0")
+                Common.MyUtils.GetBlueprint<BlueprintFeatureSelection>("9ee0f6745f555484299b0a1563b99d81"),
+                Common.MyUtils.GetBlueprint<BlueprintFeatureSelection>("ba0e5a900b775be4a99702f1ed08914d"),
+                Common.MyUtils.GetBlueprint<BlueprintFeatureSelection>("1421e0034a3afac458de08648d06faf0")
             };
             foreach (var selection in selections)
             {
