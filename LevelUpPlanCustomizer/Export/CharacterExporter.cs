@@ -31,7 +31,7 @@ namespace LevelUpPlanCustomizer.Export
                 }
             };
             //get stats
-            getStats(unit, out var attributes, out var levelUps);
+            GetStats(unit, out var attributes, out var levelUps);
 
             pregen.Strength = attributes[StatType.Strength];
             pregen.Dexterity = attributes[StatType.Dexterity];
@@ -50,7 +50,7 @@ namespace LevelUpPlanCustomizer.Export
             SetSkills(levelUpPlan, unit, sb);
 
             // selection
-            getSelections(levelUpPlan, unit, sb);
+            GetSelections(levelUpPlan, unit, sb);
 
             log = sb.ToString();
             pregen.Schema = "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/main/schemas/v1/PregenV1.json";
@@ -74,7 +74,7 @@ namespace LevelUpPlanCustomizer.Export
             levelUpPlan.FeatureList = $"Blueprint:{maybeFeatureList.AssetGuid}:{maybeFeatureList}";
 
             //get stats
-            getStatsForCompanion(unit, out var levelUps);
+            GetStatsForCompanion(unit, out var levelUps);
 
             //set ClassOrder
             SetClassOrder(levelUpPlan, unit, sb, levelUps);
@@ -83,7 +83,7 @@ namespace LevelUpPlanCustomizer.Export
             SetSkills(levelUpPlan, unit, sb);
 
             // selection
-            getSelections(levelUpPlan, unit, sb);
+            GetSelections(levelUpPlan, unit, sb);
 
             log = sb.ToString();
             levelUpPlan.Schema = "https://raw.githubusercontent.com/alterasc/LevelUpPlanCustomizer/main/schemas/v1/LevelUpPlanV1.json";
@@ -118,7 +118,7 @@ namespace LevelUpPlanCustomizer.Export
             }
         }
 
-        static void SetClassOrder(LevelUpPlan levelUpPlan, UnitEntityData unit, StringBuilder sb, IDictionary<StatType, int> levelUps)
+        static void SetClassOrder(LevelUpPlan levelUpPlan, UnitEntityData unit, StringBuilder sb, IDictionary<int, StatType> levelUps)
         {
             var lvl = unit.Progression.CharacterLevel;
             var classOrder = unit.Progression.ClassesOrder;
@@ -177,16 +177,7 @@ namespace LevelUpPlanCustomizer.Export
                 {
                     if (nextLevel % 4 == 0)
                     {
-                        var stat = levelUps.Keys.First();
-                        classLevel.LevelsStat = stat;
-                        if (levelUps[stat] == 1)
-                        {
-                            levelUps.Remove(stat);
-                        }
-                        else
-                        {
-                            levelUps[stat] = levelUps[stat] - 1;
-                        }
+                        classLevel.LevelsStat = levelUps[nextLevel];
                     }
                 }
                 catch (System.Exception ex)
@@ -199,7 +190,7 @@ namespace LevelUpPlanCustomizer.Export
             levelUpPlan.Classes = tmpList.ToArray();
         }
 
-        static void getSelections(LevelUpPlan levelUpPlan, UnitEntityData unit, StringBuilder sb)
+        static void GetSelections(LevelUpPlan levelUpPlan, UnitEntityData unit, StringBuilder sb)
         {
             var selections = unit.Progression.Selections;
             var selectionSkips = new List<BlueprintFeatureSelection>() {
@@ -309,90 +300,114 @@ namespace LevelUpPlanCustomizer.Export
             }
         }
 
-        static void getStats(UnitEntityData unit, out Dictionary<StatType, int> attributes, out IDictionary<StatType, int> levelUps)
+        static void GetStats(UnitEntityData unit, out Dictionary<StatType, int> attributes, out IDictionary<int, StatType> levelUps)
         {
             attributes = unit.Stats.Attributes.ToDictionary(a => a.Type, a => a.BaseValue);
-            levelUps = new Dictionary<StatType, int>();
+            levelUps = new Dictionary<int, StatType>();
             var statLevelUps = unit.Progression.CharacterLevel / 4;
             if (statLevelUps > 0)
             {
-                IDictionary<int, int> pointBuy = new Dictionary<int, int>()
-                {
-                    {7, -4},
-                    {8, -2},
-                    {9, -1},
-                    {10, 0},
-                    {11, 1},
-                    {12, 2},
-                    {13, 3},
-                    {14, 5},
-                    {15, 7},
-                    {16, 10},
-                    {17, 13},
-                    {18, 17}
-                };
-                var statPB = 0;
+                var characterRecord = GlobalRecord.Instance.ForCharacter(unit);
+                var curStatLevel = statLevelUps * 4;
+                var recordPresent = true;
 
-                foreach (var attrKey in attributes.Keys.ToList())
+                //recorded levelups
+                while (curStatLevel >= 4 && recordPresent)
                 {
-                    var baseValue = attributes[attrKey];
-                    if (baseValue > 18)
+                    characterRecord.LevelUpActions.TryGetValue(curStatLevel, out var actions);
+                    if (actions == null)
                     {
-                        levelUps.TryGetValue(attrKey, out var ups);
-                        levelUps[attrKey] = ups + (baseValue - 18);
-                        statLevelUps -= (baseValue - 18);
-                        attributes[attrKey] = 18;
+                        recordPresent = false;
+                        break;
                     }
-                    statPB += pointBuy[attributes[attrKey]];
+                    var action = actions.OfType<SpendAttributePointAction>().FirstOrDefault();
+                    if (action == null)
+                    {
+                        recordPresent = false;
+                        break;
+                    }
+                    levelUps[curStatLevel] = action.Attribute;
+                    attributes[action.Attribute] = attributes[action.Attribute] - 1;
+                    curStatLevel -= 4;
                 }
 
-                while (statLevelUps > 0)
+                //non-recordded level ups
+                while (curStatLevel >= 4)
                 {
                     var highest = attributes.MaxBy(a => a.Value);
-                    attributes[highest.Key]--;
-                    var newV = attributes[highest.Key];
-                    statPB -= pointBuy[newV + 1] - pointBuy[newV];
-                    levelUps.TryGetValue(highest.Key, out var ups);
-                    levelUps[highest.Key] = ups + 1;
-                    statLevelUps--;
-                }
-                if (statPB != 25)
-                {
-                    // log it
+                    attributes[highest.Key] = attributes[highest.Key] - 1;
+                    levelUps[curStatLevel] = highest.Key;
+
+                    curStatLevel -= 4;
                 }
             }
         }
 
-        static void getStatsForCompanion(UnitEntityData unit, out IDictionary<StatType, int> levelUps)
+        static void GetStatsForCompanion(UnitEntityData unit, out IDictionary<int, StatType> levelUps)
         {
             var attributes = unit.Stats.Attributes.ToDictionary(a => a.Type, a => a.BaseValue);
-            levelUps = new Dictionary<StatType, int>();
+            levelUps = new Dictionary<int, StatType>();
             var statLevelUps = unit.Progression.CharacterLevel / 4;
+
             if (statLevelUps > 0)
             {
-                if (unit.Stats.Strength > unit.Blueprint.Strength)
+                var characterRecord = GlobalRecord.Instance.ForCharacter(unit);
+                var curStatLevel = statLevelUps * 4;
+                var recordPresent = true;
+
+                //recorded levelups
+                while (curStatLevel >= 4 && recordPresent)
                 {
-                    levelUps[StatType.Strength] = unit.Stats.Strength - unit.Blueprint.Strength;
+                    characterRecord.LevelUpActions.TryGetValue(curStatLevel, out var actions);
+                    if (actions == null)
+                    {
+                        recordPresent = false;
+                        break;
+                    }
+                    var action = actions.OfType<SpendAttributePointAction>().FirstOrDefault();
+                    if (action == null)
+                    {
+                        recordPresent = false;
+                        break;
+                    }
+                    levelUps[curStatLevel] = action.Attribute;
+                    attributes[action.Attribute] = attributes[action.Attribute] - 1;
+                    curStatLevel -= 4;
                 }
-                if (unit.Stats.Dexterity > unit.Blueprint.Dexterity)
+
+                //non-recordded level ups
+                while (curStatLevel >= 4)
                 {
-                    levelUps[StatType.Dexterity] = unit.Stats.Dexterity - unit.Blueprint.Dexterity;
-                }
-                if (unit.Stats.Constitution > unit.Blueprint.Constitution)
-                {
-                    levelUps[StatType.Constitution] = unit.Stats.Constitution - unit.Blueprint.Constitution;
-                }
-                if (unit.Stats.Intelligence > unit.Blueprint.Intelligence)
-                {
-                    levelUps[StatType.Intelligence] = unit.Stats.Intelligence - unit.Blueprint.Intelligence;
-                }
-                if (unit.Stats.Wisdom > unit.Blueprint.Wisdom)
-                {
-                    levelUps[StatType.Wisdom] = unit.Stats.Wisdom - unit.Blueprint.Wisdom;
-                }
-                if (unit.Stats.Charisma > unit.Blueprint.Charisma)
-                {
-                    levelUps[StatType.Charisma] = unit.Stats.Charisma - unit.Blueprint.Charisma;
+                    if (unit.Stats.Strength > unit.Blueprint.Strength)
+                    {
+                        levelUps[curStatLevel] = StatType.Strength;
+                    }
+                    else if (unit.Stats.Dexterity > unit.Blueprint.Dexterity)
+                    {
+                        levelUps[curStatLevel] = StatType.Dexterity;
+                    }
+                    else if (unit.Stats.Constitution > unit.Blueprint.Constitution)
+                    {
+                        levelUps[curStatLevel] = StatType.Constitution;
+                    }
+                    else if (unit.Stats.Intelligence > unit.Blueprint.Intelligence)
+                    {
+                        levelUps[curStatLevel] = StatType.Intelligence;
+                    }
+                    else if (unit.Stats.Wisdom > unit.Blueprint.Wisdom)
+                    {
+                        levelUps[curStatLevel] = StatType.Wisdom;
+                    }
+                    else if (unit.Stats.Charisma > unit.Blueprint.Charisma)
+                    {
+                        levelUps[curStatLevel] = StatType.Charisma;
+                    }
+                    else
+                    {
+                        //if none of stats is higher than in blueprint, let's just say we're increasing strength
+                        levelUps[curStatLevel] = StatType.Strength;
+                    }
+                    curStatLevel -= 4;
                 }
             }
         }
